@@ -212,4 +212,14 @@ public class MainActivity extends AppCompatActivity {
         return manager.isEnabled();
     }
 
+    @Override
+    protected void onDestroy() {
+        if (mInterstitalAd.isAdLoaded()){
+            mInterstitalAd.destroy();
+        }
+        if (mNativeBannerAd.isAdLoaded()){
+            mNativeBannerAd.destroy();
+        }
+        super.onDestroy();
+    }
 }

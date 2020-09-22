@@ -50,4 +50,6 @@ dependencies {
 
     implementation 'com.facebook.android:audience-network-sdk:5.10.0'
 
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.4'
+
 }
