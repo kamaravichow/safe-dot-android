@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.accessibility.AccessibilityManager;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
@@ -30,14 +31,16 @@ import com.facebook.ads.NativeBannerAdView;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
+import static com.aravi.dot.Constants.ACCESSIBILITY_RESULT_CODE;
+import static com.aravi.dot.Constants.INTERSTITIAL_PLACEMENT_ID;
+import static com.aravi.dot.Constants.NATIVE_BANNER_PLACEMENT_ID;
+
 public class MainActivity extends AppCompatActivity {
 
-    public static final int ACCESSIBILITY_RESULT_CODE = 2002;
     private boolean TRIGGERED_START = false;
+
     private SwitchMaterial mainSwitch, vibrateSwitch;
     private SharedPreferenceManager sharedPreferenceManager;
-    private MaterialButton submitFeedback;
-
     private InterstitialAd mInterstitalAd;
     private NativeBannerAd mNativeBannerAd;
 
@@ -48,14 +51,23 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         sharedPreferenceManager = SharedPreferenceManager.getInstance(this);
 
+        init();
+        initAdvertisements();
+
+    }
+
+    private void init() {
         mainSwitch = findViewById(R.id.mainSwitch);
         vibrateSwitch = findViewById(R.id.vibrationSwitch);
-        submitFeedback = findViewById(R.id.submitFeedback);
+        MaterialButton submitFeedback = findViewById(R.id.submitFeedback);
+        RadioGroup align = findViewById(R.id.align);
+        ((TextView) findViewById(R.id.versionText)).setText("VERSION - " + BuildConfig.VERSION_NAME);
 
+        mainSwitch.setChecked(sharedPreferenceManager.isServiceEnabled());
+        vibrateSwitch.setChecked(sharedPreferenceManager.isVibrationEnabled());
         mainSwitch.setOnCheckedChangeListener(onCheckedChangeListener);
         vibrateSwitch.setOnCheckedChangeListener(onCheckedChangeListener);
-
-        RadioGroup align = findViewById(R.id.align);
+        submitFeedback.setOnClickListener(view -> sendFeedbackEmail());
         align.setOnCheckedChangeListener((radioGroup, i) -> {
             switch (i) {
                 case R.id.topLeft:
@@ -68,25 +80,6 @@ public class MainActivity extends AppCompatActivity {
                     break;
             }
         });
-
-        submitFeedback.setOnClickListener(view -> sendFeedbackEmail());
-
-        ((TextView) findViewById(R.id.versionText)).setText("VERSION - " + BuildConfig.VERSION_NAME);
-
-        mInterstitalAd = new InterstitialAd(this, "244358406678589_319269205854175");
-        mInterstitalAd.loadAd();
-        mInterstitalAd.setAdListener(new AbstractAdListener() {
-            @Override
-            public void onInterstitialDismissed(Ad ad) {
-                super.onInterstitialDismissed(ad);
-                mInterstitalAd.loadAd();
-            }
-        });
-
-        mNativeBannerAd = new NativeBannerAd(MainActivity.this, "244358406678589_244358583345238");
-        mNativeBannerAd.setAdListener(listener);
-        mNativeBannerAd.loadAd();
-
 
     }
 
@@ -117,19 +110,22 @@ public class MainActivity extends AppCompatActivity {
             mainSwitch.setChecked(false);
             startActivityForResult(new Intent("android.settings.ACCESSIBILITY_SETTINGS"), ACCESSIBILITY_RESULT_CODE);
         } else {
+            mainSwitch.setChecked(true);
+            sharedPreferenceManager.setServiceEnabled(true);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                startForegroundService(new Intent(MainActivity.this, DotService.class));
+            } else {
+                startService(new Intent(MainActivity.this, DotService.class));
+            }
             if (mInterstitalAd.isAdLoaded()) {
                 mInterstitalAd.show();
             }
-            mainSwitch.setChecked(true);
-            startService(new Intent(MainActivity.this, DotService.class));
         }
     }
 
     private void stopService() {
+        sharedPreferenceManager.setServiceEnabled(false);
         stopService(new Intent(MainActivity.this, DotService.class));
-        if (mInterstitalAd.isAdLoaded()) {
-            mInterstitalAd.show();
-        }
     }
 
     public static boolean accessibilityPermission(Context context, Class<?> cls) {
@@ -190,8 +186,30 @@ public class MainActivity extends AppCompatActivity {
     private void sendFeedbackEmail() {
         Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", "kamaravichow@gmail.com", null));
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Feedback for SafeDot");
-        emailIntent.putExtra(Intent.EXTRA_TEXT, "Device Information ----- Don't clear these ---- "
-                + Build.DEVICE + " , " + Build.BOARD + " , " + Build.BRAND + " , " + Build.MANUFACTURER + " , " + Build.MODEL + " ------ ");
+        emailIntent.putExtra(Intent.EXTRA_TEXT, "Device Information : \n----- Don't clear these ----\n "
+                + Build.DEVICE + " ,\n " + Build.BOARD + " ,\n " + Build.BRAND + " , " + Build.MANUFACTURER + " ,\n " + Build.MODEL + "\n ------ ");
         startActivity(Intent.createChooser(emailIntent, "Send feedback..."));
     }
+
+    private void initAdvertisements() {
+        mInterstitalAd = new InterstitialAd(this, INTERSTITIAL_PLACEMENT_ID);
+        mInterstitalAd.loadAd();
+        mInterstitalAd.setAdListener(new AbstractAdListener() {
+            @Override
+            public void onInterstitialDismissed(Ad ad) {
+                super.onInterstitialDismissed(ad);
+                mInterstitalAd.loadAd();
+            }
+        });
+
+        mNativeBannerAd = new NativeBannerAd(MainActivity.this, NATIVE_BANNER_PLACEMENT_ID);
+        mNativeBannerAd.setAdListener(listener);
+        mNativeBannerAd.loadAd();
+    }
+
+    private boolean checkAccessiblity() {
+        AccessibilityManager manager = (AccessibilityManager) getSystemService(Context.ACCESSIBILITY_SERVICE);
+        return manager.isEnabled();
+    }
+
 }
