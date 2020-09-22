@@ -210,19 +210,21 @@ public class DotService extends AccessibilityService {
 
     @Override
     public void onDestroy() {
-        if (sharedPreferenceManager.isServiceEnabled()){
-            Intent broadcastIntent = new Intent();
-            broadcastIntent.setAction("restartservice");
-            broadcastIntent.setClass(this, Restarter.class);
-            this.sendBroadcast(broadcastIntent);
-            super.onDestroy();
-        }
-        else {
-            unRegisterCameraCallBack();
-            unRegisterMicCallback();
-            stopSelf();
-            super.onDestroy();
-        }
+        unRegisterCameraCallBack();
+        unRegisterMicCallback();
+        super.onDestroy();
+
+//        Removed because it made situation even worse
+//        if (sharedPreferenceManager.isServiceEnabled()){
+//            Intent broadcastIntent = new Intent();
+//            broadcastIntent.setAction("restartservice");
+//            broadcastIntent.setClass(this, Restarter.class);
+//            this.sendBroadcast(broadcastIntent);
+//            super.onDestroy();
+//        }
+//        else {
+//
+//        }
 
     }
 }
