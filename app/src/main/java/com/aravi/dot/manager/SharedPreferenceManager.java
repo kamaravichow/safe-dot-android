@@ -25,11 +25,11 @@ public class SharedPreferenceManager {
     }
 
     public void setFirstLaunch(){
-        setBoolean(context, "APP.FIRST_LAUNCH", true);
+        setBoolean(context, "APP.FIRST_LAUNCH", false);
     }
 
     public boolean isFirstLaunch(){
-        return getBoolean(context, "APP.FIRST_LAUNCH", false);
+        return getBoolean(context, "APP.FIRST_LAUNCH", true);
     }
 
 

@@ -1,5 +1,6 @@
 package com.aravi.dot.main;
 
+import android.app.Dialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -109,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
     private void checkForAccessibilityAndStart() {
         if (!accessibilityPermission(getApplicationContext(), DotService.class)) {
             mainSwitch.setChecked(false);
-            startActivityForResult(new Intent("android.settings.ACCESSIBILITY_SETTINGS"), ACCESSIBILITY_RESULT_CODE);
+            Utils.showPermissionsDialog(MainActivity.this);
         } else {
             mainSwitch.setChecked(true);
             sharedPreferenceManager.setServiceEnabled(true);
@@ -123,6 +124,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
 
     private void stopService() {
         sharedPreferenceManager.setServiceEnabled(false);
@@ -181,6 +183,9 @@ public class MainActivity extends AppCompatActivity {
         if (TRIGGERED_START) {
             checkForAccessibilityAndStart();
             TRIGGERED_START = false;
+        }
+        if (accessibilityPermission(getApplicationContext(), DotService.class)){
+            Utils.dismissPermissionDialog();
         }
     }
 
