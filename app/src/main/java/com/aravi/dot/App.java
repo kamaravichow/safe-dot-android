@@ -11,17 +11,11 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
         AudienceNetworkAds.initialize(this);
-
+        FirebaseAnalytics.getInstance(this);
         if (FirebaseCrashlytics.getInstance().didCrashOnPreviousExecution()) {
             FirebaseCrashlytics.getInstance().sendUnsentReports();
         }
-        FirebaseAnalytics.getInstance(this);
-
-//        OneSignal.startInit(this)
-//                .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
-//                .unsubscribeWhenNotificationsAreDisabled(false)
-//                .init();
     }
+
 }

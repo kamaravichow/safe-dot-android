@@ -44,16 +44,13 @@ public class MainActivity extends AppCompatActivity {
     private InterstitialAd mInterstitalAd;
     private NativeBannerAd mNativeBannerAd;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         sharedPreferenceManager = SharedPreferenceManager.getInstance(this);
-
         init();
         initAdvertisements();
-
     }
 
     private void init() {
@@ -115,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
             mainSwitch.setChecked(true);
             sharedPreferenceManager.setServiceEnabled(true);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                startForegroundService(new Intent(MainActivity.this, DotService.class));
+                startService(new Intent(MainActivity.this, DotService.class));
             } else {
                 startService(new Intent(MainActivity.this, DotService.class));
             }

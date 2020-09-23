@@ -1,7 +1,11 @@
 package com.aravi.dot.service;
 
 import android.accessibilityservice.AccessibilityService;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.hardware.camera2.CameraManager;
@@ -18,15 +22,27 @@ import android.view.accessibility.AccessibilityEvent;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+
+import com.aravi.dot.Constants;
 import com.aravi.dot.R;
+import com.aravi.dot.main.MainActivity;
 import com.aravi.dot.manager.SharedPreferenceManager;
 
 import java.util.List;
 
+import static android.app.PendingIntent.FLAG_UPDATE_CURRENT;
+import static com.aravi.dot.Constants.NOTIFICATION_ID;
+
 public class DotService extends AccessibilityService {
 
+    private boolean isCameraUnavailable = false;
+    private boolean isMicUnavailable = false;
+    private boolean isOnUseNotificationEnabled = true;
+
     private FrameLayout hoverLayout;
-    private ImageView dot_camera, dot_mic;
+    private ImageView dotCamera, dotMic;
 
     private CameraManager cameraManager;
     private CameraManager.AvailabilityCallback cameraCallback;
@@ -36,6 +52,9 @@ public class DotService extends AccessibilityService {
 
     private WindowManager.LayoutParams layoutParams;
     private WindowManager windowManager;
+
+    private NotificationManagerCompat notificationManager;
+    private NotificationCompat.Builder notificationCompatBuilder;
 
     @Override
     protected void onServiceConnected() {
@@ -62,14 +81,18 @@ public class DotService extends AccessibilityService {
             @Override
             public void onCameraAvailable(String cameraId) {
                 super.onCameraAvailable(cameraId);
+                isCameraUnavailable = false;
                 hideCamDot();
+                dismissOnUseNotification();
             }
 
             @Override
             public void onCameraUnavailable(String cameraId) {
                 super.onCameraUnavailable(cameraId);
+                isCameraUnavailable = true;
                 showCamDot();
                 triggerVibration();
+                showOnUseNotification();
             }
         };
         return cameraCallback;
@@ -82,17 +105,86 @@ public class DotService extends AccessibilityService {
                 if (configs.size() > 0) {
                     showMicDot();
                     triggerVibration();
+                    isMicUnavailable = true;
+                    showOnUseNotification();
+
                 } else {
                     hideMicDot();
+                    isMicUnavailable = false;
+                    dismissOnUseNotification();
+
                 }
             }
         };
         return micCallback;
     }
 
+    private void initOnUseNotification() {
+        createNotificationChannels();
+        notificationCompatBuilder = new NotificationCompat.Builder(getApplicationContext(), Constants.DEFAULT_NOTIFICATION_CHANNEL)
+                .setSmallIcon(R.drawable.transparent)
+                .setContentTitle(getNotificationTitle())
+                .setContentText(getNotificationDescription())
+                .setContentIntent(getPendingIntent())
+                .setOngoing(true)
+                .setPriority(NotificationCompat.PRIORITY_HIGH);
+
+        notificationManager = NotificationManagerCompat.from(getApplicationContext());
+    }
+
+    private String getNotificationTitle() {
+        if (isCameraUnavailable && isMicUnavailable) return "Camera and Mic are being accessed";
+        if (isCameraUnavailable && !isMicUnavailable) return "Camera is being accessed";
+        if (!isCameraUnavailable && isMicUnavailable) return "Mic is being accessed";
+        return "Your Camera or Mic is ON";
+    }
+
+    private String getNotificationDescription() {
+        if (isCameraUnavailable && isMicUnavailable)
+            return "Hey, Some app is watching and hearing you";
+        if (isCameraUnavailable && !isMicUnavailable)
+            return "You're being watched !";
+        if (!isCameraUnavailable && isMicUnavailable)
+            return "Some app is hearing you !";
+        return "Looks like some app is using your camera and mic...";
+    }
+
+    private void showOnUseNotification() {
+        if (isOnUseNotificationEnabled) {
+            initOnUseNotification();
+            if (notificationManager != null)
+                notificationManager.notify(NOTIFICATION_ID, notificationCompatBuilder.build());
+        }
+    }
+
+    private void dismissOnUseNotification() {
+        if (isCameraUnavailable || isMicUnavailable) {
+            showOnUseNotification();
+        } else {
+            if (notificationManager != null) notificationManager.cancel(NOTIFICATION_ID);
+        }
+    }
+
+    private PendingIntent getPendingIntent() {
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        return PendingIntent.getActivity(getApplicationContext(), 1, intent, FLAG_UPDATE_CURRENT);
+    }
+
+
+    private void createNotificationChannels() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel defaultChannel = new NotificationChannel(Constants.DEFAULT_NOTIFICATION_CHANNEL, "SafeDot", NotificationManager.IMPORTANCE_LOW);
+            defaultChannel.setDescription("You'll receive a notification when app uses your camera or microphone");
+            defaultChannel.setLightColor(Color.BLUE);
+            NotificationManager manager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+            manager.createNotificationChannel(defaultChannel);
+
+        }
+    }
+
     private void setDotCustomColors() {
-        setViewTint(dot_camera, "#4CAF50");
-        setViewTint(dot_mic, "#FF9800");
+        setViewTint(dotCamera, "#4CAF50");
+        setViewTint(dotMic, "#FF9800");
     }
 
     private void setViewTint(ImageView imageView, String hex) {
@@ -111,12 +203,12 @@ public class DotService extends AccessibilityService {
     }
 
     private void initDotViews() {
-        dot_camera = hoverLayout.findViewById(R.id.dot_camera);
-        dot_mic = hoverLayout.findViewById(R.id.dot_mic);
+        dotCamera = hoverLayout.findViewById(R.id.dot_camera);
+        dotMic = hoverLayout.findViewById(R.id.dot_mic);
         setDotCustomColors();
-        dot_camera.postDelayed(() -> {
-            dot_camera.setVisibility(View.GONE);
-            dot_mic.setVisibility(View.GONE);
+        dotCamera.postDelayed(() -> {
+            dotCamera.setVisibility(View.GONE);
+            dotMic.setVisibility(View.GONE);
         }, 500);
 
     }
@@ -157,24 +249,24 @@ public class DotService extends AccessibilityService {
         if (sharedPreferenceManager.isMicIndicatorEnabled()) {
             updateLayoutGravity();
             setDotCustomColors();
-            dot_mic.setVisibility(View.VISIBLE);
+            dotMic.setVisibility(View.VISIBLE);
         }
     }
 
     private void hideMicDot() {
-        dot_mic.setVisibility(View.GONE);
+        dotMic.setVisibility(View.GONE);
     }
 
     private void showCamDot() {
         if (sharedPreferenceManager.isCameraIndicatorEnabled()) {
             updateLayoutGravity();
             setDotCustomColors();
-            dot_camera.setVisibility(View.VISIBLE);
+            dotCamera.setVisibility(View.VISIBLE);
         }
     }
 
     private void hideCamDot() {
-        dot_camera.setVisibility(View.GONE);
+        dotCamera.setVisibility(View.GONE);
     }
 
     public void upScaleView(View view) {
