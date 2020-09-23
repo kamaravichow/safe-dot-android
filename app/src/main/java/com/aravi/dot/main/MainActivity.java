@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         RadioGroup align = findViewById(R.id.align);
         ((TextView) findViewById(R.id.versionText)).setText("VERSION - " + BuildConfig.VERSION_NAME);
 
-        mainSwitch.setChecked(sharedPreferenceManager.isServiceEnabled());
+        mainSwitch.setChecked(sharedPreferenceManager.isServiceEnabled() && checkAccessiblity());
         vibrateSwitch.setChecked(sharedPreferenceManager.isVibrationEnabled());
         mainSwitch.setOnCheckedChangeListener(onCheckedChangeListener);
         vibrateSwitch.setOnCheckedChangeListener(onCheckedChangeListener);
@@ -80,6 +80,8 @@ public class MainActivity extends AppCompatActivity {
                     break;
             }
         });
+
+
 
     }
 
@@ -214,10 +216,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        if (mInterstitalAd.isAdLoaded()){
+        if (mInterstitalAd != null && mInterstitalAd.isAdLoaded()){
             mInterstitalAd.destroy();
         }
-        if (mNativeBannerAd.isAdLoaded()){
+        if (mNativeBannerAd != null && mNativeBannerAd.isAdLoaded()){
             mNativeBannerAd.destroy();
         }
         super.onDestroy();
