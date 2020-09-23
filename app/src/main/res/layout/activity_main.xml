@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="false"
     android:background="@android:color/white"
     tools:context=".main.MainActivity">
 
@@ -11,12 +12,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/white"
+        android:fitsSystemWindows="true"
         app:elevation="0dp">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:titleEnabled="false">
+            app:titleEnabled="false"
+            app:layout_scrollFlags="scroll|snap|exitUntilCollapsed">
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:layout_width="match_parent"
@@ -35,15 +38,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_collapseMode="parallax"
+                app:layout_collapseParallaxMultiplier="0.7"
                 android:padding="10dp"
                 android:layout_marginStart="10dp"
                 android:orientation="vertical"
                 android:layout_marginTop="?attr/actionBarSize">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Safe Dot"
                     android:textSize="18sp"
+                    android:layout_marginTop="5dp"
                     android:textAllCaps="true"
                     android:textColor="@android:color/black"
                     android:fontFamily="@font/product_sans_bold"/>
@@ -63,7 +69,7 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="none"
@@ -73,8 +79,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="10dp"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+            android:padding="10dp">
 
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/mainSwitch"
@@ -116,7 +121,7 @@
                 android:id="@+id/vibrationSwitch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="HAPTIC FEEDBACK"
+                android:text="VIBRATE ON USE"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/product_sans_bold"/>
 
@@ -197,7 +202,6 @@
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/product_sans_regular"/>
 
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -207,19 +211,69 @@
                 android:layout_marginStart="10dp"/>
 
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/submitFeedback"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Write Feedback"
-                android:layout_margin="10dp"
-                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"/>
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/submitFeedback"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Send Feedback"
+                    android:layout_weight="1"
+                    android:layout_margin="10dp"
+                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/rateApp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Drop Rating :)"
+                    android:layout_weight="1"
+                    android:layout_margin="10dp"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"/>
+
+
+            </LinearLayout>
+
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/grey_100"
                 android:layout_margin="10dp"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Worried of privacy ? "
+                android:textAllCaps="true"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/product_sans_regular"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="This app asks for accessibility permission to check if any app is using your camera/ mic. We do NOT collect any kinds of information from your device. All the logs are stored on your device. Still Unsure ? You can get the premium version :)"
+                android:fontFamily="@font/product_sans_regular"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"/>
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/premiumVersion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Get Premium Version"
+                android:layout_margin="10dp"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"/>
+
 
             <TextView
                 android:layout_width="wrap_content"
@@ -245,6 +299,6 @@
 
 
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
