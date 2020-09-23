@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.aravi.dot.BuildConfig;
 import com.aravi.dot.R;
+import com.aravi.dot.Utils;
 import com.aravi.dot.manager.SharedPreferenceManager;
 import com.aravi.dot.service.DotService;
 import com.facebook.ads.AbstractAdListener;
@@ -51,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         sharedPreferenceManager = SharedPreferenceManager.getInstance(this);
         init();
         initAdvertisements();
+
     }
 
     private void init() {

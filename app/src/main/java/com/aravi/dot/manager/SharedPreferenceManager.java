@@ -24,6 +24,15 @@ public class SharedPreferenceManager {
         this.sharedPreferences = context.getSharedPreferences(SHARED_PREFERENCE_NAME, ACCESS_MODE);
     }
 
+    public void setFirstLaunch(){
+        setBoolean(context, "APP.FIRST_LAUNCH", true);
+    }
+
+    public boolean isFirstLaunch(){
+        return getBoolean(context, "APP.FIRST_LAUNCH", false);
+    }
+
+
     public void setServiceEnabled(boolean value) {
         setBoolean(context, "SERVICE.STATE", value);
     }

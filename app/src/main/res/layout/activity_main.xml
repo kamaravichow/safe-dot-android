@@ -99,11 +99,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="60dp"
+                android:visibility="visible"
                 android:orientation="vertical"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
+                android:visibility="visible"
                 android:background="@color/grey_100"
                 android:layout_margin="10dp"/>
 
