@@ -3,12 +3,15 @@ package com.aravi.dot;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 
 import com.aravi.dot.service.DotService;
 
 import static com.aravi.dot.main.MainActivity.accessibilityPermission;
 
 public class Utils {
+
 
     public static Dialog permissionsDialog;
 
@@ -24,8 +27,22 @@ public class Utils {
         });
     }
 
-    public static void dismissPermissionDialog(){
-        permissionsDialog.setCancelable(true);
-        permissionsDialog.dismiss();
+    public static void dismissPermissionDialog() {
+        if (permissionsDialog != null && permissionsDialog.isShowing()) {
+            permissionsDialog.setCancelable(true);
+            permissionsDialog.dismiss();
+        }
+
+    }
+
+    public static String getNameFromPackageName(Context context, String packageName) {
+        final PackageManager packageManager = context.getPackageManager();
+        ApplicationInfo applicationInfo;
+        try {
+            applicationInfo = packageManager.getApplicationInfo(packageName, 0);
+        } catch (final PackageManager.NameNotFoundException e) {
+            applicationInfo = null;
+        }
+        return (String) (applicationInfo != null ? packageManager.getApplicationLabel(applicationInfo) : "(unknown)");
     }
 }

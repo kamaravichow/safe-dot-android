@@ -4,6 +4,7 @@ import android.accessibilityservice.AccessibilityService;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -14,6 +15,7 @@ import android.media.AudioRecordingConfiguration;
 import android.os.Build;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +39,8 @@ import static com.aravi.dot.Constants.NOTIFICATION_ID;
 
 public class DotService extends AccessibilityService {
 
+    private static final String TAG = "DotService";
+
     private boolean isCameraUnavailable = false;
     private boolean isMicUnavailable = false;
     private boolean isOnUseNotificationEnabled = true;
@@ -55,6 +59,7 @@ public class DotService extends AccessibilityService {
 
     private NotificationManagerCompat notificationManager;
     private NotificationCompat.Builder notificationCompatBuilder;
+    private String currentRunningAppPackage = "com.aravi.dot";
 
     @Override
     protected void onServiceConnected() {
@@ -84,6 +89,7 @@ public class DotService extends AccessibilityService {
                 isCameraUnavailable = false;
                 hideCamDot();
                 dismissOnUseNotification();
+                Log.i("LOG.APP", "CAM Off : " + currentRunningAppPackage);
             }
 
             @Override
@@ -93,6 +99,7 @@ public class DotService extends AccessibilityService {
                 showCamDot();
                 triggerVibration();
                 showOnUseNotification();
+                Log.i("LOG.APP", "CAM On : " + currentRunningAppPackage);
             }
         };
         return cameraCallback;
@@ -107,12 +114,13 @@ public class DotService extends AccessibilityService {
                     triggerVibration();
                     isMicUnavailable = true;
                     showOnUseNotification();
+                    Log.i("LOG.APP", "MIC On : " + currentRunningAppPackage);
 
                 } else {
                     hideMicDot();
                     isMicUnavailable = false;
                     dismissOnUseNotification();
-
+                    Log.i("LOG.APP", "MIC Off : " + currentRunningAppPackage);
                 }
             }
         };
@@ -284,6 +292,14 @@ public class DotService extends AccessibilityService {
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent accessibilityEvent) {
+        try {
+            if (accessibilityEvent.getEventType() == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED && accessibilityEvent.getPackageName() != null) {
+                ComponentName componentName = new ComponentName(accessibilityEvent.getPackageName().toString(), accessibilityEvent.getClassName().toString());
+                currentRunningAppPackage = componentName.getPackageName().toString();
+            }
+        } catch (Exception ignored) {
+            Log.i(TAG, "onAccessibilityEvent:" + new Exception(ignored).getMessage());
+        }
 
     }
 
@@ -299,23 +315,13 @@ public class DotService extends AccessibilityService {
         }
     }
 
+
+
     @Override
     public void onDestroy() {
         unRegisterCameraCallBack();
         unRegisterMicCallback();
         super.onDestroy();
-
-//        Removed because it made situation even worse
-//        if (sharedPreferenceManager.isServiceEnabled()){
-//            Intent broadcastIntent = new Intent();
-//            broadcastIntent.setAction("restartservice");
-//            broadcastIntent.setClass(this, Restarter.class);
-//            this.sendBroadcast(broadcastIntent);
-//            super.onDestroy();
-//        }
-//        else {
-//
-//        }
 
     }
 }

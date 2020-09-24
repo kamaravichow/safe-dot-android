@@ -1,6 +1,5 @@
 package com.aravi.dot.main;
 
-import android.app.Dialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -33,7 +32,6 @@ import com.facebook.ads.NativeBannerAdView;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
-import static com.aravi.dot.Constants.ACCESSIBILITY_RESULT_CODE;
 import static com.aravi.dot.Constants.INTERSTITIAL_PLACEMENT_ID;
 import static com.aravi.dot.Constants.NATIVE_BANNER_PLACEMENT_ID;
 
