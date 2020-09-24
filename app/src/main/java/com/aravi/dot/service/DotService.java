@@ -29,6 +29,7 @@ import androidx.core.app.NotificationManagerCompat;
 
 import com.aravi.dot.Constants;
 import com.aravi.dot.R;
+import com.aravi.dot.Utils;
 import com.aravi.dot.main.MainActivity;
 import com.aravi.dot.manager.SharedPreferenceManager;
 
@@ -99,7 +100,7 @@ public class DotService extends AccessibilityService {
                 showCamDot();
                 triggerVibration();
                 showOnUseNotification();
-                Log.i("LOG.APP", "CAM On : " + currentRunningAppPackage);
+                Log.i("LOG.APP", "CAM On : " + currentRunningAppPackage + " NAME :" + Utils.getNameFromPackageName(getApplicationContext(), currentRunningAppPackage));
             }
         };
         return cameraCallback;
@@ -114,7 +115,7 @@ public class DotService extends AccessibilityService {
                     triggerVibration();
                     isMicUnavailable = true;
                     showOnUseNotification();
-                    Log.i("LOG.APP", "MIC On : " + currentRunningAppPackage);
+                    Log.i("LOG.APP", "MIC On : " + currentRunningAppPackage + " NAME :" + Utils.getNameFromPackageName(getApplicationContext(), currentRunningAppPackage));
 
                 } else {
                     hideMicDot();
