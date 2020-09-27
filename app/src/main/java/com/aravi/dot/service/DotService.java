@@ -35,6 +35,8 @@ import com.aravi.dot.manager.SharedPreferenceManager;
 
 import java.util.List;
 
+import javax.security.auth.login.LoginException;
+
 import static android.app.PendingIntent.FLAG_UPDATE_CURRENT;
 import static com.aravi.dot.Constants.NOTIFICATION_ID;
 
@@ -45,6 +47,9 @@ public class DotService extends AccessibilityService {
     private boolean isCameraUnavailable = false;
     private boolean isMicUnavailable = false;
     private boolean isOnUseNotificationEnabled = true;
+
+    private boolean didCameraUseStart = false;
+    private boolean didMicUseStart = false;
 
     private FrameLayout hoverLayout;
     private ImageView dotCamera, dotMic;
@@ -88,19 +93,21 @@ public class DotService extends AccessibilityService {
             public void onCameraAvailable(String cameraId) {
                 super.onCameraAvailable(cameraId);
                 isCameraUnavailable = false;
-                hideCamDot();
+                didCameraUseStart = true;
                 dismissOnUseNotification();
-                Log.i("LOG.APP", "CAM Off : " + currentRunningAppPackage);
+                hideCamDot();
+                makeLog();
             }
 
             @Override
             public void onCameraUnavailable(String cameraId) {
                 super.onCameraUnavailable(cameraId);
                 isCameraUnavailable = true;
+                didCameraUseStart = true;
+                showOnUseNotification();
                 showCamDot();
                 triggerVibration();
-                showOnUseNotification();
-                Log.i("LOG.APP", "CAM On : " + currentRunningAppPackage + " NAME :" + Utils.getNameFromPackageName(getApplicationContext(), currentRunningAppPackage));
+                makeLog();
             }
         };
         return cameraCallback;
@@ -115,14 +122,15 @@ public class DotService extends AccessibilityService {
                     triggerVibration();
                     isMicUnavailable = true;
                     showOnUseNotification();
-                    Log.i("LOG.APP", "MIC On : " + currentRunningAppPackage + " NAME :" + Utils.getNameFromPackageName(getApplicationContext(), currentRunningAppPackage));
 
                 } else {
                     hideMicDot();
                     isMicUnavailable = false;
                     dismissOnUseNotification();
-                    Log.i("LOG.APP", "MIC Off : " + currentRunningAppPackage);
                 }
+                didMicUseStart = true;
+                makeLog();
+
             }
         };
         return micCallback;
@@ -142,9 +150,12 @@ public class DotService extends AccessibilityService {
     }
 
     private String getNotificationTitle() {
-        if (isCameraUnavailable && isMicUnavailable) return "Camera and Mic are being accessed";
-        if (isCameraUnavailable && !isMicUnavailable) return "Camera is being accessed";
-        if (!isCameraUnavailable && isMicUnavailable) return "Mic is being accessed";
+        if (isCameraUnavailable && isMicUnavailable)
+            return "Camera and Mic are being accessed";
+        if (isCameraUnavailable && !isMicUnavailable)
+            return "Camera is being accessed";
+        if (!isCameraUnavailable && isMicUnavailable)
+            return "Mic is being accessed";
         return "Your Camera or Mic is ON";
     }
 
@@ -189,6 +200,30 @@ public class DotService extends AccessibilityService {
             manager.createNotificationChannel(defaultChannel);
 
         }
+    }
+
+    private void makeLog() {
+        int cameraState = 0;
+        int micState = 0;
+
+        if (didCameraUseStart && isCameraUnavailable) {
+            cameraState = 1;
+        } else {
+            if (didCameraUseStart && !isCameraUnavailable) {
+                cameraState = 2;
+                didCameraUseStart = false;
+            }
+        }
+
+        if (didMicUseStart && isMicUnavailable) {
+            micState = 1;
+        } else {
+            if (didMicUseStart && !isMicUnavailable) {
+                micState = 2;
+                didMicUseStart = false;
+            }
+        }
+        Utils.createNewLog(getApplicationContext(), currentRunningAppPackage, cameraState, micState);
     }
 
     private void setDotCustomColors() {
@@ -296,7 +331,7 @@ public class DotService extends AccessibilityService {
         try {
             if (accessibilityEvent.getEventType() == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED && accessibilityEvent.getPackageName() != null) {
                 ComponentName componentName = new ComponentName(accessibilityEvent.getPackageName().toString(), accessibilityEvent.getClassName().toString());
-                currentRunningAppPackage = componentName.getPackageName().toString();
+                currentRunningAppPackage = componentName.getPackageName();
             }
         } catch (Exception ignored) {
             Log.i(TAG, "onAccessibilityEvent:" + new Exception(ignored).getMessage());

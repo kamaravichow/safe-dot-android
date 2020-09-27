@@ -1,9 +1,26 @@
 <resources>
     <string name="app_name">Dot</string>
 
-    <string name="service_description">When this service is enabled it lets \'  Dot safe app \' to display notifications and indicators
-        every time a third-party app or a service uses camera or microphone on any screen.
-        \n\nThis Service/App doesn\'t have any permission to use internet or your device\'s camera, microphone or any other Hardware. And will NOT gather any data whatsoever.
-    </string>
+    <string name="service_description">When this service is enabled it lets Dot safe app to display notifications and indicators every time a third-party app or a service uses camera or microphone on any screen.</string>
     <string name="service_summary">Get notified every time a third-party app uses camera or microphone</string>
+    <string name="full_app_name">Safe Dot</string>
+    <string name="app_tagline">Puts Your privacy on the Top</string>
+    <string name="turn_on_string">TURN SAFE DOT ON</string>
+    <string name="preferences">Preferences</string>
+    <string name="vibrate_string">VIBRATE ON USE</string>
+    <string name="vibrate_description">You\'ll get a short vibration whenever an application or a service uses microphone or camera</string>
+    <string name="dot_alignment_string">DOT ALIGNMENT</string>
+    <string name="top_right_corner">TOP RIGHT CORNER</string>
+    <string name="top_left_corner">TOP LEFT CORNER</string>
+    <string name="dot_alignment_description">Align the dots in the way you want and you are comfortable with</string>
+    <string name="more_string">MORE</string>
+    <string name="found_a_bug">Found a bug ?</string>
+    <string name="found_a_bug_description">This app is currently in development stage so feel free to report bugs and your suggestions to improve app. Thanks for understanding ! :)</string>
+    <string name="send_feedback">Send Feedback</string>
+    <string name="drop_rating">Drop Rating :)</string>
+    <string name="worried_of_privacy">Worried of privacy ?</string>
+    <string name="worried_about_privacy_description">This app asks for accessibility permission to check if any app is using your camera/ mic. We do NOT collect any kinds of information from your device. All the logs are stored on your device. Still Unsure ? You can get the premium version :)</string>
+    <string name="get_premium_version">Get Premium Version</string>
+    <string name="creator_attribution">Made for you by Aravind Chowdary</string>
+    <string name="default_version_text">Version - 1.0</string>
 </resources>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Dot</string>
+    <string name="service_description">عند تمكين هذه الخدمة ، فإنها تتيح \"تطبيق Dot safe\" لعرض الإشعارات والمؤشرات في كل مرة يستخدم فيها تطبيق أو خدمة تابعة لجهة خارجية كاميرا أو ميكروفونًا على أي شاشة.</string>
+    <string name="service_summary">احصل على إشعار في كل مرة يستخدم فيها تطبيق جهة خارجية الكاميرا أو الميكروفون</string>
+    <string name="full_app_name">Safe Dot</string>
+    <string name="app_tagline">ضع خصوصيتك على القمة</string>
+    <string name="turn_on_string">قم بتشغيل Safe Dot</string>
+    <string name="preferences">التفضيلات</string>
+    <string name="vibrate_string">الاهتزاز قيد التشغيل</string>
+    <string name="vibrate_description">ستحصل على اهتزاز قصير عندما يستخدم تطبيق أو خدمة ميكروفونًا أو كاميرا</string>
+    <string name="dot_alignment_string">تخصيص Dot Alignment</string>
+    <string name="top_right_corner">اعلى اليمين</string>
+    <string name="top_left_corner">أعلى اليسار</string>
+    <string name="dot_alignment_description">قم بمحاذاة النقاط بالطريقة التي تريدها وأنت مرتاح</string>
+</resources>

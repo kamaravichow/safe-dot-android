@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/logItem"
+    android:background="@android:color/white">
+
+    <LinearLayout
+        android:id="@+id/lineHolder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp">
+
+        <LinearLayout
+            android:id="@+id/lineCamera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <View
+                android:id="@+id/lineCameraStart"
+                android:layout_width="1dp"
+                android:layout_height="20dp"
+                android:visibility="invisible"
+                android:background="@color/grey_500"
+                android:layout_marginBottom="5dp"/>
+
+            <ImageView
+                android:id="@+id/logCameraDot"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:src="@drawable/ic_dot"
+                app:tint="@color/green_500" />
+
+            <View
+                android:id="@+id/lineCameraStop"
+                android:layout_width="1dp"
+                android:layout_height="20dp"
+                android:visibility="invisible"
+                android:background="@color/grey_500"
+                android:layout_marginTop="5dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lineMic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginStart="10dp"
+            android:orientation="vertical">
+
+            <View
+                android:id="@+id/lineMicStart"
+                android:layout_width="1dp"
+                android:layout_height="20dp"
+                android:background="@color/grey_500"
+                android:visibility="invisible"
+                android:layout_marginBottom="5dp"/>
+
+            <ImageView
+                android:id="@+id/logMicDot"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:src="@drawable/ic_dot"
+                android:tint="@color/orange_500"
+                tools:ignore="UseAppTint" />
+
+            <View
+                android:id="@+id/lineMicStop"
+                android:layout_width="1dp"
+                android:layout_height="20dp"
+                android:visibility="invisible"
+                android:background="@color/grey_500"
+                android:layout_marginTop="5dp"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/logAppIcon"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_toEndOf="@+id/lineHolder"
+        android:layout_centerVertical="true"
+        android:src="@drawable/transparent"
+        android:scaleType="centerCrop"
+        android:layout_marginStart="5dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:layout_toEndOf="@+id/logAppIcon"
+        android:layout_centerVertical="true">
+
+        <TextView
+            android:id="@+id/logAppName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Safe Dot"
+            android:ellipsize="end"
+            android:maxLength="16"
+            android:fontFamily="@font/product_sans_bold"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/logAppPackage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="com.aravi.dot"
+            android:ellipsize="end"
+            android:maxLength="26"
+            android:textSize="@dimen/footer_text_size"
+            android:fontFamily="@font/product_sans_bold"
+            android:textAllCaps="true"/>
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/logTimestamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="12:00 AM"
+        android:textSize="12sp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:fontFamily="@font/product_sans_bold"
+        android:textAllCaps="true"
+        android:layout_margin="5dp"/>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/grey_300"
+        android:layout_below="@+id/lineHolder"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="10dp"/>
+
+</RelativeLayout>

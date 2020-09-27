@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Dot</string>
+    <string name="service_description">Cuando este servicio está habilitado, permite que la \'aplicación Dot safe\' muestre notificaciones e indicadores cada vez que una aplicación o servicio de terceros usa una cámara o micrófono en cualquier pantalla.</string>
+    <string name="service_summary">Reciba una notificación cada vez que una aplicación de terceros use una cámara o un micrófono</string>
+    <string name="full_app_name">Safe Dot</string>
+    <string name="app_tagline">Pon tu privacidad en la cima</string>
+    <string name="turn_on_string">ENCIENDA SAFE DOT</string>
+    <string name="preferences">Preferencias</string>
+    <string name="vibrate_string">Vibración activada</string>
+    <string name="vibrate_description">Obtendrá una breve vibración cada vez que una aplicación o un servicio use un micrófono o una cámara</string>
+    <string name="dot_alignment_string">Personalizar la alineación de puntos</string>
+    <string name="top_right_corner">Parte superior derecha</string>
+    <string name="top_left_corner">Arriba a la izquierda</string>
+    <string name="dot_alignment_description">Alinee los puntos de la manera que desee y se sienta cómodo</string>
+</resources>

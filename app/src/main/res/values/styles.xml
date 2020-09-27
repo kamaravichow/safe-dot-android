@@ -10,10 +10,14 @@
     </style>
 
     <style name="ServiceLayoutTheme" >
-
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <style name="ToolbarTitleAppearance">
+        <item name="android:textSize">16sp</item>
+        <item name="fontFamily">@font/product_sans_bold</item>
     </style>
 
 </resources>

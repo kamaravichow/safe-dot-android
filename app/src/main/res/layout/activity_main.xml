@@ -47,8 +47,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Safe Dot"
-                    android:textSize="18sp"
+                    android:text="@string/full_app_name"
+                    android:textSize="@dimen/title_heading_size"
                     android:layout_marginTop="5dp"
                     android:textAllCaps="true"
                     android:textColor="@android:color/black"
@@ -57,10 +57,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Puts Your privacy on the Top"
+                    android:text="@string/app_tagline"
                     android:textAllCaps="true"
                     android:textStyle="bold"
-                    android:textSize="11sp"
+                    android:textSize="@dimen/sub_head_size"
                     android:fontFamily="@font/product_sans_regular"/>
 
             </LinearLayout>
@@ -73,6 +73,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="none"
+        android:fitsSystemWindows="true"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <LinearLayout
@@ -85,7 +86,7 @@
                 android:id="@+id/mainSwitch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TURN SAFE DOT ON"
+                android:text="@string/turn_on_string"
                 android:fontFamily="@font/product_sans_bold"/>
 
             <View
@@ -114,34 +115,34 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/product_sans_regular"
-                android:text="Preferences"
+                android:text="@string/preferences"
                 android:textAllCaps="true"
-                android:textSize="11sp"
+                android:textSize="@dimen/sub_head_size"
                 android:textStyle="bold" />
 
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/vibrationSwitch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="VIBRATE ON USE"
+                android:text="@string/vibrate_string"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/product_sans_bold"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="You'll get a short vibration whenever an application or a service uses microphone or camera"
+                android:text="@string/vibrate_description"
                 android:fontFamily="@font/product_sans_regular"
                 android:layout_marginStart="10dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="INDICATOR"
+                android:text="@string/dot_alignment_string"
                 android:textAllCaps="true"
                 android:textStyle="bold"
                 android:textColor="@android:color/black"
-                android:textSize="14sp"
+                android:textSize="@dimen/minor_heading_size"
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/product_sans_regular"/>
 
@@ -156,7 +157,7 @@
                     android:id="@+id/topRight"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="TOP RIGHT CORNER"
+                    android:text="@string/top_right_corner"
                     android:checked="true"
                     android:fontFamily="@font/product_sans_bold"/>
 
@@ -164,7 +165,7 @@
                     android:id="@+id/topLeft"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="TOP LEFT CORNER"
+                    android:text="@string/top_left_corner"
                     android:fontFamily="@font/product_sans_bold"/>
 
             </RadioGroup>
@@ -172,10 +173,43 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Align the dots in the way you want and you are comfortable with"
+                android:text="@string/dot_alignment_description"
                 android:fontFamily="@font/product_sans_regular"
                 android:layout_marginStart="10dp"/>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grey_100"
+                android:layout_margin="10dp"/>
+
+            <LinearLayout
+                android:id="@+id/logsClickable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:clickable="true"
+                android:padding="10dp"
+                android:background="?attr/selectableItemBackground">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Access Logs"
+                    android:textAllCaps="true"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/minor_heading_size"
+                    android:fontFamily="@font/product_sans_regular"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Timeline of app usage logs. You can find which app used your camera and mic at what intervals."
+                    android:fontFamily="@font/product_sans_regular"
+                    android:layout_marginStart="10dp"/>
+
+            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
@@ -188,26 +222,26 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/product_sans_regular"
-                android:text="MORE"
+                android:text="@string/more_string"
                 android:textAllCaps="true"
-                android:textSize="11sp"
+                android:textSize="@dimen/sub_head_size"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Found a bug ?"
+                android:text="@string/found_a_bug"
                 android:textAllCaps="true"
                 android:textStyle="bold"
                 android:textColor="@android:color/black"
-                android:textSize="14sp"
+                android:textSize="@dimen/minor_heading_size"
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/product_sans_regular"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="This app is currently in development stage so feel free to report bugs and your suggestions to improve app. Thanks for understanding ! :)"
+                android:text="@string/found_a_bug_description"
                 android:fontFamily="@font/product_sans_regular"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="10dp"/>
@@ -223,7 +257,7 @@
                     android:id="@+id/submitFeedback"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Send Feedback"
+                    android:text="@string/send_feedback"
                     android:layout_weight="1"
                     android:layout_margin="10dp"
                     style="@style/Widget.MaterialComponents.Button.UnelevatedButton"/>
@@ -232,7 +266,7 @@
                     android:id="@+id/rateApp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Drop Rating :)"
+                    android:text="@string/drop_rating"
                     android:layout_weight="1"
                     android:layout_margin="10dp"
                     style="@style/Widget.MaterialComponents.Button.TextButton"/>
@@ -251,18 +285,18 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Worried of privacy ? "
-                android:textAllCaps="true"
-                android:textStyle="bold"
-                android:textColor="@android:color/black"
-                android:textSize="14sp"
                 android:layout_marginTop="20dp"
-                android:fontFamily="@font/product_sans_regular"/>
+                android:fontFamily="@font/product_sans_regular"
+                android:text="@string/worried_of_privacy"
+                android:textAllCaps="true"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/minor_heading_size"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="This app asks for accessibility permission to check if any app is using your camera/ mic. We do NOT collect any kinds of information from your device. All the logs are stored on your device. Still Unsure ? You can get the premium version :)"
+                android:text="@string/worried_about_privacy_description"
                 android:fontFamily="@font/product_sans_regular"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="10dp"/>
@@ -272,19 +306,24 @@
                 android:id="@+id/premiumVersion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Get Premium Version"
+                android:text="@string/get_premium_version"
                 android:layout_margin="10dp"
                 style="@style/Widget.MaterialComponents.Button.UnelevatedButton"/>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grey_100"
+                android:layout_margin="10dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAllCaps="true"
-                android:textSize="10sp"
+                android:textSize="@dimen/footer_text_size"
                 android:layout_gravity="center"
                 android:fontFamily="@font/product_sans_bold"
-                android:text="Made for you by Aravind Chowdary "/>
+                android:text="@string/creator_attribution"/>
 
             <TextView
                 android:id="@+id/versionText"
@@ -292,14 +331,12 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:textAllCaps="true"
-                android:textSize="10sp"
+                android:textSize="@dimen/footer_text_size"
                 android:fontFamily="@font/product_sans_regular"
-                android:text="Version - 1.0"/>
+                android:text="@string/default_version_text"
+                android:layout_marginBottom="50dp"/>
 
         </LinearLayout>
-
-
-
 
     </androidx.core.widget.NestedScrollView>
 

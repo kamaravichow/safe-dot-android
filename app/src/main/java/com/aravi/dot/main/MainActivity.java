@@ -58,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
         mainSwitch = findViewById(R.id.mainSwitch);
         vibrateSwitch = findViewById(R.id.vibrationSwitch);
         MaterialButton submitFeedback = findViewById(R.id.submitFeedback);
+        MaterialButton rateApp = findViewById(R.id.rateApp);
+        MaterialButton premiumApp = findViewById(R.id.premiumVersion);
         RadioGroup align = findViewById(R.id.align);
         ((TextView) findViewById(R.id.versionText)).setText("VERSION - " + BuildConfig.VERSION_NAME);
 
@@ -79,8 +81,24 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        rateApp.setOnClickListener(view -> {
+            String url = "https://play.google.com/store/apps/details?id=com.aravi.dot";
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse(url));
+            startActivity(i);
+        });
 
+        premiumApp.setOnClickListener(view -> {
+            String url = "https://play.google.com/store/apps/details?id=com.aravi.dotpro";
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse(url));
+            startActivity(i);
+        });
 
+        findViewById(R.id.logsClickable).setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, LogsActivity.class);
+            startActivity(intent);
+        });
     }
 
     private SwitchMaterial.OnCheckedChangeListener onCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
