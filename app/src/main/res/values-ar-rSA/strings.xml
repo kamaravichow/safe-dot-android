@@ -13,4 +13,8 @@
     <string name="top_right_corner">اعلى اليمين</string>
     <string name="top_left_corner">أعلى اليسار</string>
     <string name="dot_alignment_description">قم بمحاذاة النقاط بالطريقة التي تريدها وأنت مرتاح</string>
+    <string name="clear_dialog_title">Are you sure ?</string>
+    <string name="clear_dialog_description">This will clear all the logs which cannot be recovered back. \nStill want to proceed ?</string>
+    <string name="clear_dialog_yes">Yes, Clear it</string>
+    <string name="clear_dialog_no">No, Not now</string>
 </resources>

@@ -13,4 +13,8 @@
     <string name="app_tagline">プライバシーを最優先に</string>
     <string name="service_summary">サードパーティのアプリがカメラまたはマイクを使用するたびに通知を受け取る</string>
     <string name="service_description">このサービスを有効にすると、サードパーティのアプリまたはサービスが任意の画面でカメラまたはマイクを使用するたびに、「ドットセーフ」で通知とインジケーターを表示できます。</string>
+    <string name="clear_dialog_title">Are you sure ?</string>
+    <string name="clear_dialog_description">This will clear all the logs which cannot be recovered back. \nStill want to proceed ?</string>
+    <string name="clear_dialog_yes">Yes, Clear it</string>
+    <string name="clear_dialog_no">No, Not now</string>
 </resources>

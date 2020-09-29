@@ -13,4 +13,8 @@
     <string name="top_right_corner">Parte superior derecha</string>
     <string name="top_left_corner">Arriba a la izquierda</string>
     <string name="dot_alignment_description">Alinee los puntos de la manera que desee y se sienta cómodo</string>
+    <string name="clear_dialog_title">Are you sure ?</string>
+    <string name="clear_dialog_description">This will clear all the logs which cannot be recovered back. \nStill want to proceed ?</string>
+    <string name="clear_dialog_yes">Yes, Clear it</string>
+    <string name="clear_dialog_no">No, Not now</string>
 </resources>

@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.aravi.dot.Constants;
 import com.aravi.dot.R;
 import com.aravi.dot.adapter.LogAdapter;
 import com.aravi.dot.model.Log;
@@ -50,25 +51,26 @@ public class LogsActivity extends AppCompatActivity {
         logList.clear();
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         clearLogsButton.setOnClickListener(view -> new MaterialAlertDialogBuilder(LogsActivity.this)
-                .setTitle("Are you sure ?")
-                .setMessage("This will clear all the logs which cannot be recovered back. \n Still want to proceed ?")
-                .setPositiveButton("Yes, Clear it", (dialogInterface, i) -> {
+                .setTitle(R.string.clear_dialog_title)
+                .setMessage(R.string.clear_dialog_description)
+                .setPositiveButton(R.string.clear_dialog_yes, (dialogInterface, i) -> {
                     clearLogs();
                     new Handler().postDelayed(this::loadLogData, 1000);
                 })
-                .setNegativeButton("No, Not now", null)
+                .setNegativeButton(R.string.clear_dialog_no, null)
                 .show());
 
         new Handler().postDelayed(this::loadLogData, 1000);
     }
 
     private void loadLogData() {
+        logList.clear();
         AsyncTask.execute(() -> {
             Gson gson = new Gson();
-            SharedPreferences preferences = getApplicationContext().getSharedPreferences("APP.USAGE.LOG", Context.MODE_PRIVATE);
+            SharedPreferences preferences = getApplicationContext().getSharedPreferences(Constants.LOGS_PREFERENCE_NAME, Context.MODE_PRIVATE);
             Type logListType = new TypeToken<ArrayList<Log>>() {
             }.getType();
-            List<Log> savedList = gson.fromJson(preferences.getString("LOG.USAGE", null), logListType);
+            List<Log> savedList = gson.fromJson(preferences.getString(Constants.LOGS_PREFERENCE_TAG, null), logListType);
             if (savedList != null) {
                 logList = savedList;
             }

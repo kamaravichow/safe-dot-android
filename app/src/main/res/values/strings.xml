@@ -23,4 +23,8 @@
     <string name="get_premium_version">Get Premium Version</string>
     <string name="creator_attribution">Made for you by Aravind Chowdary</string>
     <string name="default_version_text">Version - 1.0</string>
+    <string name="clear_dialog_title">Are you sure ?</string>
+    <string name="clear_dialog_description">This will clear all the logs which cannot be recovered back. \nStill want to proceed ?</string>
+    <string name="clear_dialog_yes">Yes, Clear it</string>
+    <string name="clear_dialog_no">No, Not now</string>
 </resources>
