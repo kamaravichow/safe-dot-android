@@ -13,8 +13,8 @@ public class SharedPreferenceManager {
     private Context context;
 
     public static SharedPreferenceManager getInstance(Context context) {
-        if (null == sharedPreferenceManager) {
-            sharedPreferenceManager = new SharedPreferenceManager(context.getApplicationContext()); // Memory leak fixed 
+        if (sharedPreferenceManager == null) {
+            sharedPreferenceManager = new SharedPreferenceManager(context.getApplicationContext());
         }
         return sharedPreferenceManager;
     }

@@ -24,6 +24,7 @@ import android.view.accessibility.AccessibilityEvent;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
@@ -34,8 +35,6 @@ import com.aravi.dot.main.MainActivity;
 import com.aravi.dot.manager.SharedPreferenceManager;
 
 import java.util.List;
-
-import javax.security.auth.login.LoginException;
 
 import static android.app.PendingIntent.FLAG_UPDATE_CURRENT;
 import static com.aravi.dot.Constants.NOTIFICATION_ID;
@@ -97,6 +96,7 @@ public class DotService extends AccessibilityService {
                 dismissOnUseNotification();
                 hideCamDot();
                 makeLog();
+                Log.i(TAG, "onCameraAvailable: " + cameraId);
             }
 
             @Override
@@ -108,6 +108,17 @@ public class DotService extends AccessibilityService {
                 showCamDot();
                 triggerVibration();
                 makeLog();
+                Log.i(TAG, "onCameraUnavailable: " + cameraId);
+            }
+
+            @Override
+            public void onPhysicalCameraAvailable(@NonNull String cameraId, @NonNull String physicalCameraId) {
+                super.onPhysicalCameraAvailable(cameraId, physicalCameraId);
+            }
+
+            @Override
+            public void onPhysicalCameraUnavailable(@NonNull String cameraId, @NonNull String physicalCameraId) {
+                super.onPhysicalCameraUnavailable(cameraId, physicalCameraId);
             }
         };
         return cameraCallback;
@@ -130,6 +141,8 @@ public class DotService extends AccessibilityService {
                 }
                 didMicUseStart = true;
                 makeLog();
+
+                Log.i(TAG, "onRecordingConfigChanged: " + configs.toString());
 
             }
         };

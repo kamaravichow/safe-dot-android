@@ -13,6 +13,7 @@ public class App extends Application {
         super.onCreate();
         AudienceNetworkAds.initialize(this);
         FirebaseAnalytics.getInstance(this);
+        FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true);
         if (FirebaseCrashlytics.getInstance().didCrashOnPreviousExecution()) {
             FirebaseCrashlytics.getInstance().sendUnsentReports();
         }
