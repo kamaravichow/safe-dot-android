@@ -1,11 +1,13 @@
 package com.aravi.dot.main;
 
+import android.app.Dialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.view.View;
@@ -18,6 +20,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.aravi.dot.BuildConfig;
+import com.aravi.dot.Constants;
 import com.aravi.dot.R;
 import com.aravi.dot.Utils;
 import com.aravi.dot.manager.SharedPreferenceManager;
@@ -30,6 +33,7 @@ import com.facebook.ads.NativeAdListener;
 import com.facebook.ads.NativeBannerAd;
 import com.facebook.ads.NativeBannerAdView;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
 import static com.aravi.dot.Constants.INTERSTITIAL_PLACEMENT_ID;
@@ -41,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
     private SwitchMaterial mainSwitch, vibrateSwitch;
     private SharedPreferenceManager sharedPreferenceManager;
+    private Intent serviceIntent;
     private InterstitialAd mInterstitalAd;
     private NativeBannerAd mNativeBannerAd;
 
@@ -130,11 +135,13 @@ public class MainActivity extends AppCompatActivity {
         } else {
             mainSwitch.setChecked(true);
             sharedPreferenceManager.setServiceEnabled(true);
+            serviceIntent = new Intent(MainActivity.this, DotService.class);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                startService(new Intent(MainActivity.this, DotService.class));
+                startForegroundService(serviceIntent);
             } else {
-                startService(new Intent(MainActivity.this, DotService.class));
+                startService(serviceIntent);
             }
+            Snackbar.make(findViewById(android.R.id.content), "Safe Dot Mode Started", Snackbar.LENGTH_LONG).show();
             if (mInterstitalAd.isAdLoaded()) {
                 mInterstitalAd.show();
             }
@@ -144,7 +151,22 @@ public class MainActivity extends AppCompatActivity {
 
     private void stopService() {
         sharedPreferenceManager.setServiceEnabled(false);
-        stopService(new Intent(MainActivity.this, DotService.class));
+        if (isAccessiblityServiceRunning()) {
+            serviceIntent.setAction(Constants.STOP_SERVICE_ACTION);
+            stopService(serviceIntent);
+            Snackbar.make(findViewById(android.R.id.content), "Stopped Safe Dot Mode", Snackbar.LENGTH_LONG).show();
+        } else {
+            Snackbar.make(findViewById(android.R.id.content), "Service Not Yet Started..", Snackbar.LENGTH_LONG).show();
+        }
+
+        Dialog progressDialog = new Dialog(MainActivity.this, android.R.style.Theme_Translucent_NoTitleBar);
+        progressDialog.setContentView(R.layout.dialog_loading);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        new Handler().postDelayed(() -> {
+            progressDialog.setCancelable(true);
+            progressDialog.dismiss();
+        }, 5000);
     }
 
     public static boolean accessibilityPermission(Context context, Class<?> cls) {
@@ -234,12 +256,17 @@ public class MainActivity extends AppCompatActivity {
         return manager.isEnabled();
     }
 
+    private boolean isAccessiblityServiceRunning() {
+        String prefString = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES);
+        return prefString != null && prefString.contains(this.getPackageName() + "/" + DotService.class.getName());
+    }
+
     @Override
     protected void onDestroy() {
-        if (mInterstitalAd != null && mInterstitalAd.isAdLoaded()){
+        if (mInterstitalAd != null && mInterstitalAd.isAdLoaded()) {
             mInterstitalAd.destroy();
         }
-        if (mNativeBannerAd != null && mNativeBannerAd.isAdLoaded()){
+        if (mNativeBannerAd != null && mNativeBannerAd.isAdLoaded()) {
             mNativeBannerAd.destroy();
         }
         super.onDestroy();

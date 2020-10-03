@@ -13,6 +13,11 @@ public class Constants {
     public static String DEFAULT_NOTIFICATION_CHANNEL = "SAFE_DOT_NOTIFICATION";
     public static int NOTIFICATION_ID = 256;
 
+    public static String STOP_SERVICE_ACTION = "SERVICE.FOREGROUND.STOP.NOW";
+
+
+
+
     public static final String INTERSTITIAL_PLACEMENT_ID = "244358406678589_319269205854175";
     public static final String NATIVE_BANNER_PLACEMENT_ID = "244358406678589_319269205854175";
 

@@ -74,6 +74,16 @@ public class DotService extends AccessibilityService {
         initHardwareCallbacks();
     }
 
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        if (intent.getAction() == Constants.STOP_SERVICE_ACTION) {
+            stopForegroundService(startId);
+        } else {
+            return START_STICKY;
+        }
+        return super.onStartCommand(intent, flags, startId);
+    }
+
     private void getDefaults() {
         sharedPreferenceManager = SharedPreferenceManager.getInstance(getApplicationContext());
     }
@@ -365,6 +375,10 @@ public class DotService extends AccessibilityService {
     }
 
 
+    public void stopForegroundService(int startId) {
+        stopForeground(true);
+        stopSelfResult(startId);
+    }
 
     @Override
     public void onDestroy() {
