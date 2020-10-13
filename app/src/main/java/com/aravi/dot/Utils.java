@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 
 import com.aravi.dot.model.Log;
 import com.aravi.dot.service.DotService;
@@ -61,30 +62,29 @@ public class Utils {
         if (packageName.equals("com.aravi.dot")) {
             return;
         }
+        AsyncTask.execute(() -> {
+            SharedPreferences preferences = context.getSharedPreferences("APP.USAGE.LOG", Context.MODE_PRIVATE);
+            Gson gson = new Gson();
+            List<Log> logList = new ArrayList<>();
+            List<Log> savedLog;
 
-        SharedPreferences preferences = context.getSharedPreferences("APP.USAGE.LOG", Context.MODE_PRIVATE);
-        Gson gson = new Gson();
-        List<Log> logList = new ArrayList<>();
-        List<Log> savedLog;
+            Type logListType = new TypeToken<ArrayList<Log>>() {
+            }.getType();
+            savedLog = gson.fromJson(preferences.getString("LOG.USAGE", null), logListType);
+            if (savedLog != null && !savedLog.isEmpty()) {
+                logList.addAll(savedLog);
+            }
 
-        Type logListType = new TypeToken<ArrayList<Log>>() {
-        }.getType();
-        savedLog = gson.fromJson(preferences.getString("LOG.USAGE", null), logListType);
-        if (savedLog != null && !savedLog.isEmpty()) {
-            logList.addAll(savedLog);
-        }
-
-        Log log = new Log();
-        log.setAppName(getNameFromPackageName(context, packageName));
-        log.setAppPackage(packageName);
-        log.setCamera(camera);
-        log.setMic(mic);
-        log.setTimestamp(convertSecondsToHMmSs(System.currentTimeMillis()));
-        logList.add(log);
-        String newCompleteLog = gson.toJson(logList);
-        preferences.edit().putString("LOG.USAGE", newCompleteLog).apply();
-
-        android.util.Log.i("LOG.TEST", "mic: " + mic + " camera :" + camera);
+            Log log = new Log();
+            log.setAppName(getNameFromPackageName(context, packageName));
+            log.setAppPackage(packageName);
+            log.setCamera(camera);
+            log.setMic(mic);
+            log.setTimestamp(convertSecondsToHMmSs(System.currentTimeMillis()));
+            logList.add(log);
+            String newCompleteLog = gson.toJson(logList);
+            preferences.edit().putString("LOG.USAGE", newCompleteLog).apply();
+        });
     }
 
     public static String convertSecondsToHMmSs(long millis) {

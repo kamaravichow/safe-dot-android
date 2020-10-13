@@ -1,13 +1,11 @@
 package com.aravi.dot.main;
 
-import android.app.Dialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.view.View;
@@ -20,7 +18,6 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.aravi.dot.BuildConfig;
-import com.aravi.dot.Constants;
 import com.aravi.dot.R;
 import com.aravi.dot.Utils;
 import com.aravi.dot.manager.SharedPreferenceManager;
@@ -116,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
                         TRIGGERED_START = true;
                     } else {
                         stopService();
+                        TRIGGERED_START = false;
                     }
                     break;
                 case R.id.vibrationSwitch:
@@ -149,24 +147,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void stopService() {
-        sharedPreferenceManager.setServiceEnabled(false);
-        if (isAccessiblityServiceRunning()) {
-            serviceIntent.setAction(Constants.STOP_SERVICE_ACTION);
-            stopService(serviceIntent);
-            Snackbar.make(findViewById(android.R.id.content), "Stopped Safe Dot Mode", Snackbar.LENGTH_LONG).show();
-        } else {
-            Snackbar.make(findViewById(android.R.id.content), "Service Not Yet Started..", Snackbar.LENGTH_LONG).show();
-        }
 
-        Dialog progressDialog = new Dialog(MainActivity.this, android.R.style.Theme_Translucent_NoTitleBar);
-        progressDialog.setContentView(R.layout.dialog_loading);
-        progressDialog.setCancelable(false);
-        progressDialog.show();
-        new Handler().postDelayed(() -> {
-            progressDialog.setCancelable(true);
-            progressDialog.dismiss();
-        }, 5000);
+    private void stopService() {
+        if (isAccessiblityServiceRunning()) {
+            sharedPreferenceManager.setServiceEnabled(false);
+            Intent intent = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
+            startActivity(intent);
+        }
+        Snackbar.make(findViewById(android.R.id.content), "Disable the accessibility permission to the app", Snackbar.LENGTH_LONG).show();
     }
 
     public static boolean accessibilityPermission(Context context, Class<?> cls) {
@@ -218,12 +206,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        Utils.dismissPermissionDialog();
         if (TRIGGERED_START) {
-            checkForAccessibilityAndStart();
             TRIGGERED_START = false;
+            checkForAccessibilityAndStart();
         }
-        if (accessibilityPermission(getApplicationContext(), DotService.class)){
-            Utils.dismissPermissionDialog();
+        if (!sharedPreferenceManager.isServiceEnabled()) {
+            mainSwitch.setChecked(checkAccessiblity());
         }
     }
 
