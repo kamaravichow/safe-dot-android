@@ -3,6 +3,8 @@ package com.aravi.dot.manager
 import android.content.Context
 import android.content.SharedPreferences
 import com.aravi.dot.Constants
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 
 class SharedPreferenceManager(private val context: Context) {
     private val sharedPreferences: SharedPreferences
@@ -51,6 +53,13 @@ class SharedPreferenceManager(private val context: Context) {
         get() = getInteger(context, "DOT.POSITION", 0)
         set(value) {
             setInteger(context, "DOT.POSITION", value)
+        }
+    var isAnalyticsEnabled: Boolean
+        get() = getBoolean(context, "ANALYTICS.STATE", true)    // Collection is enabled by default
+        set(value) {
+            setBoolean(context, "ANALYTICS.STATE", value)
+            FirebaseAnalytics.getInstance(context).setAnalyticsCollectionEnabled(value)
+            FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(value)
         }
 
     // -----------------------------------------------------------------------------
