@@ -14,6 +14,7 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -109,25 +110,25 @@ public class MainActivity extends AppCompatActivity {
     private SwitchMaterial.OnCheckedChangeListener onCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-            switch (compoundButton.getId()) {
-                case R.id.mainSwitch:
-                    if (b) {
-                        checkForAccessibilityAndStart();
-                        TRIGGERED_START = true;
-                    } else {
-                        stopService();
-                        TRIGGERED_START = false;
-                    }
-                    break;
-                case R.id.vibrationSwitch:
-                    sharedPreferenceManager.setVibrationEnabled(b);
-                    break;
-                case R.id.analyticsSwitch: // fixme: Resource IDs will be non-final in Android Gradle Plugin version 5.0, avoid using them in switch case statements
-                    sharedPreferenceManager.setAnalyticsEnabled(b);
-                default:
-                    break;
+            int id = compoundButton.getId();
+            if (id == R.id.mainSwitch) {
+                if (b) {
+                    checkForAccessibilityAndStart();
+                    TRIGGERED_START = true;
+                } else {
+                    stopService();
+                    TRIGGERED_START = false;
+                }
+            } else if (id == R.id.vibrationSwitch) {
+                sharedPreferenceManager.setVibrationEnabled(b);
 
+            } else if (id == R.id.analyticsSwitch) {
+                sharedPreferenceManager.setAnalyticsEnabled(b);
+                Toast.makeText(MainActivity.this, "Changes will be applied on app restart", Toast.LENGTH_SHORT).show();
+                // fixed: Resource IDs will be non-final in Android Gradle Plugin version 5.0, avoid using them in switch case statements
+                // fix source : http://tools.android.com/tips/non-constant-fields
             }
+
         }
     };
 
@@ -150,7 +151,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
 
 
     private void stopService() {
