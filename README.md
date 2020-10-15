@@ -2,6 +2,10 @@
 An app that 🔔 alerts you when a third-party application uses your device camera or microphone.
 [READ MORE](https://medium.com/@kamaravichow/youre-being-watched-5ab439fe42ef)
 
+## Screenshots 
+|![Screenshot1](https://github.com/kamaravichow/safe-dot-android/raw/master/docs/screenshot1.png)|![Screenshot2](https://github.com/kamaravichow/safe-dot-android/raw/master/docs/screenshot2.png)|![Screenshot2](https://github.com/kamaravichow/safe-dot-android/raw/master/docs/screenshot3.png)|
+|---|---|---|
+
 ## Download Now
 App is currently available for Production & Open Beta Testing on Google Play Store. Use the below link to get redirected to the app page.
 
