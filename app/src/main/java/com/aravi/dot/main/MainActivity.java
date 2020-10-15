@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean TRIGGERED_START = false;
 
-    private SwitchMaterial mainSwitch, vibrateSwitch;
+    private SwitchMaterial mainSwitch, vibrateSwitch, analyticsSwitch;
     private SharedPreferenceManager sharedPreferenceManager;
     private Intent serviceIntent;
     private InterstitialAd mInterstitalAd;
@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
     private void init() {
         mainSwitch = findViewById(R.id.mainSwitch);
         vibrateSwitch = findViewById(R.id.vibrationSwitch);
+        analyticsSwitch = findViewById(R.id.analyticsSwitch);
         MaterialButton submitFeedback = findViewById(R.id.submitFeedback);
         MaterialButton rateApp = findViewById(R.id.rateApp);
         MaterialButton premiumApp = findViewById(R.id.premiumVersion);
@@ -67,8 +68,10 @@ public class MainActivity extends AppCompatActivity {
 
         mainSwitch.setChecked(sharedPreferenceManager.isServiceEnabled() && checkAccessiblity());
         vibrateSwitch.setChecked(sharedPreferenceManager.isVibrationEnabled());
+        analyticsSwitch.setChecked(sharedPreferenceManager.isAnalyticsEnabled());
         mainSwitch.setOnCheckedChangeListener(onCheckedChangeListener);
         vibrateSwitch.setOnCheckedChangeListener(onCheckedChangeListener);
+        analyticsSwitch.setOnCheckedChangeListener(onCheckedChangeListener);
         submitFeedback.setOnClickListener(view -> sendFeedbackEmail());
         align.setOnCheckedChangeListener((radioGroup, i) -> {
             switch (i) {
@@ -119,6 +122,8 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.vibrationSwitch:
                     sharedPreferenceManager.setVibrationEnabled(b);
                     break;
+                case R.id.analyticsSwitch: // fixme: Resource IDs will be non-final in Android Gradle Plugin version 5.0, avoid using them in switch case statements
+                    sharedPreferenceManager.setAnalyticsEnabled(b);
                 default:
                     break;
 

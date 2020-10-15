@@ -27,4 +27,6 @@
     <string name="clear_dialog_description">This will clear all the logs which cannot be recovered back. \nStill want to proceed ?</string>
     <string name="clear_dialog_yes">Yes, Clear it</string>
     <string name="clear_dialog_no">No, Not now</string>
+    <string name="analytics_description">The app will send non-personal detail about your app usage to help us make this app even more productive overtime. This also helps us understand bugs before more people experiance them.</string>
+    <string name="analytics_string">SEND ANALYTICS DATA</string>
 </resources>

@@ -282,6 +282,26 @@
                 android:background="@color/grey_100"
                 android:layout_margin="10dp"/>
 
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/analyticsSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/analytics_string"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/product_sans_bold"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/analytics_description"
+                android:fontFamily="@font/product_sans_regular"
+                android:layout_marginStart="10dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grey_100"
+                android:layout_margin="10dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
