@@ -12,7 +12,6 @@ import android.graphics.PixelFormat;
 import android.hardware.camera2.CameraManager;
 import android.media.AudioManager;
 import android.media.AudioRecordingConfiguration;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
@@ -160,7 +159,7 @@ public class DotService extends AccessibilityService {
     private void initOnUseNotification() {
         createNotificationChannels();
         notificationCompatBuilder = new NotificationCompat.Builder(getApplicationContext(), Constants.DEFAULT_NOTIFICATION_CHANNEL)
-                .setSmallIcon(R.drawable.ic_baseline_dot)
+                .setSmallIcon(R.drawable.transparent)
                 .setContentTitle(getNotificationTitle())
                 .setContentText(getNotificationDescription())
                 .setContentIntent(getPendingIntent())

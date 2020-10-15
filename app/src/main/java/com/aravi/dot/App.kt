@@ -10,7 +10,6 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         AudienceNetworkAds.initialize(this)
-
         // It's better to ask consent from the user but analytics collection is on by default.
         if (SharedPreferenceManager.getInstance(this)?.isAnalyticsEnabled == true) {
             FirebaseAnalytics.getInstance(this).setAnalyticsCollectionEnabled(true)

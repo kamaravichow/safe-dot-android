@@ -151,6 +151,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:orientation="horizontal"
                 android:saveEnabled="true">
 
                 <RadioButton
@@ -189,7 +190,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:clickable="true"
-                android:padding="10dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
                 android:background="?attr/selectableItemBackground">
 
                 <TextView
@@ -228,10 +230,86 @@
                 android:textSize="@dimen/sub_head_size"
                 android:textStyle="bold" />
 
+
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/found_a_bug"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/product_sans_regular"
+                android:text="Why Premium ?"
+                android:textAllCaps="true"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/minor_heading_size"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No advertisments &amp; analytics"
+                android:textSize="16sp"
+                android:drawablePadding="10dp"
+                android:gravity="center"
+                app:drawableStartCompat="@drawable/ic_analytics"
+                android:fontFamily="@font/product_sans_regular"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No internet permission "
+                android:textSize="16sp"
+                android:drawablePadding="10dp"
+                android:gravity="center"
+                app:drawableStartCompat="@drawable/ic_internet"
+                android:fontFamily="@font/product_sans_regular"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Better battery optimisation &amp; Stable updates"
+                android:textSize="16sp"
+                android:drawablePadding="10dp"
+                android:gravity="center"
+                app:drawableStartCompat="@drawable/ic_baseline_battery_charging_full_24"
+                android:fontFamily="@font/product_sans_regular"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Support development"
+                android:textSize="16sp"
+                android:drawablePadding="10dp"
+                android:gravity="center"
+                app:drawableStartCompat="@drawable/ic_attach_money"
+                android:fontFamily="@font/product_sans_regular"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"/>
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/premiumVersion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/get_premium_version"
+                android:layout_margin="10dp"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grey_100"
+                android:layout_margin="10dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mind telling me your experience ?"
                 android:textAllCaps="true"
                 android:textStyle="bold"
                 android:textColor="@android:color/black"
@@ -242,7 +320,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/found_a_bug_description"
+                android:text="Building an app like this takes a lot of time and effort. My humble request is that if you encounter a bug please report it through feedback email, we'll fix it ASAP instead of droping a negative review which make me sad."
                 android:fontFamily="@font/product_sans_regular"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="10dp"/>
@@ -303,39 +381,28 @@
                 android:background="@color/grey_100"
                 android:layout_margin="10dp"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:fontFamily="@font/product_sans_regular"
-                android:text="@string/worried_of_privacy"
-                android:textAllCaps="true"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/minor_heading_size"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/worried_about_privacy_description"
-                android:fontFamily="@font/product_sans_regular"
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="10dp"/>
-
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/premiumVersion"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/get_premium_version"
-                android:layout_margin="10dp"
-                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"/>
+                android:orientation="horizontal"
+                android:gravity="center">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/grey_100"
-                android:layout_margin="10dp"/>
+                <ImageButton
+                    android:id="@+id/github_button"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/ic_github"
+                    android:background="@android:color/transparent"/>
+
+                <ImageButton
+                    android:id="@+id/twitter_button"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_twitter"
+                    android:background="@android:color/transparent"/>
+
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"

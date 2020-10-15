@@ -8,7 +8,7 @@
     <string name="turn_on_string">TURN SAFE DOT ON</string>
     <string name="preferences">Preferences</string>
     <string name="vibrate_string">VIBRATE ON USE</string>
-    <string name="vibrate_description">You'll get a short vibration whenever an application or a service uses microphone or camera</string>
+    <string name="vibrate_description">You will get a short vibration whenever an application or a service uses microphone or camera</string>
     <string name="dot_alignment_string">DOT ALIGNMENT</string>
     <string name="top_right_corner">TOP RIGHT CORNER</string>
     <string name="top_left_corner">TOP LEFT CORNER</string>

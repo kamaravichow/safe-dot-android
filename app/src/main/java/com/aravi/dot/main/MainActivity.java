@@ -78,6 +78,18 @@ public class MainActivity extends AppCompatActivity {
             // fix source : http://tools.android.com/tips/non-constant-fields
         });
 
+        findViewById(R.id.twitter_button).setOnClickListener(v -> {
+            String url = "https://www.twitter.com/kamaravichow";
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse(url));
+            startActivity(i);
+        });
+        findViewById(R.id.github_button).setOnClickListener(v -> {
+            String url = "https://www.github.com/kamaravichow";
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse(url));
+            startActivity(i);
+        });
         rateApp.setOnClickListener(view -> {
             String url = "https://play.google.com/store/apps/details?id=com.aravi.dot";
             Intent i = new Intent(Intent.ACTION_VIEW);
