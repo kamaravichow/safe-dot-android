@@ -14,7 +14,6 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -23,10 +22,8 @@ import com.aravi.dot.R;
 import com.aravi.dot.Utils;
 import com.aravi.dot.manager.SharedPreferenceManager;
 import com.aravi.dot.service.DotService;
-import com.facebook.ads.AbstractAdListener;
 import com.facebook.ads.Ad;
 import com.facebook.ads.AdError;
-import com.facebook.ads.InterstitialAd;
 import com.facebook.ads.NativeAdListener;
 import com.facebook.ads.NativeBannerAd;
 import com.facebook.ads.NativeBannerAdView;
@@ -34,17 +31,14 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
-import static com.aravi.dot.Constants.INTERSTITIAL_PLACEMENT_ID;
 import static com.aravi.dot.Constants.NATIVE_BANNER_PLACEMENT_ID;
 
 public class MainActivity extends AppCompatActivity {
 
     private boolean TRIGGERED_START = false;
-
     private SwitchMaterial mainSwitch, vibrateSwitch, analyticsSwitch;
     private SharedPreferenceManager sharedPreferenceManager;
     private Intent serviceIntent;
-    private InterstitialAd mInterstitalAd;
     private NativeBannerAd mNativeBannerAd;
 
     @Override
@@ -67,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         RadioGroup align = findViewById(R.id.align);
         ((TextView) findViewById(R.id.versionText)).setText("VERSION - " + BuildConfig.VERSION_NAME);
 
-        mainSwitch.setChecked(sharedPreferenceManager.isServiceEnabled() && checkAccessiblity());
+        mainSwitch.setChecked(sharedPreferenceManager.isServiceEnabled() && checkAccessibility());
         vibrateSwitch.setChecked(sharedPreferenceManager.isVibrationEnabled());
         analyticsSwitch.setChecked(sharedPreferenceManager.isAnalyticsEnabled());
         mainSwitch.setOnCheckedChangeListener(onCheckedChangeListener);
@@ -75,16 +69,13 @@ public class MainActivity extends AppCompatActivity {
         analyticsSwitch.setOnCheckedChangeListener(onCheckedChangeListener);
         submitFeedback.setOnClickListener(view -> sendFeedbackEmail());
         align.setOnCheckedChangeListener((radioGroup, i) -> {
-            switch (i) {
-                case R.id.topLeft:
-                    sharedPreferenceManager.setPosition(0);
-                    break;
-                case R.id.topRight:
-                    sharedPreferenceManager.setPosition(1);
-                    break;
-                default:
-                    break;
+            if (i == R.id.topLeft) {
+                sharedPreferenceManager.setPosition(0);
+            } else if (i == R.id.topRight) {
+                sharedPreferenceManager.setPosition(1);
             }
+            // fixed: Resource IDs will be non-final in Android Gradle Plugin version 5.0, avoid using them in switch case statements
+            // fix source : http://tools.android.com/tips/non-constant-fields
         });
 
         rateApp.setOnClickListener(view -> {
@@ -107,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private SwitchMaterial.OnCheckedChangeListener onCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
+    private final SwitchMaterial.OnCheckedChangeListener onCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
             int id = compoundButton.getId();
@@ -124,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
 
             } else if (id == R.id.analyticsSwitch) {
                 sharedPreferenceManager.setAnalyticsEnabled(b);
-                Toast.makeText(MainActivity.this, "Changes will be applied on app restart", Toast.LENGTH_SHORT).show();
+                showSnack("Changes will be applied on app restart");
                 // fixed: Resource IDs will be non-final in Android Gradle Plugin version 5.0, avoid using them in switch case statements
                 // fix source : http://tools.android.com/tips/non-constant-fields
             }
@@ -145,21 +136,17 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 startService(serviceIntent);
             }
-            Snackbar.make(findViewById(android.R.id.content), "Safe Dot Mode Started", Snackbar.LENGTH_LONG).show();
-            if (mInterstitalAd.isAdLoaded()) {
-                mInterstitalAd.show();
-            }
         }
     }
 
 
     private void stopService() {
-        if (isAccessiblityServiceRunning()) {
+        if (isAccessibilityServiceRunning()) {
             sharedPreferenceManager.setServiceEnabled(false);
             Intent intent = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
             startActivity(intent);
         }
-        Snackbar.make(findViewById(android.R.id.content), "Disable the accessibility permission to the app", Snackbar.LENGTH_LONG).show();
+        showSnack("Disable the accessibility permission to the app");
     }
 
     public static boolean accessibilityPermission(Context context, Class<?> cls) {
@@ -180,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private NativeAdListener listener = new NativeAdListener() {
+    private final NativeAdListener listener = new NativeAdListener() {
         @Override
         public void onMediaDownloaded(Ad ad) {
         }
@@ -192,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onAdLoaded(Ad ad) {
             View adView = NativeBannerAdView.render(MainActivity.this, mNativeBannerAd, NativeBannerAdView.Type.HEIGHT_100);
-            LinearLayout nativeBannerAdContainer = (LinearLayout) findViewById(R.id.native_banner_ad_container);
+            LinearLayout nativeBannerAdContainer = findViewById(R.id.native_banner_ad_container);
             nativeBannerAdContainer.addView(adView);
 
         }
@@ -217,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
             checkForAccessibilityAndStart();
         }
         if (!sharedPreferenceManager.isServiceEnabled()) {
-            mainSwitch.setChecked(checkAccessiblity());
+            mainSwitch.setChecked(checkAccessibility());
         }
     }
 
@@ -230,36 +217,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initAdvertisements() {
-        mInterstitalAd = new InterstitialAd(this, INTERSTITIAL_PLACEMENT_ID);
-        mInterstitalAd.loadAd();
-        mInterstitalAd.setAdListener(new AbstractAdListener() {
-            @Override
-            public void onInterstitialDismissed(Ad ad) {
-                super.onInterstitialDismissed(ad);
-                mInterstitalAd.loadAd();
-            }
-        });
-
         mNativeBannerAd = new NativeBannerAd(MainActivity.this, NATIVE_BANNER_PLACEMENT_ID);
         mNativeBannerAd.setAdListener(listener);
         mNativeBannerAd.loadAd();
     }
 
-    private boolean checkAccessiblity() {
+    private boolean checkAccessibility() {
         AccessibilityManager manager = (AccessibilityManager) getSystemService(Context.ACCESSIBILITY_SERVICE);
         return manager.isEnabled();
     }
 
-    private boolean isAccessiblityServiceRunning() {
+    private boolean isAccessibilityServiceRunning() {
         String prefString = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES);
         return prefString != null && prefString.contains(this.getPackageName() + "/" + DotService.class.getName());
     }
 
+
+    private void showSnack(String message) {
+        Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG).show();
+    }
+
     @Override
     protected void onDestroy() {
-        if (mInterstitalAd != null && mInterstitalAd.isAdLoaded()) {
-            mInterstitalAd.destroy();
-        }
         if (mNativeBannerAd != null && mNativeBannerAd.isAdLoaded()) {
             mNativeBannerAd.destroy();
         }
