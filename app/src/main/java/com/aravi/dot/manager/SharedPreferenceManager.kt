@@ -7,7 +7,8 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 
 class SharedPreferenceManager(private val context: Context) {
-    private val sharedPreferences: SharedPreferences
+    private val sharedPreferences: SharedPreferences = context.getSharedPreferences(Constants.SHARED_PREFERENCE_NAME, Constants.ACCESS_MODE)
+
     fun setFirstLaunch() {
         setBoolean(context, "APP.FIRST_LAUNCH", false)
     }
@@ -110,7 +111,4 @@ class SharedPreferenceManager(private val context: Context) {
         }
     }
 
-    init {
-        sharedPreferences = context.getSharedPreferences(Constants.SHARED_PREFERENCE_NAME, Constants.ACCESS_MODE)
-    }
 }

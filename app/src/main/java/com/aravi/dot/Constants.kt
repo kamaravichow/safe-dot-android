@@ -14,8 +14,5 @@ object Constants {
 
     @JvmField
     var NOTIFICATION_ID = 256
-
-    @JvmField
-    var STOP_SERVICE_ACTION = "SERVICE.FOREGROUND.STOP.NOW"
     const val NATIVE_BANNER_PLACEMENT_ID = "244358406678589_244358583345238"
 }

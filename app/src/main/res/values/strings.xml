@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">Dot</string>
 
+    <string name="channel_name" translatable="false">SafeDot</string>
+    <string name="channel_description" translatable="false">You will receive a notification when app uses your camera or microphone</string>
+
+
     <string name="service_description">When this service is enabled it lets Dot safe app to display notifications and indicators every time a third-party app or a service uses camera or microphone on any screen.</string>
     <string name="service_summary">Get notified every time a third-party app uses camera or microphone</string>
     <string name="full_app_name">Safe Dot</string>

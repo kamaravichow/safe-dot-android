@@ -31,6 +31,9 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.aravi.dot.Constants.NATIVE_BANNER_PLACEMENT_ID;
 
 public class MainActivity extends AppCompatActivity {
@@ -39,7 +42,75 @@ public class MainActivity extends AppCompatActivity {
     private SwitchMaterial mainSwitch, vibrateSwitch, analyticsSwitch;
     private SharedPreferenceManager sharedPreferenceManager;
     private Intent serviceIntent;
+    private final SwitchMaterial.OnCheckedChangeListener onCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+            int id = compoundButton.getId();
+            if (id == R.id.mainSwitch) {
+                if (b) {
+                    checkForAccessibilityAndStart();
+                    TRIGGERED_START = true;
+                } else {
+                    stopService();
+                    TRIGGERED_START = false;
+                }
+            } else if (id == R.id.vibrationSwitch) {
+                sharedPreferenceManager.setVibrationEnabled(b);
+
+            } else if (id == R.id.analyticsSwitch) {
+                sharedPreferenceManager.setAnalyticsEnabled(b);
+                showSnack("Changes will be applied on app restart");
+                // fixed: Resource IDs will be non-final in Android Gradle Plugin version 5.0, avoid using them in switch case statements
+                // fix source : http://tools.android.com/tips/non-constant-fields
+            }
+
+        }
+    };
     private NativeBannerAd mNativeBannerAd;
+    private final NativeAdListener listener = new NativeAdListener() {
+        @Override
+        public void onMediaDownloaded(Ad ad) {
+        }
+
+        @Override
+        public void onError(Ad ad, AdError adError) {
+        }
+
+        @Override
+        public void onAdLoaded(Ad ad) {
+            View adView = NativeBannerAdView.render(MainActivity.this, mNativeBannerAd, NativeBannerAdView.Type.HEIGHT_100);
+            LinearLayout nativeBannerAdContainer = findViewById(R.id.native_banner_ad_container);
+            nativeBannerAdContainer.addView(adView);
+
+        }
+
+        @Override
+        public void onAdClicked(Ad ad) {
+
+        }
+
+        @Override
+        public void onLoggingImpression(Ad ad) {
+
+        }
+    };
+
+    public static boolean accessibilityPermission(Context context, Class<?> cls) {
+        ComponentName componentName = new ComponentName(context, cls);
+        String string = Settings.Secure.getString(context.getContentResolver(), "enabled_accessibility_services");
+        if (string == null) {
+            return false;
+        }
+        TextUtils.SimpleStringSplitter simpleStringSplitter = new TextUtils.SimpleStringSplitter(':');
+        simpleStringSplitter.setString(string);
+        while (simpleStringSplitter.hasNext()) {
+            ComponentName unflattenFromString = ComponentName.unflattenFromString(simpleStringSplitter.next());
+            if (unflattenFromString != null && unflattenFromString.equals(componentName)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
         sharedPreferenceManager = SharedPreferenceManager.getInstance(this);
         init();
         initAdvertisements();
-
+        checkAutoStartRequirement();
     }
 
     private void init() {
@@ -110,35 +181,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private final SwitchMaterial.OnCheckedChangeListener onCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
-        @Override
-        public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-            int id = compoundButton.getId();
-            if (id == R.id.mainSwitch) {
-                if (b) {
-                    checkForAccessibilityAndStart();
-                    TRIGGERED_START = true;
-                } else {
-                    stopService();
-                    TRIGGERED_START = false;
-                }
-            } else if (id == R.id.vibrationSwitch) {
-                sharedPreferenceManager.setVibrationEnabled(b);
-
-            } else if (id == R.id.analyticsSwitch) {
-                sharedPreferenceManager.setAnalyticsEnabled(b);
-                showSnack("Changes will be applied on app restart");
-                // fixed: Resource IDs will be non-final in Android Gradle Plugin version 5.0, avoid using them in switch case statements
-                // fix source : http://tools.android.com/tips/non-constant-fields
-            }
-
-        }
-    };
-
     private void checkForAccessibilityAndStart() {
         if (!accessibilityPermission(getApplicationContext(), DotService.class)) {
             mainSwitch.setChecked(false);
-            Utils.showPermissionsDialog(MainActivity.this);
+            startActivity(new Intent("android.settings.ACCESSIBILITY_SETTINGS"));
         } else {
             mainSwitch.setChecked(true);
             sharedPreferenceManager.setServiceEnabled(true);
@@ -151,7 +197,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     private void stopService() {
         if (isAccessibilityServiceRunning()) {
             sharedPreferenceManager.setServiceEnabled(false);
@@ -161,56 +206,9 @@ public class MainActivity extends AppCompatActivity {
         showSnack("Disable the accessibility permission to the app");
     }
 
-    public static boolean accessibilityPermission(Context context, Class<?> cls) {
-        ComponentName componentName = new ComponentName(context, cls);
-        String string = Settings.Secure.getString(context.getContentResolver(), "enabled_accessibility_services");
-        if (string == null) {
-            return false;
-        }
-        TextUtils.SimpleStringSplitter simpleStringSplitter = new TextUtils.SimpleStringSplitter(':');
-        simpleStringSplitter.setString(string);
-        while (simpleStringSplitter.hasNext()) {
-            ComponentName unflattenFromString = ComponentName.unflattenFromString(simpleStringSplitter.next());
-            if (unflattenFromString != null && unflattenFromString.equals(componentName)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-
-    private final NativeAdListener listener = new NativeAdListener() {
-        @Override
-        public void onMediaDownloaded(Ad ad) {
-        }
-
-        @Override
-        public void onError(Ad ad, AdError adError) {
-        }
-
-        @Override
-        public void onAdLoaded(Ad ad) {
-            View adView = NativeBannerAdView.render(MainActivity.this, mNativeBannerAd, NativeBannerAdView.Type.HEIGHT_100);
-            LinearLayout nativeBannerAdContainer = findViewById(R.id.native_banner_ad_container);
-            nativeBannerAdContainer.addView(adView);
-
-        }
-
-        @Override
-        public void onAdClicked(Ad ad) {
-
-        }
-
-        @Override
-        public void onLoggingImpression(Ad ad) {
-
-        }
-    };
-
     @Override
     protected void onResume() {
         super.onResume();
-        Utils.dismissPermissionDialog();
         if (TRIGGERED_START) {
             TRIGGERED_START = false;
             checkForAccessibilityAndStart();
@@ -247,6 +245,23 @@ public class MainActivity extends AppCompatActivity {
 
     private void showSnack(String message) {
         Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG).show();
+    }
+
+    private void checkAutoStartRequirement() {
+        String manufacturer = android.os.Build.MANUFACTURER;
+
+        List<String> customROMs = new ArrayList<>();
+        customROMs.add("xiaomi");
+        customROMs.add("oppo");
+        customROMs.add("vivo");
+        customROMs.add("honor");
+
+        if (customROMs.contains(manufacturer)) {
+            if (sharedPreferenceManager.getBoolean(getApplicationContext(), "DID.ASK.AUTOSTART", false)) {
+                Utils.showAutoStartDialog(MainActivity.this);
+                sharedPreferenceManager.setBoolean(getApplicationContext(), "DID.ASK.AUTOSTART", true);
+            }
+        }
     }
 
     @Override

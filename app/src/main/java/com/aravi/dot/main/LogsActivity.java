@@ -82,11 +82,10 @@ public class LogsActivity extends AppCompatActivity {
     private void setAdapter() {
         Collections.reverse(logList);
         runOnUiThread(() -> {
-            if (logList.isEmpty()){
+            if (logList.isEmpty()) {
                 findViewById(R.id.emptyListImage).setVisibility(View.VISIBLE);
                 findViewById(R.id.clearLogsButton).setVisibility(View.INVISIBLE);
-            }
-            else {
+            } else {
                 findViewById(R.id.emptyListImage).setVisibility(View.GONE);
                 findViewById(R.id.clearLogsButton).setVisibility(View.VISIBLE);
             }

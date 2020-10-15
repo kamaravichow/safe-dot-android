@@ -1,8 +1,6 @@
 package com.aravi.dot.service;
 
 import android.accessibilityservice.AccessibilityService;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
@@ -24,10 +22,10 @@ import android.view.accessibility.AccessibilityEvent;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import com.aravi.dot.BuildConfig;
 import com.aravi.dot.Constants;
 import com.aravi.dot.R;
 import com.aravi.dot.Utils;
@@ -45,7 +43,7 @@ public class DotService extends AccessibilityService {
 
     private boolean isCameraUnavailable = false;
     private boolean isMicUnavailable = false;
-    private boolean isOnUseNotificationEnabled = true;
+    private final boolean isOnUseNotificationEnabled = true;
 
     private boolean didCameraUseStart = false;
     private boolean didMicUseStart = false;
@@ -64,24 +62,19 @@ public class DotService extends AccessibilityService {
 
     private NotificationManagerCompat notificationManager;
     private NotificationCompat.Builder notificationCompatBuilder;
-    private String currentRunningAppPackage = "com.aravi.dot";
+    private String currentRunningAppPackage = BuildConfig.APPLICATION_ID;
 
     @Override
-    protected void onServiceConnected() {
+    public void onCreate() {
+        super.onCreate();
         getDefaults();
-        createHoverOverlay();
-        initDotViews();
-        initHardwareCallbacks();
     }
 
     @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        if (intent.getAction() == Constants.STOP_SERVICE_ACTION) {
-            stopForegroundService(startId);
-        } else {
-            return START_STICKY;
-        }
-        return super.onStartCommand(intent, flags, startId);
+    protected void onServiceConnected() {
+        createHoverOverlay();
+        initDotViews();
+        initHardwareCallbacks();
     }
 
     private void getDefaults() {
@@ -106,7 +99,6 @@ public class DotService extends AccessibilityService {
                 dismissOnUseNotification();
                 hideCamDot();
                 makeLog();
-                Log.i(TAG, "onCameraAvailable: " + cameraId);
             }
 
             @Override
@@ -118,17 +110,6 @@ public class DotService extends AccessibilityService {
                 showCamDot();
                 triggerVibration();
                 makeLog();
-                Log.i(TAG, "onCameraUnavailable: " + cameraId);
-            }
-
-            @Override
-            public void onPhysicalCameraAvailable(@NonNull String cameraId, @NonNull String physicalCameraId) {
-                super.onPhysicalCameraAvailable(cameraId, physicalCameraId);
-            }
-
-            @Override
-            public void onPhysicalCameraUnavailable(@NonNull String cameraId, @NonNull String physicalCameraId) {
-                super.onPhysicalCameraUnavailable(cameraId, physicalCameraId);
             }
         };
         return cameraCallback;
@@ -151,13 +132,13 @@ public class DotService extends AccessibilityService {
                 }
                 didMicUseStart = true;
                 makeLog();
+
             }
         };
         return micCallback;
     }
 
     private void initOnUseNotification() {
-        createNotificationChannels();
         notificationCompatBuilder = new NotificationCompat.Builder(getApplicationContext(), Constants.DEFAULT_NOTIFICATION_CHANNEL)
                 .setSmallIcon(R.drawable.transparent)
                 .setContentTitle(getNotificationTitle())
@@ -211,21 +192,9 @@ public class DotService extends AccessibilityService {
     }
 
 
-    private void createNotificationChannels() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel defaultChannel = new NotificationChannel(Constants.DEFAULT_NOTIFICATION_CHANNEL, "SafeDot", NotificationManager.IMPORTANCE_LOW);
-            defaultChannel.setDescription("You'll receive a notification when app uses your camera or microphone");
-            defaultChannel.setLightColor(Color.BLUE);
-            NotificationManager manager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
-            manager.createNotificationChannel(defaultChannel);
-
-        }
-    }
-
     private void makeLog() {
         int cameraState = 0;
         int micState = 0;
-
 
         if (didCameraUseStart && isCameraUnavailable) {
             cameraState = 1;
@@ -372,11 +341,6 @@ public class DotService extends AccessibilityService {
         }
     }
 
-
-    public void stopForegroundService(int startId) {
-        stopForeground(true);
-        stopSelfResult(startId);
-    }
 
     @Override
     public void onDestroy() {

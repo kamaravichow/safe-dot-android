@@ -1,15 +1,16 @@
 package com.aravi.dot;
 
-import android.app.Dialog;
+import android.app.AlertDialog;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.os.AsyncTask;
 
 import com.aravi.dot.model.Log;
-import com.aravi.dot.service.DotService;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -20,32 +21,42 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import static com.aravi.dot.main.MainActivity.accessibilityPermission;
-
 public class Utils {
 
+    public static void showAutoStartDialog(Context context) {
+        AlertDialog alertDialog = new AlertDialog.Builder(context)
+                .setTitle("Enable AutoStart")
+                .setMessage("You're required to provide the auto start permission to the app to keep app running as expected. ")
+                .setPositiveButton("Setup Now", (dialog, which) -> {
+                    openAutoStartAccordingToManufacturer(context);
+                })
+                .setCancelable(true)
+                .show();
+    }
 
-    public static Dialog permissionsDialog;
-
-    public static void showPermissionsDialog(Context context) {
-        permissionsDialog = new Dialog(context, android.R.style.Theme_Material_Light_NoActionBar_TranslucentDecor);
-        permissionsDialog.setContentView(R.layout.dialog_permissions);
-        permissionsDialog.setCancelable(false);
-        permissionsDialog.show();
-        permissionsDialog.findViewById(R.id.permissions).setOnClickListener(view -> {
-            if (!accessibilityPermission(context, DotService.class)) {
-                context.startActivity(new Intent("android.settings.ACCESSIBILITY_SETTINGS"));
+    private static void openAutoStartAccordingToManufacturer(Context context) {
+        try {
+            Intent intent = new Intent();
+            String manufacturer = android.os.Build.MANUFACTURER;
+            if ("xiaomi".equalsIgnoreCase(manufacturer)) {
+                intent.setComponent(new ComponentName("com.miui.securitycenter", "com.miui.permcenter.autostart.AutoStartManagementActivity"));
+            } else if ("oppo".equalsIgnoreCase(manufacturer)) {
+                intent.setComponent(new ComponentName("com.coloros.safecenter", "com.coloros.safecenter.permission.startup.StartupAppListActivity"));
+            } else if ("vivo".equalsIgnoreCase(manufacturer)) {
+                intent.setComponent(new ComponentName("com.vivo.permissionmanager", "com.vivo.permissionmanager.activity.BgStartUpManagerActivity"));
+            } else if ("Honor".equalsIgnoreCase(manufacturer)) {
+                intent.setComponent(new ComponentName("com.huawei.systemmanager", "com.huawei.systemmanager.optimize.process.ProtectActivity"));
             }
-        });
-    }
 
-    public static void dismissPermissionDialog() {
-        if (permissionsDialog != null && permissionsDialog.isShowing()) {
-            permissionsDialog.setCancelable(true);
-            permissionsDialog.dismiss();
+            List<ResolveInfo> list = context.getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+            if (list.size() > 0) {
+                context.startActivity(intent);
+            }
+        } catch (Exception e) {
+            android.util.Log.i("UTILS", "openAutoStartAccordingToManufacturer: " + e.getMessage());
         }
-
     }
+
 
     public static String getNameFromPackageName(Context context, String packageName) {
         final PackageManager packageManager = context.getPackageManager();
