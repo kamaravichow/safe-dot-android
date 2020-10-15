@@ -249,17 +249,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void checkAutoStartRequirement() {
         String manufacturer = android.os.Build.MANUFACTURER;
-
-        List<String> customROMs = new ArrayList<>();
-        customROMs.add("xiaomi");
-        customROMs.add("oppo");
-        customROMs.add("vivo");
-        customROMs.add("honor");
-
-        if (customROMs.contains(manufacturer)) {
-            if (sharedPreferenceManager.getBoolean(getApplicationContext(), "DID.ASK.AUTOSTART", false)) {
+        if (sharedPreferenceManager.isFirstLaunch()){
+            if ("xiaomi".equalsIgnoreCase(manufacturer)
+                    || ("oppo".equalsIgnoreCase(manufacturer))
+                    || ("vivo".equalsIgnoreCase(manufacturer))
+                    || ("Honor".equalsIgnoreCase(manufacturer))) {
                 Utils.showAutoStartDialog(MainActivity.this);
-                sharedPreferenceManager.setBoolean(getApplicationContext(), "DID.ASK.AUTOSTART", true);
+                sharedPreferenceManager.setFirstLaunch();
             }
         }
     }

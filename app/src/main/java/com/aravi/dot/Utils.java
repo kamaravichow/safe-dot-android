@@ -1,6 +1,5 @@
 package com.aravi.dot;
 
-import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -10,7 +9,9 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.AsyncTask;
 
+import com.aravi.dot.manager.SharedPreferenceManager;
 import com.aravi.dot.model.Log;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -24,7 +25,7 @@ import java.util.List;
 public class Utils {
 
     public static void showAutoStartDialog(Context context) {
-        AlertDialog alertDialog = new AlertDialog.Builder(context)
+        new MaterialAlertDialogBuilder(context)
                 .setTitle("Enable AutoStart")
                 .setMessage("You're required to provide the auto start permission to the app to keep app running as expected. ")
                 .setPositiveButton("Setup Now", (dialog, which) -> {
