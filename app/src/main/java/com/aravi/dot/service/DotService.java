@@ -138,11 +138,11 @@ public class DotService extends AccessibilityService {
         return micCallback;
     }
 
-    private void initOnUseNotification() {
+    private void initOnUseNotification(String appUsingComponent) {
         notificationCompatBuilder = new NotificationCompat.Builder(getApplicationContext(), Constants.DEFAULT_NOTIFICATION_CHANNEL)
                 .setSmallIcon(R.drawable.transparent)
                 .setContentTitle(getNotificationTitle())
-                .setContentText(getNotificationDescription())
+                .setContentText(getNotificationDescription(appUsingComponent))
                 .setContentIntent(getPendingIntent())
                 .setOngoing(true)
                 .setPriority(NotificationCompat.PRIORITY_HIGH);
@@ -160,19 +160,23 @@ public class DotService extends AccessibilityService {
         return "Your Camera or Mic is ON";
     }
 
-    private String getNotificationDescription() {
+    private String getNotificationDescription(String appUsingComponent) {
+        if (appUsingComponent.isEmpty() || appUsingComponent.equals("(unknown)")) {
+            appUsingComponent = "some app";
+        }
+
         if (isCameraUnavailable && isMicUnavailable)
-            return "Hey, Some app is watching and hearing you";
+            return "Hey, " + appUsingComponent + " is watching and hearing you";
         if (isCameraUnavailable && !isMicUnavailable)
-            return "You're being watched !";
+            return "You're being watched by " + appUsingComponent + "!";
         if (!isCameraUnavailable && isMicUnavailable)
-            return "Some app is hearing you !";
-        return "Looks like some app is using your camera and mic...";
+            return Utils.capitalizeFirstLetterOfString(appUsingComponent) + " is hearing you !";
+        return "Looks like " + appUsingComponent + " is using your camera and mic...";
     }
 
     private void showOnUseNotification() {
         if (isOnUseNotificationEnabled) {
-            initOnUseNotification();
+            initOnUseNotification(Utils.getNameFromPackageName(this, currentRunningAppPackage));
             if (notificationManager != null)
                 notificationManager.notify(NOTIFICATION_ID, notificationCompatBuilder.build());
         }

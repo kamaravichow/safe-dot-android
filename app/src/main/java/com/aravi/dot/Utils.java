@@ -24,6 +24,11 @@ import java.util.List;
 
 public class Utils {
 
+    public static String capitalizeFirstLetterOfString(String input) {
+        if (input.isEmpty()) return "";
+        return input.substring(0, 1).toUpperCase() + input.substring(1);
+    }
+
     public static void showAutoStartDialog(Context context) {
         new MaterialAlertDialogBuilder(context)
                 .setTitle("Enable AutoStart")
