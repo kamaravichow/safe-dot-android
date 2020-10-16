@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@android:color/white"
+    android:orientation="vertical"
     tools:context=".main.LogsActivity">
 
     <ProgressBar
@@ -25,16 +25,16 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        app:title="Access Log"
+        app:title="@string/access_log_title"
         app:titleTextAppearance="@style/ToolbarTitleAppearance" />
 
     <ImageView
         android:id="@+id/emptyListImage"
         android:layout_width="200dp"
         android:layout_height="200dp"
+        android:layout_centerInParent="true"
         android:src="@drawable/empty_v"
-        android:visibility="gone"
-        android:layout_centerInParent="true"/>
+        android:visibility="gone" />
 
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
@@ -45,7 +45,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_margin="16dp"
-        android:text="Clear Logs"
+        android:text="@string/clear_logs"
         android:textColor="@android:color/white"
         app:icon="@drawable/ic_round_clear_24"
         app:iconTint="@android:color/white" />

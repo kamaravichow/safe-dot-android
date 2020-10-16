@@ -51,7 +51,7 @@ class SharedPreferenceManager(private val context: Context) {
             setBoolean(context, "VIBRATION.STATE", value)
         }
     var position: Int
-        get() = getInteger(context, "DOT.POSITION", 0)
+        get() = getInteger(context, "DOT.POSITION", 1)
         set(value) {
             setInteger(context, "DOT.POSITION", value)
         }

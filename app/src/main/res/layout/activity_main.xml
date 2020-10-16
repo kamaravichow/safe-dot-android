@@ -4,76 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="false"
     android:background="@android:color/white"
+    android:fitsSystemWindows="false"
     tools:context=".main.MainActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        android:fitsSystemWindows="true"
-        app:elevation="0dp">
-
-        <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:titleEnabled="false"
-            app:layout_scrollFlags="scroll|snap|exitUntilCollapsed">
-
-            <com.google.android.material.appbar.MaterialToolbar
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:gravity="start"
-                app:layout_collapseMode="pin">
-
-                <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:src="@drawable/transparent"
-                    android:scaleType="fitCenter"/>
-            </com.google.android.material.appbar.MaterialToolbar>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_collapseMode="parallax"
-                app:layout_collapseParallaxMultiplier="0.7"
-                android:padding="10dp"
-                android:layout_marginStart="10dp"
-                android:orientation="vertical"
-                android:layout_marginTop="?attr/actionBarSize">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/full_app_name"
-                    android:textSize="@dimen/title_heading_size"
-                    android:layout_marginTop="5dp"
-                    android:textAllCaps="true"
-                    android:textColor="@android:color/black"
-                    android:fontFamily="@font/product_sans_bold"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/app_tagline"
-                    android:textAllCaps="true"
-                    android:textStyle="bold"
-                    android:textSize="@dimen/sub_head_size"
-                    android:fontFamily="@font/product_sans_regular"/>
-
-            </LinearLayout>
-
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
-
-    </com.google.android.material.appbar.AppBarLayout>
+    <include
+        android:id="@+id/appbarLayout"
+        layout="@layout/appbar" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scrollbars="none"
         android:fitsSystemWindows="true"
+        android:scrollbars="none"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <LinearLayout
@@ -86,29 +29,29 @@
                 android:id="@+id/mainSwitch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/turn_on_string"
-                android:fontFamily="@font/product_sans_bold"/>
+                android:fontFamily="@font/product_sans_bold"
+                android:text="@string/turn_on_string" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/grey_100"
-                android:layout_margin="10dp"/>
+                android:layout_margin="10dp"
+                android:background="@color/grey_100" />
 
             <LinearLayout
                 android:id="@+id/native_banner_ad_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="60dp"
-                android:visibility="visible"
-                android:orientation="vertical"/>
+                android:orientation="vertical"
+                android:visibility="visible" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:visibility="visible"
+                android:layout_margin="10dp"
                 android:background="@color/grey_100"
-                android:layout_margin="10dp"/>
+                android:visibility="visible" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -124,27 +67,27 @@
                 android:id="@+id/vibrationSwitch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/vibrate_string"
                 android:layout_marginTop="10dp"
-                android:fontFamily="@font/product_sans_bold"/>
+                android:fontFamily="@font/product_sans_bold"
+                android:text="@string/vibrate_string" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/vibrate_description"
+                android:layout_marginStart="10dp"
                 android:fontFamily="@font/product_sans_regular"
-                android:layout_marginStart="10dp"/>
+                android:text="@string/vibrate_description" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/product_sans_regular"
                 android:text="@string/dot_alignment_string"
                 android:textAllCaps="true"
-                android:textStyle="bold"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/minor_heading_size"
-                android:layout_marginTop="20dp"
-                android:fontFamily="@font/product_sans_regular"/>
+                android:textStyle="bold" />
 
             <RadioGroup
                 android:id="@+id/align"
@@ -158,67 +101,67 @@
                     android:id="@+id/topRight"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/top_right_corner"
                     android:checked="true"
-                    android:fontFamily="@font/product_sans_bold"/>
+                    android:fontFamily="@font/product_sans_bold"
+                    android:text="@string/top_right_corner" />
 
                 <RadioButton
                     android:id="@+id/topLeft"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/top_left_corner"
-                    android:fontFamily="@font/product_sans_bold"/>
+                    android:fontFamily="@font/product_sans_bold"
+                    android:text="@string/top_left_corner" />
 
             </RadioGroup>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/dot_alignment_description"
+                android:layout_marginStart="10dp"
                 android:fontFamily="@font/product_sans_regular"
-                android:layout_marginStart="10dp"/>
+                android:text="@string/dot_alignment_description" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/grey_100"
-                android:layout_margin="10dp"/>
+                android:layout_margin="10dp"
+                android:background="@color/grey_100" />
 
             <LinearLayout
                 android:id="@+id/logsClickable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:background="?attr/selectableItemBackground"
                 android:clickable="true"
+                android:orientation="vertical"
                 android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:background="?attr/selectableItemBackground">
+                android:paddingBottom="10dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Access Logs"
+                    android:fontFamily="@font/product_sans_regular"
+                    android:text="@string/access_logs_title"
                     android:textAllCaps="true"
-                    android:textStyle="bold"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/minor_heading_size"
-                    android:fontFamily="@font/product_sans_regular"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
                     android:layout_marginTop="5dp"
-                    android:text="Timeline of app usage logs. You can find which app used your camera and mic at what intervals."
                     android:fontFamily="@font/product_sans_regular"
-                    android:layout_marginStart="10dp"/>
+                    android:text="@string/access_log_description" />
 
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/grey_100"
-                android:layout_margin="10dp"/>
+                android:layout_margin="10dp"
+                android:background="@color/grey_100" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -231,13 +174,12 @@
                 android:textStyle="bold" />
 
 
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/product_sans_regular"
-                android:text="Why Premium ?"
+                android:text="@string/why_premium"
                 android:textAllCaps="true"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/minor_heading_size"
@@ -246,84 +188,84 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="No advertisments &amp; analytics"
-                android:textSize="16sp"
-                android:drawablePadding="10dp"
-                android:gravity="center"
-                app:drawableStartCompat="@drawable/ic_analytics"
-                android:fontFamily="@font/product_sans_regular"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginStart="10dp"/>
+                android:drawablePadding="10dp"
+                android:fontFamily="@font/product_sans_regular"
+                android:gravity="center"
+                android:text="@string/premium_reason_1"
+                android:textSize="16sp"
+                app:drawableStartCompat="@drawable/ic_analytics" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="No internet permission "
-                android:textSize="16sp"
-                android:drawablePadding="10dp"
-                android:gravity="center"
-                app:drawableStartCompat="@drawable/ic_internet"
-                android:fontFamily="@font/product_sans_regular"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginStart="10dp"/>
+                android:drawablePadding="10dp"
+                android:fontFamily="@font/product_sans_regular"
+                android:gravity="center"
+                android:text="@string/premium_reason_2"
+                android:textSize="16sp"
+                app:drawableStartCompat="@drawable/ic_internet" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Better battery optimisation &amp; Stable updates"
-                android:textSize="16sp"
-                android:drawablePadding="10dp"
-                android:gravity="center"
-                app:drawableStartCompat="@drawable/ic_baseline_battery_charging_full_24"
-                android:fontFamily="@font/product_sans_regular"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginStart="10dp"/>
+                android:drawablePadding="10dp"
+                android:fontFamily="@font/product_sans_regular"
+                android:gravity="center"
+                android:text="@string/premium_reason_3"
+                android:textSize="16sp"
+                app:drawableStartCompat="@drawable/ic_baseline_battery_charging_full_24" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Support development"
-                android:textSize="16sp"
-                android:drawablePadding="10dp"
-                android:gravity="center"
-                app:drawableStartCompat="@drawable/ic_attach_money"
-                android:fontFamily="@font/product_sans_regular"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginStart="10dp"/>
+                android:drawablePadding="10dp"
+                android:fontFamily="@font/product_sans_regular"
+                android:gravity="center"
+                android:text="@string/premium_reason_4"
+                android:textSize="16sp"
+                app:drawableStartCompat="@drawable/ic_attach_money" />
 
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/premiumVersion"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/get_premium_version"
                 android:layout_margin="10dp"
-                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"/>
+                android:text="@string/get_premium_version" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/grey_100"
-                android:layout_margin="10dp"/>
+                android:layout_margin="10dp"
+                android:background="@color/grey_100" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Mind telling me your experience ?"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/product_sans_regular"
+                android:text="@string/feedback_title"
                 android:textAllCaps="true"
-                android:textStyle="bold"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/minor_heading_size"
-                android:layout_marginTop="20dp"
-                android:fontFamily="@font/product_sans_regular"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Building an app like this takes a lot of time and effort. My humble request is that if you encounter a bug please report it through feedback email, we'll fix it ASAP instead of droping a negative review which make me sad."
-                android:fontFamily="@font/product_sans_regular"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginStart="10dp"/>
+                android:fontFamily="@font/product_sans_regular"
+                android:text="@string/feedback_description" />
 
 
             <LinearLayout
@@ -334,21 +276,21 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/submitFeedback"
+                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/send_feedback"
-                    android:layout_weight="1"
                     android:layout_margin="10dp"
-                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"/>
+                    android:layout_weight="1"
+                    android:text="@string/send_feedback" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/rateApp"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/drop_rating"
-                    android:layout_weight="1"
                     android:layout_margin="10dp"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"/>
+                    android:layout_weight="1"
+                    android:text="@string/drop_rating" />
 
 
             </LinearLayout>
@@ -357,72 +299,72 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/grey_100"
-                android:layout_margin="10dp"/>
+                android:layout_margin="10dp"
+                android:background="@color/grey_100" />
 
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/analyticsSwitch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/analytics_string"
                 android:layout_marginTop="10dp"
-                android:fontFamily="@font/product_sans_bold"/>
+                android:fontFamily="@font/product_sans_bold"
+                android:text="@string/analytics_string" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/analytics_description"
+                android:layout_marginStart="10dp"
                 android:fontFamily="@font/product_sans_regular"
-                android:layout_marginStart="10dp"/>
+                android:text="@string/analytics_description" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/grey_100"
-                android:layout_margin="10dp"/>
+                android:layout_margin="10dp"
+                android:background="@color/grey_100" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center">
+                android:gravity="center"
+                android:orientation="horizontal">
 
                 <ImageButton
                     android:id="@+id/github_button"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:src="@drawable/ic_github"
-                    android:background="@android:color/transparent"/>
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/ic_github" />
 
                 <ImageButton
                     android:id="@+id/twitter_button"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
+                    android:background="@android:color/transparent"
                     android:padding="10dp"
-                    android:src="@drawable/ic_twitter"
-                    android:background="@android:color/transparent"/>
+                    android:src="@drawable/ic_twitter" />
 
             </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAllCaps="true"
-                android:textSize="@dimen/footer_text_size"
                 android:layout_gravity="center"
                 android:fontFamily="@font/product_sans_bold"
-                android:text="@string/creator_attribution"/>
+                android:text="@string/creator_attribution"
+                android:textAllCaps="true"
+                android:textSize="@dimen/footer_text_size" />
 
             <TextView
                 android:id="@+id/versionText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textAllCaps="true"
-                android:textSize="@dimen/footer_text_size"
+                android:layout_marginBottom="50dp"
                 android:fontFamily="@font/product_sans_regular"
                 android:text="@string/default_version_text"
-                android:layout_marginBottom="50dp"/>
+                android:textAllCaps="true"
+                android:textSize="@dimen/footer_text_size" />
 
         </LinearLayout>
 
