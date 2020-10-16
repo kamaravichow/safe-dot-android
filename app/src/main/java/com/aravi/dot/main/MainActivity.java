@@ -3,6 +3,7 @@ package com.aravi.dot.main;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -30,18 +31,23 @@ import com.facebook.ads.NativeBannerAdView;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.switchmaterial.SwitchMaterial;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.google.android.play.core.appupdate.AppUpdateInfo;
+import com.google.android.play.core.appupdate.AppUpdateManager;
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
+import com.google.android.play.core.install.model.AppUpdateType;
+import com.google.android.play.core.install.model.UpdateAvailability;
+import com.google.android.play.core.tasks.Task;
 
 import static com.aravi.dot.Constants.NATIVE_BANNER_PLACEMENT_ID;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final int MY_REQUEST_CODE = 1802;
     private boolean TRIGGERED_START = false;
     private SwitchMaterial mainSwitch, vibrateSwitch, analyticsSwitch;
     private SharedPreferenceManager sharedPreferenceManager;
     private Intent serviceIntent;
+    private AppUpdateManager appUpdateManager;
     private final SwitchMaterial.OnCheckedChangeListener onCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -118,6 +124,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         sharedPreferenceManager = SharedPreferenceManager.getInstance(this);
         init();
+        checkForAppUpdates();
         initAdvertisements();
         checkAutoStartRequirement();
     }
@@ -203,7 +210,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
             startActivity(intent);
         }
-        showSnack("Disable the accessibility permission to the app");
+        showSnack(getString(R.string.close_app_note));
     }
 
     @Override
@@ -218,11 +225,39 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
+    private void checkForAppUpdates() {
+        appUpdateManager = AppUpdateManagerFactory.create(MainActivity.this);
+        Task<AppUpdateInfo> appUpdateInfoTask = appUpdateManager.getAppUpdateInfo();
+        appUpdateInfoTask.addOnSuccessListener(appUpdateInfo -> {
+            if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)) {
+                try {
+                    appUpdateManager.startUpdateFlowForResult(appUpdateInfo, AppUpdateType.IMMEDIATE, this, MY_REQUEST_CODE);
+                } catch (IntentSender.SendIntentException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == MY_REQUEST_CODE) {
+            if (resultCode != RESULT_OK) {
+                showSnack(getString(R.string.update_failed_note));
+                checkForAppUpdates();
+            }
+        }
+    }
+
+
     private void sendFeedbackEmail() {
-        Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", "kamaravichow@gmail.com", null));
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Feedback for SafeDot");
-        emailIntent.putExtra(Intent.EXTRA_TEXT, "Device Information : \n----- Don't clear these ----\n "
-                + Build.DEVICE + " ,\n " + Build.BOARD + " ,\n " + Build.BRAND + " , " + Build.MANUFACTURER + " ,\n " + Build.MODEL + "\n ------ ");
+        Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", getString(R.string.feedback_email_address), null));
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.feedback_subject));
+        emailIntent.putExtra(Intent.EXTRA_TEXT, "Device Information : \n----- Don't clear these ----\n " + Build.DEVICE + " ,\n " + Build.BOARD + " ,\n " + Build.BRAND + " , " + Build.MANUFACTURER + " ,\n " + Build.MODEL + "\n ------ ");
         startActivity(Intent.createChooser(emailIntent, "Send feedback..."));
     }
 
@@ -249,7 +284,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void checkAutoStartRequirement() {
         String manufacturer = android.os.Build.MANUFACTURER;
-        if (sharedPreferenceManager.isFirstLaunch()){
+        if (sharedPreferenceManager.isFirstLaunch()) {
             if ("xiaomi".equalsIgnoreCase(manufacturer)
                     || ("oppo".equalsIgnoreCase(manufacturer))
                     || ("vivo".equalsIgnoreCase(manufacturer))
