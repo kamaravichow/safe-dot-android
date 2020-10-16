@@ -10,7 +10,7 @@ android {
 
     def versionMajor = 1
     def versionMinor = 1
-    def versionPatch = 4
+    def versionPatch = 5
 
     defaultConfig {
         applicationId "com.aravi.dot"
