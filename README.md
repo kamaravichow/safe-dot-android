@@ -7,9 +7,11 @@ An app that 🔔 alerts you when a third-party application uses your device came
 |---|---|---|
 
 ## Download Now
-App is currently available for Production & Open Beta Testing on Google Play Store. Use the below link to get redirected to the app page.
+App is currently available for Production & Open Beta Testing on Google Play Store & Samsung's Galaxy Store. Use the below links to get redirected to the app page.
 
 [<img src="https://github.com/kamaravichow/safe-dot-android/raw/master/docs/google-play-badge.png" width="200">](https://play.google.com/store/apps/details?id=com.aravi.dot)
+[<img src="https://github.com/kamaravichow/safe-dot-android/raw/master/docs/galaxy-store-badge.png" width="200">](https://galaxy.store/dotsafe)
+
 
 ## Libraries Used
 Firebase Crashylitics & Analytics [View Source](https://github.com/firebase/firebase-android-sdk/tree/master/firebase-crashlytics)
