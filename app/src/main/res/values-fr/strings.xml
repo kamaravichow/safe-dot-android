@@ -1,0 +1,62 @@
+<resources>
+    <string name="app_name">Dot</string>
+
+    <string name="channel_name">SafeDot</string>
+    <string name="channel_description">Vous recevrez une notification lorsqu\'une application utilise votre caméra ou votre microphone en silence</string>
+
+    <string name="service_description">Lorsque ce service est activé, il permet à l\'application SafeDot d\'afficher des notifications et des indicateurs chaque fois qu\'une application ou un service tiers utilise une caméra ou un microphone sur n\'importe quel écran.</string>
+    <string name="service_summary">Recevez une notification chaque fois qu\'une application tierce utilise silencieusement une caméra ou un microphone</string>
+
+    <string name="full_app_name">Safe Dot</string>
+    <string name="app_tagline">Mettez votre vie privée sur le dessus</string>
+
+    <string name="turn_on_string">ACTIVER LE SAFE DOT</string>
+    <string name="close_app_note">Désactivez l\'autorisation d\'accessibilité de l\'application</string>
+
+    <string name="preferences">Préférences</string>
+
+    <string name="vibrate_string">VIBRER À LA DÉTECTION</string>
+    <string name="vibrate_description">Vous obtiendrez une courte vibration chaque fois qu\'une application ou un service utilise un microphone ou une caméra</string>
+
+    <string name="dot_alignment_string">ALIGNEMENT DOT</string>
+    <string name="top_right_corner">LE COIN SUPÉRIEUR DROIT</string>
+    <string name="top_left_corner">COIN SUPÉRIEUR GAUCHE</string>
+    <string name="dot_alignment_description">Alignez les points comme vous le souhaitez et vous êtes à l\'aise avec</string>
+
+    <string name="more_string">PLUS DE RÉGLAGES</string>
+
+    <string name="send_feedback">Envoyer des commentaires</string>
+    <string name="drop_rating">Évaluer sur Playstore</string>
+
+    <string name="get_premium_version">Obtenez la version Premium</string>
+
+    <string name="default_version_text">Version - 1.0</string>
+    <string name="clear_dialog_title">Êtes-vous sûr ?</string>
+    <string name="clear_dialog_description">Cela effacera tous les journaux qui ne peuvent pas être récupérés.</string>
+    <string name="clear_dialog_yes">Oui</string>
+    <string name="clear_dialog_no">Non, ne pas effacer</string>
+
+    <string name="why_premium">Pourquoi devriez-vous acheter une application Premium?</string>
+    <string name="premium_reason_1">Pas de publicités ennuyeuses</string>
+    <string name="premium_reason_2">Pas de connexion Internet</string>
+    <string name="premium_reason_3">Meilleure optimisation de la batterie et mises à jour stables</string>
+    <string name="premium_reason_4">Développement de support</string>
+
+    <string name="feedback_title">Mind telling me your experience ?</string>
+    <string name="feedback_description">Créer une application comme celle-ci demande beaucoup de temps et d\'efforts. Mon humble demande est que si vous rencontrez un bug, veuillez le signaler par e-mail de commentaires, nous le corrigerons dès que possible au lieu de laisser tomber un avis négatif qui me rend triste.</string>
+    <string name="feedback_subject">Commentaires pour SafeDot</string>
+
+    <string name="analytics_string">ENVOYER DES DONNÉES ANALYTIQUES</string>
+    <string name="analytics_description">L\'application enverra des détails non personnels sur l\'utilisation de votre application pour nous aider à rendre cette application encore plus productive. Cela nous aide également à comprendre les bogues avant que davantage de personnes ne les rencontrent.</string>
+
+    <string name="creator_attribution">Conçu pour vous par Aravind Chowdary</string>
+
+    <string name="access_logs_title">Journaux d\'accès</string>
+    <string name="access_log_description">Chronologie des journaux d\'utilisation des applications. Vous pouvez trouver quelle application a utilisé votre caméra et votre micro à quels intervalles.</string>
+
+    <string name="update_failed_note">Mise à jour a échoué ! Nouvelle tentative ...</string>
+
+    <string name="access_log_title">Journal d\'accès</string>
+    <string name="clear_logs">Effacer les journaux</string>
+
+</resources>

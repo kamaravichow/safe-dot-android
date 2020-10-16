@@ -1,0 +1,62 @@
+<resources>
+    <string name="app_name">Dot</string>
+
+    <string name="channel_name">SafeDot</string>
+    <string name="channel_description">You will receive a notification when app uses your camera or microphone</string>
+
+    <string name="service_description">When this service is enabled it lets Dot safe app to display notifications and indicators every time a third-party app or a service uses camera or microphone on any screen.</string>
+    <string name="service_summary">Get notified every time a third-party app uses camera or microphone</string>
+
+    <string name="full_app_name">Safe Dot</string>
+    <string name="app_tagline">Puts Your privacy on the Top</string>
+
+    <string name="turn_on_string">TURN SAFE DOT ON</string>
+    <string name="close_app_note">Disable the accessibility permission to the app</string>
+
+    <string name="preferences">Preferences</string>
+
+    <string name="vibrate_string">VIBRATE ON USE</string>
+    <string name="vibrate_description">You will get a short vibration whenever an application or a service uses microphone or camera</string>
+
+    <string name="dot_alignment_string">DOT ALIGNMENT</string>
+    <string name="top_right_corner">TOP RIGHT CORNER</string>
+    <string name="top_left_corner">TOP LEFT CORNER</string>
+    <string name="dot_alignment_description">Align the dots in the way you want and you are comfortable with</string>
+
+    <string name="more_string">MORE</string>
+
+    <string name="send_feedback">Send Feedback</string>
+    <string name="drop_rating">Drop Rating :)</string>
+
+    <string name="get_premium_version">Get Premium Version</string>
+
+    <string name="default_version_text">Version - 1.0</string>
+    <string name="clear_dialog_title">Are you sure ?</string>
+    <string name="clear_dialog_description">This will clear all the logs which cannot be recovered back.\nStill want to proceed ?</string>
+    <string name="clear_dialog_yes">Yes, Clear it</string>
+    <string name="clear_dialog_no">No, Not now</string>
+
+    <string name="why_premium">Why Premium ?</string>
+    <string name="premium_reason_1">No advertisements &amp; analytics</string>
+    <string name="premium_reason_2">No internet permission</string>
+    <string name="premium_reason_3">Better battery optimisation &amp; Stable updates</string>
+    <string name="premium_reason_4">Support development</string>
+
+    <string name="feedback_title">Mind telling me your experience ?</string>
+    <string name="feedback_description">Building an app like this takes a lot of time and effort. My humble request is that if you encounter a bug please report it through feedback email, we\'ll fix it ASAP instead of droping a negative review which make me sad.</string>
+    <string name="feedback_subject">Feedback for SafeDot</string>
+
+    <string name="analytics_string">SEND ANALYTICS DATA</string>
+    <string name="analytics_description">The app will send non-personal detail about your app usage to help us make this app even more productive overtime. This also helps us understand bugs before more people experience them.</string>
+
+    <string name="creator_attribution">Made for you by Aravind Chowdary</string>
+
+    <string name="access_logs_title">Access Logs</string>
+    <string name="access_log_description">Timeline of app usage logs. You can find which app used your camera and mic at what intervals.</string>
+
+    <string name="update_failed_note">Update Failed ! Retrying...</string>
+
+    <string name="access_log_title">Access Log</string>
+    <string name="clear_logs">Clear Logs</string>
+
+</resources>
