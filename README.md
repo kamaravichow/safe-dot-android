@@ -1,4 +1,6 @@
 # SafeDot
+![Android CI](https://github.com/kamaravichow/safe-dot-android/workflows/Android%20CI/badge.svg)
+
 An app that 🔔 alerts you when a third-party application uses your device camera or microphone.
 [READ MORE](https://medium.com/@kamaravichow/youre-being-watched-5ab439fe42ef)
 
