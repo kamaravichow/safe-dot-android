@@ -59,7 +59,6 @@
                 android:layout_marginTop="5dp"
                 android:fontFamily="@font/product_sans_bold"
                 android:text="@string/full_app_name"
-                android:textAllCaps="true"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/title_heading_size" />
 
@@ -68,7 +67,6 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/product_sans_regular"
                 android:text="@string/app_tagline"
-                android:textAllCaps="true"
                 android:textSize="@dimen/sub_head_size"
                 android:textStyle="bold" />
 

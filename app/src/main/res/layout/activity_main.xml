@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) 2020.  Aravind Chowdary (@kamaravichow)
   ~
   ~ This program is free software: you can redistribute it and/or modify
@@ -40,103 +39,225 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="10dp">
+            android:padding="20dp">
 
-            <com.google.android.material.switchmaterial.SwitchMaterial
-                android:id="@+id/mainSwitch"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/product_sans_bold"
-                android:text="@string/turn_on_string" />
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:padding="5dp"
+                        android:src="@drawable/transparent" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="Safe Dots"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/mainSwitch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/grey_100"
+                    android:visibility="visible" />
+
+            </RelativeLayout>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/product_sans_regular"
+                android:text="Preferences"
+                android:textSize="@dimen/sub_head_size"
+                android:textStyle="bold" />
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/vibrationSwitch"
+                    android:gravity="center_vertical"
+                    android:padding="5dp">
+
+                    <ImageView
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:padding="5dp"
+                        android:src="@drawable/ic_round_vibration_24"
+                        app:tint="@color/orange_300" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:text="Enable Vibration"
+                            android:textColor="@android:color/black"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="5dp"
+                            android:text="@string/vibrate_description"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/vibrationSwitch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp" />
+
+
+            </RelativeLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_margin="10dp"
-                android:background="@color/grey_100" />
-
-            <LinearLayout
-                android:id="@+id/native_banner_ad_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="60dp"
-                android:orientation="vertical"
-                android:visibility="visible" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_margin="10dp"
                 android:background="@color/grey_100"
                 android:visibility="visible" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:fontFamily="@font/product_sans_regular"
-                android:text="@string/preferences"
-                android:textAllCaps="true"
-                android:textSize="@dimen/sub_head_size"
-                android:textStyle="bold" />
 
-            <com.google.android.material.switchmaterial.SwitchMaterial
-                android:id="@+id/vibrationSwitch"
+            <RelativeLayout
+                android:id="@+id/alignment_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:fontFamily="@font/product_sans_bold"
-                android:text="@string/vibrate_string" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:fontFamily="@font/product_sans_regular"
-                android:text="@string/vibrate_description" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:fontFamily="@font/product_sans_regular"
-                android:text="@string/dot_alignment_string"
-                android:textAllCaps="true"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/minor_heading_size"
-                android:textStyle="bold" />
-
-            <RadioGroup
-                android:id="@+id/align"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
                 android:orientation="horizontal"
-                android:saveEnabled="true">
+                android:padding="5dp">
 
-                <RadioButton
-                    android:id="@+id/topRight"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:checked="true"
-                    android:fontFamily="@font/product_sans_bold"
-                    android:text="@string/top_right_corner" />
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/align"
+                    android:gravity="center_vertical"
+                    android:padding="5dp">
 
-                <RadioButton
-                    android:id="@+id/topLeft"
+                    <ImageView
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:padding="5dp"
+                        android:src="@drawable/ic_round_format_align_center_24"
+                        app:tint="@color/purple_300" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:text="@string/dot_alignment_string"
+                            android:textColor="@android:color/black"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="5dp"
+                            android:text="@string/dot_alignment_description"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+                <RadioGroup
+                    android:id="@+id/align"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/product_sans_bold"
-                    android:text="@string/top_left_corner" />
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical"
+                    android:saveEnabled="true">
 
-            </RadioGroup>
+                    <RadioButton
+                        android:id="@+id/topRight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:fontFamily="@font/product_sans_bold"
+                        android:text="@string/top_right_corner" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:fontFamily="@font/product_sans_regular"
-                android:text="@string/dot_alignment_description" />
+                    <RadioButton
+                        android:id="@+id/topLeft"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/product_sans_bold"
+                        android:text="@string/top_left_corner" />
+
+                </RadioGroup>
+
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grey_100"
+                android:visibility="visible" />
+
 
             <View
                 android:layout_width="match_parent"
@@ -144,35 +265,86 @@
                 android:layout_margin="10dp"
                 android:background="@color/grey_100" />
 
-            <LinearLayout
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/product_sans_regular"
+                android:text="Additional Options"
+                android:textSize="@dimen/sub_head_size"
+                android:textStyle="bold" />
+
+
+            <RelativeLayout
                 android:id="@+id/logsClickable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:background="?attr/selectableItemBackground"
                 android:clickable="true"
-                android:orientation="vertical"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp">
+                android:focusable="true"
+                android:orientation="horizontal"
+                android:padding="5dp">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/product_sans_regular"
-                    android:text="@string/access_logs_title"
-                    android:textAllCaps="true"
-                    android:textColor="@android:color/black"
-                    android:textSize="@dimen/minor_heading_size"
-                    android:textStyle="bold" />
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/logs_arrow"
+                    android:gravity="center_vertical"
+                    android:padding="5dp">
 
-                <TextView
+                    <ImageView
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:padding="5dp"
+                        android:src="@drawable/ic_round_calendar_view_day_24"
+                        app:tint="@color/blue_500" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:text="Access Logs"
+                            android:textColor="@android:color/black"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginEnd="10dp"
+                            android:text="@string/access_log_description"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+                <ImageView
+                    android:id="@+id/logs_arrow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="5dp"
-                    android:fontFamily="@font/product_sans_regular"
-                    android:text="@string/access_log_description" />
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:src="@drawable/ic_round_keyboard_arrow_right_24"
+                    app:tint="@color/blue_500" />
 
-            </LinearLayout>
+
+            </RelativeLayout>
 
             <View
                 android:layout_width="match_parent"
@@ -185,11 +357,84 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/product_sans_regular"
-                android:text="@string/more_string"
-                android:textAllCaps="true"
+                android:text="Others"
                 android:textSize="@dimen/sub_head_size"
                 android:textStyle="bold" />
 
+            <RelativeLayout
+                android:id="@+id/shareClickable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:gravity="center_vertical"
+                    android:padding="5dp">
+
+                    <ImageView
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:padding="5dp"
+                        android:src="@drawable/ic_round_share_24"
+                        app:tint="@color/red_500" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:text="Tell Friends &amp; Family"
+                            android:textColor="@android:color/black"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginEnd="10dp"
+                            android:text="Help your friends and family stay private too by sharing the app with them"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+                <ImageView
+                    android:id="@+id/share"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:src="@drawable/ic_round_keyboard_arrow_right_24"
+                    app:tint="@color/red_500" />
+
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_margin="10dp"
+                android:background="@color/grey_100" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -197,7 +442,6 @@
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/product_sans_regular"
                 android:text="@string/why_premium"
-                android:textAllCaps="true"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/minor_heading_size"
                 android:textStyle="bold" />
@@ -253,86 +497,80 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/premiumVersion"
-                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:text="@string/get_premium_version" />
 
-            <View
+
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_margin="10dp"
-                android:background="@color/grey_100" />
-
-            <TextView
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:fontFamily="@font/product_sans_regular"
-                android:text="@string/feedback_title"
-                android:textAllCaps="true"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/minor_heading_size"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
-                android:fontFamily="@font/product_sans_regular"
-                android:text="@string/feedback_description" />
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
                 android:orientation="horizontal"
-                android:weightSum="2">
+                android:padding="5dp">
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/submitFeedback"
-                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:layout_weight="1"
-                    android:text="@string/send_feedback" />
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/analyticsSwitch"
+                    android:gravity="center_vertical"
+                    android:padding="5dp">
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/rateApp"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    <ImageView
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:padding="5dp"
+                        android:src="@drawable/ic_analytics"
+                        app:tint="@color/blue_500" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:text="Analytics Data"
+                            android:textColor="@android:color/black"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginEnd="10dp"
+                            android:text="@string/analytics_description"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/analyticsSwitch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:layout_weight="1"
-                    android:text="@string/drop_rating" />
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp" />
 
 
-            </LinearLayout>
+            </RelativeLayout>
 
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_margin="10dp"
-                android:background="@color/grey_100" />
-
-            <com.google.android.material.switchmaterial.SwitchMaterial
-                android:id="@+id/analyticsSwitch"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/product_sans_bold"
-                android:text="@string/analytics_string" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:fontFamily="@font/product_sans_regular"
-                android:text="@string/analytics_description" />
 
             <View
                 android:layout_width="match_parent"
@@ -369,7 +607,6 @@
                 android:layout_gravity="center"
                 android:fontFamily="@font/product_sans_bold"
                 android:text="@string/creator_attribution"
-                android:textAllCaps="true"
                 android:textSize="@dimen/footer_text_size" />
 
             <TextView
@@ -380,7 +617,6 @@
                 android:layout_marginBottom="50dp"
                 android:fontFamily="@font/product_sans_regular"
                 android:text="@string/default_version_text"
-                android:textAllCaps="true"
                 android:textSize="@dimen/footer_text_size" />
 
         </LinearLayout>

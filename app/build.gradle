@@ -23,11 +23,11 @@ apply plugin: 'com.google.firebase.crashlytics'
 
 android {
     compileSdkVersion 30
-    buildToolsVersion "30.0.0"
+    buildToolsVersion "30.0.3"
 
-    def versionMajor = 1
-    def versionMinor = 1
-    def versionPatch = 6
+    def versionMajor = 2
+    def versionMinor = 0
+    def versionPatch = 0
 
     defaultConfig {
         applicationId "com.aravi.dot"
@@ -63,26 +63,24 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
     implementation 'androidx.cardview:cardview:1.0.0'
+    implementation "androidx.room:room-runtime:2.2.6"
+    annotationProcessor "androidx.room:room-compiler:2.2.6"
+    implementation "android.arch.lifecycle:extensions:1.1.1"
+    annotationProcessor "android.arch.lifecycle:compiler:1.1.1"
 
-    implementation 'com.google.code.gson:gson:2.8.6'
-
-    implementation 'com.google.android.material:material:1.2.1'
-
-    implementation 'com.google.android.play:core:1.8.2'
     implementation platform('com.google.firebase:firebase-bom:25.12.0')
     implementation 'com.google.firebase:firebase-crashlytics'
     implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'com.google.android.material:material:1.2.1'
+    implementation 'com.google.android.play:core:1.9.0'
 
-    implementation 'com.facebook.android:audience-network-sdk:5.10.0'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
-    testImplementation 'junit:junit:4.13'
-
+    testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test:runner:1.3.0'
-    androidTestImplementation 'androidx.test:rules:1.3.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-
+    androidTestImplementation "androidx.room:room-testing:2.2.6"
 }
 repositories {
     mavenCentral()

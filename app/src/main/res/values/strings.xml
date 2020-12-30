@@ -35,9 +35,9 @@
     <string name="vibrate_string">VIBRATE ON USE</string>
     <string name="vibrate_description">You will get a short vibration whenever an application or a service uses microphone or camera</string>
 
-    <string name="dot_alignment_string">DOT ALIGNMENT</string>
-    <string name="top_right_corner">TOP RIGHT CORNER</string>
-    <string name="top_left_corner">TOP LEFT CORNER</string>
+    <string name="dot_alignment_string">Dot Alignment</string>
+    <string name="top_right_corner">Top Right</string>
+    <string name="top_left_corner">Top Left</string>
     <string name="dot_alignment_description">Align the dots in the way you want and you are comfortable with</string>
 
     <string name="more_string">MORE</string>
