@@ -20,11 +20,12 @@ package com.aravi.dot.activities.log;
 /**
  * Created by Aravind Chowdary on
  **/
+
 import android.app.Application;
 
 import androidx.lifecycle.LiveData;
 
-import com.aravi.dotpro.model.Logs;
+import com.aravi.dot.model.Logs;
 
 import java.util.List;
 

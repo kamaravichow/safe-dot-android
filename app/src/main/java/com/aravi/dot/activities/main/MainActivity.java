@@ -104,9 +104,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         sharedPreferenceManager = SharedPreferenceManager.getInstance(this);
-        init();
-        checkForAppUpdates();
-        checkAutoStartRequirement();
+//        init();
+//        checkForAppUpdates();
+//        checkAutoStartRequirement();
     }
 
     private void init() {
