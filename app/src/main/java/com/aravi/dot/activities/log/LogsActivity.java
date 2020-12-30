@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.aravi.dot.main;
+package com.aravi.dot.activities.log;
 
 import android.content.Context;
 import android.content.SharedPreferences;

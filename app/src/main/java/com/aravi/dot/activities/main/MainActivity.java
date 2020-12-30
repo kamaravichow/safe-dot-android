@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.aravi.dot.main;
+package com.aravi.dot.activities.main;
 
 import android.content.ComponentName;
 import android.content.Context;
@@ -38,6 +38,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.aravi.dot.BuildConfig;
 import com.aravi.dot.R;
 import com.aravi.dot.Utils;
+import com.aravi.dot.activities.log.LogsActivity;
 import com.aravi.dot.manager.SharedPreferenceManager;
 import com.aravi.dot.service.DotService;
 import com.facebook.ads.Ad;

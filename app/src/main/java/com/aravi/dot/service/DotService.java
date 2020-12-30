@@ -46,7 +46,7 @@ import com.aravi.dot.BuildConfig;
 import com.aravi.dot.Constants;
 import com.aravi.dot.R;
 import com.aravi.dot.Utils;
-import com.aravi.dot.main.MainActivity;
+import com.aravi.dot.activities.main.MainActivity;
 import com.aravi.dot.manager.SharedPreferenceManager;
 
 import java.util.List;

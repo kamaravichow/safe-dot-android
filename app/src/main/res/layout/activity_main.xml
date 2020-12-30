@@ -22,7 +22,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:fitsSystemWindows="false"
-    tools:context=".main.MainActivity">
+    tools:context=".activities.main.MainActivity">
 
     <include
         android:id="@+id/appbarLayout"

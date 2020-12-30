@@ -38,10 +38,10 @@
         android:theme="@style/AppTheme"
         android:fullBackupContent="true">
         <activity
-            android:name=".main.LogsActivity"
+            android:name=".activities.log.LogsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".main.MainActivity"
+            android:name=".activities.main.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
