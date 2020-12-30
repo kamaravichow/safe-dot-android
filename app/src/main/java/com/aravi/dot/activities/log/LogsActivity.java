@@ -17,104 +17,77 @@
 
 package com.aravi.dot.activities.log;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.aravi.dot.Constants;
 import com.aravi.dot.R;
 import com.aravi.dot.adapter.LogAdapter;
-import com.aravi.dot.model.Log;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.aravi.dot.model.Logs;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import com.google.android.material.snackbar.Snackbar;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class LogsActivity extends AppCompatActivity {
 
-    private List<Log> logList;
+    private LogsViewModel mLogsViewModel;
+    private List<Logs> logsList;
     private ProgressBar progressBar;
     private RecyclerView recyclerView;
     private LogAdapter adapter;
+    private ExtendedFloatingActionButton clearLogsButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logs);
+        mLogsViewModel = ViewModelProviders.of(this).get(LogsViewModel.class);
         init();
     }
 
     private void init() {
         recyclerView = findViewById(R.id.logsRecyclerView);
         progressBar = findViewById(R.id.progressBar);
-        ExtendedFloatingActionButton clearLogsButton = findViewById(R.id.clearLogsButton);
+        clearLogsButton = findViewById(R.id.clearLogsButton);
+        clearLogsButton.hide();
 
         progressBar.setVisibility(View.VISIBLE);
-        logList = new ArrayList<>();
-        logList.clear();
+        logsList = new ArrayList<>();
+        logsList.clear();
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        clearLogsButton.setOnClickListener(view -> new MaterialAlertDialogBuilder(LogsActivity.this)
-                .setTitle(R.string.clear_dialog_title)
-                .setMessage(R.string.clear_dialog_description)
-                .setPositiveButton(R.string.clear_dialog_yes, (dialogInterface, i) -> {
-                    clearLogs();
-                    new Handler().postDelayed(this::loadLogData, 1000);
-                })
-                .setNegativeButton(R.string.clear_dialog_no, null)
-                .show());
 
-        new Handler().postDelayed(this::loadLogData, 1000);
-    }
-
-    private void loadLogData() {
-        logList.clear();
-        AsyncTask.execute(() -> {
-            Gson gson = new Gson();
-            SharedPreferences preferences = getApplicationContext().getSharedPreferences(Constants.LOGS_PREFERENCE_NAME, Context.MODE_PRIVATE);
-            Type logListType = new TypeToken<ArrayList<Log>>() {
-            }.getType();
-            List<Log> savedList = gson.fromJson(preferences.getString(Constants.LOGS_PREFERENCE_TAG, null), logListType);
-            if (savedList != null) {
-                logList = savedList;
-            }
+        mLogsViewModel.getAllWords().observe(this, logs -> {
             progressBar.setVisibility(View.INVISIBLE);
-            setAdapter();
-        });
-    }
-
-    private void setAdapter() {
-        Collections.reverse(logList);
-        runOnUiThread(() -> {
-            if (logList.isEmpty()) {
-                findViewById(R.id.emptyListImage).setVisibility(View.VISIBLE);
-                findViewById(R.id.clearLogsButton).setVisibility(View.INVISIBLE);
-            } else {
-                findViewById(R.id.emptyListImage).setVisibility(View.GONE);
-                findViewById(R.id.clearLogsButton).setVisibility(View.VISIBLE);
-            }
-            adapter = new LogAdapter(LogsActivity.this, logList);
+//            adapter = new LogAdapter(LogsActivity.this, logs);
             recyclerView.setAdapter(adapter);
+            if (logs.isEmpty()) {
+                clearLogsButton.hide();
+                findViewById(R.id.emptyListImage).setVisibility(View.VISIBLE);
+            } else {
+                clearLogsButton.show();
+                clearLogsButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mLogsViewModel.clearLogs();
+                        showSnackBar("Logs Cleared");
+                    }
+                });
+                findViewById(R.id.emptyListImage).setVisibility(View.INVISIBLE);
+            }
         });
-
     }
 
-    private void clearLogs() {
-        SharedPreferences preferences = this.getSharedPreferences("APP.USAGE.LOG", Context.MODE_PRIVATE);
-        preferences.edit().clear().apply();
-        Toast.makeText(this, "Log Cleared Successfully", Toast.LENGTH_SHORT).show();
+    private void showSnackBar(String message) {
+        Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_SHORT).show();
     }
+
+
 }
