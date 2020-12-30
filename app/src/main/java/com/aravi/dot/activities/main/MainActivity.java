@@ -26,10 +26,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.text.TextUtils;
-import android.view.View;
 import android.view.accessibility.AccessibilityManager;
 import android.widget.CompoundButton;
-import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -41,11 +39,6 @@ import com.aravi.dot.Utils;
 import com.aravi.dot.activities.log.LogsActivity;
 import com.aravi.dot.manager.SharedPreferenceManager;
 import com.aravi.dot.service.DotService;
-import com.facebook.ads.Ad;
-import com.facebook.ads.AdError;
-import com.facebook.ads.NativeAdListener;
-import com.facebook.ads.NativeBannerAd;
-import com.facebook.ads.NativeBannerAdView;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.switchmaterial.SwitchMaterial;
@@ -55,8 +48,6 @@ import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
 import com.google.android.play.core.install.model.AppUpdateType;
 import com.google.android.play.core.install.model.UpdateAvailability;
 import com.google.android.play.core.tasks.Task;
-
-import static com.aravi.dot.Constants.NATIVE_BANNER_PLACEMENT_ID;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -90,34 +81,6 @@ public class MainActivity extends AppCompatActivity {
 
         }
     };
-    private NativeBannerAd mNativeBannerAd;
-    private final NativeAdListener listener = new NativeAdListener() {
-        @Override
-        public void onMediaDownloaded(Ad ad) {
-        }
-
-        @Override
-        public void onError(Ad ad, AdError adError) {
-        }
-
-        @Override
-        public void onAdLoaded(Ad ad) {
-            View adView = NativeBannerAdView.render(MainActivity.this, mNativeBannerAd, NativeBannerAdView.Type.HEIGHT_100);
-            LinearLayout nativeBannerAdContainer = findViewById(R.id.native_banner_ad_container);
-            nativeBannerAdContainer.addView(adView);
-
-        }
-
-        @Override
-        public void onAdClicked(Ad ad) {
-
-        }
-
-        @Override
-        public void onLoggingImpression(Ad ad) {
-
-        }
-    };
 
     public static boolean accessibilityPermission(Context context, Class<?> cls) {
         ComponentName componentName = new ComponentName(context, cls);
@@ -143,7 +106,6 @@ public class MainActivity extends AppCompatActivity {
         sharedPreferenceManager = SharedPreferenceManager.getInstance(this);
         init();
         checkForAppUpdates();
-        initAdvertisements();
         checkAutoStartRequirement();
     }
 
@@ -151,8 +113,8 @@ public class MainActivity extends AppCompatActivity {
         mainSwitch = findViewById(R.id.mainSwitch);
         vibrateSwitch = findViewById(R.id.vibrationSwitch);
         analyticsSwitch = findViewById(R.id.analyticsSwitch);
-        MaterialButton submitFeedback = findViewById(R.id.submitFeedback);
-        MaterialButton rateApp = findViewById(R.id.rateApp);
+//        MaterialButton submitFeedback = findViewById(R.id.submitFeedback);
+//        MaterialButton rateApp = findViewById(R.id.rateApp);
         MaterialButton premiumApp = findViewById(R.id.premiumVersion);
         RadioGroup align = findViewById(R.id.align);
         ((TextView) findViewById(R.id.versionText)).setText("VERSION - " + BuildConfig.VERSION_NAME);
@@ -163,7 +125,6 @@ public class MainActivity extends AppCompatActivity {
         mainSwitch.setOnCheckedChangeListener(onCheckedChangeListener);
         vibrateSwitch.setOnCheckedChangeListener(onCheckedChangeListener);
         analyticsSwitch.setOnCheckedChangeListener(onCheckedChangeListener);
-        submitFeedback.setOnClickListener(view -> sendFeedbackEmail());
         align.setOnCheckedChangeListener((radioGroup, i) -> {
             if (i == R.id.topLeft) {
                 sharedPreferenceManager.setPosition(0);
@@ -182,12 +143,6 @@ public class MainActivity extends AppCompatActivity {
         });
         findViewById(R.id.github_button).setOnClickListener(v -> {
             String url = "https://www.github.com/kamaravichow";
-            Intent i = new Intent(Intent.ACTION_VIEW);
-            i.setData(Uri.parse(url));
-            startActivity(i);
-        });
-        rateApp.setOnClickListener(view -> {
-            String url = "https://play.google.com/store/apps/details?id=com.aravi.dot";
             Intent i = new Intent(Intent.ACTION_VIEW);
             i.setData(Uri.parse(url));
             startActivity(i);
@@ -279,11 +234,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(Intent.createChooser(emailIntent, "Send feedback..."));
     }
 
-    private void initAdvertisements() {
-        mNativeBannerAd = new NativeBannerAd(MainActivity.this, NATIVE_BANNER_PLACEMENT_ID);
-        mNativeBannerAd.setAdListener(listener);
-        mNativeBannerAd.loadAd();
-    }
 
     private boolean checkAccessibility() {
         AccessibilityManager manager = (AccessibilityManager) getSystemService(Context.ACCESSIBILITY_SERVICE);
@@ -315,9 +265,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        if (mNativeBannerAd != null && mNativeBannerAd.isAdLoaded()) {
-            mNativeBannerAd.destroy();
-        }
         super.onDestroy();
     }
 }

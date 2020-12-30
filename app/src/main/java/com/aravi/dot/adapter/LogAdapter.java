@@ -23,9 +23,6 @@ import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -35,9 +32,7 @@ import com.aravi.dot.model.Log;
 
 import java.util.List;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
-public class LogAdapter extends RecyclerView.Adapter<LogAdapter.LogViewHolder> {
+public class LogAdapter extends RecyclerView.Adapter<LogHolder> {
 
     private final Context context;
     private final List<Log> logList;
@@ -49,14 +44,14 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.LogViewHolder> {
 
     @NonNull
     @Override
-    public LogViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public LogHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View inflatedView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_log, parent, false);
-        return new LogViewHolder(inflatedView);
+        return new LogHolder(inflatedView);
     }
 
 
     @Override
-    public void onBindViewHolder(@NonNull final LogViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final LogHolder holder, int position) {
         final Log item = logList.get(position);
         holder.appName.setText(item.getAppName());
         holder.appPackage.setText(item.getAppPackage());
@@ -114,33 +109,6 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.LogViewHolder> {
         return 0;
     }
 
-
-    class LogViewHolder extends RecyclerView.ViewHolder {
-
-        final RelativeLayout item;
-        final CircleImageView appIcon;
-        final ImageView logCamDot, logMicDot;
-        final TextView appName, appPackage, appTimestamp;
-        final View cameraStart, cameraStop, micStart, micStop;
-
-        private LogViewHolder(View itemView) {
-            super(itemView);
-
-            item = itemView.findViewById(R.id.logItem);
-            appIcon = itemView.findViewById(R.id.logAppIcon);
-            appName = itemView.findViewById(R.id.logAppName);
-            appPackage = itemView.findViewById(R.id.logAppPackage);
-            appTimestamp = itemView.findViewById(R.id.logTimestamp);
-
-            logCamDot = itemView.findViewById(R.id.logCameraDot);
-            logMicDot = itemView.findViewById(R.id.logMicDot);
-
-            cameraStart = itemView.findViewById(R.id.lineCameraStart);
-            cameraStop = itemView.findViewById(R.id.lineCameraStop);
-            micStart = itemView.findViewById(R.id.lineMicStart);
-            micStop = itemView.findViewById(R.id.lineMicStop);
-        }
-    }
 
 }
 

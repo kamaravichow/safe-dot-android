@@ -22,14 +22,12 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.os.Build
 import com.aravi.dot.manager.SharedPreferenceManager
-import com.facebook.ads.AudienceNetworkAds
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 
 class App : Application() {
     override fun onCreate() {
         super.onCreate()
-        AudienceNetworkAds.initialize(this)
         createNotificationChannels()
         if (SharedPreferenceManager.getInstance(this)?.isAnalyticsEnabled == true) {
             FirebaseAnalytics.getInstance(this).setAnalyticsCollectionEnabled(true)
