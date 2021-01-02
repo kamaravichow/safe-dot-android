@@ -3,22 +3,19 @@
 
 An app that 🔔 alerts you when a third-party application uses your device camera or microphone.
 
+## Download Now
+App is currently available for Production & Open Beta Testing on Google Play Store & Samsung's Galaxy Store. Use the below links to get redirected to the app page.
+
+|[<img src="https://github.com/kamaravichow/safe-dot-android/raw/master/docs/google-play-badge.png" width="200">](https://play.google.com/store/apps/details?id=com.aravi.dot)| [<img src="https://github.com/kamaravichow/safe-dot-android/raw/master/docs/galaxy-store-badge.png" width="200">](https://galaxy.store/dotsafe)|
+|---|---|
+
+
 **Stack :**
 - Minimum SDK 21
 - MVVM Architecture (View - ViewModel - Model)
 - View Binding
 - Room Database
 - Accessibility Service
-
-## Screenshots 
-|![Screenshot1](https://github.com/kamaravichow/safe-dot-android/raw/master/docs/screenshot1.png)|![Screenshot2](https://github.com/kamaravichow/safe-dot-android/raw/master/docs/screenshot2.png)|![Screenshot2](https://github.com/kamaravichow/safe-dot-android/raw/master/docs/screenshot3.png)|
-|---|---|---|
-
-## Download Now
-App is currently available for Production & Open Beta Testing on Google Play Store & Samsung's Galaxy Store. Use the below links to get redirected to the app page.
-
-|[<img src="https://github.com/kamaravichow/safe-dot-android/raw/master/docs/google-play-badge.png" width="200">](https://play.google.com/store/apps/details?id=com.aravi.dot)| [<img src="https://github.com/kamaravichow/safe-dot-android/raw/master/docs/galaxy-store-badge.png" width="200">](https://galaxy.store/dotsafe)|
-|---|---|
 
 
 ## Libraries Used
@@ -48,6 +45,13 @@ git clone https://github.com/kamaravichow/safe-dot-android.git
 or just fork the repository.
 
 [READ MORE](https://github.com/kamaravichow/safe-dot-android/blob/master/CONTRIBUTING.md)
+
+## Screenshots 
+|![Screenshot1](https://github.com/kamaravichow/safe-dot-android/raw/master/docs/screenshot1.png)|![Screenshot2](https://github.com/kamaravichow/safe-dot-android/raw/master/docs/screenshot2.png)|![Screenshot2](https://github.com/kamaravichow/safe-dot-android/raw/master/docs/screenshot3.png)|
+|---|---|---|
+
+
+
 
 ## Licence
 
