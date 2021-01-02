@@ -27,7 +27,6 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.view.accessibility.AccessibilityManager;
-import android.widget.CompoundButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -39,7 +38,6 @@ import com.aravi.dot.databinding.ActivityMainBinding;
 import com.aravi.dot.manager.SharedPreferenceManager;
 import com.aravi.dot.service.DotService;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.play.core.appupdate.AppUpdateInfo;
 import com.google.android.play.core.appupdate.AppUpdateManager;
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
@@ -50,54 +48,10 @@ import com.google.android.play.core.tasks.Task;
 public class MainActivity extends AppCompatActivity {
     private static final int MY_REQUEST_CODE = 1802;
     private boolean TRIGGERED_START = false;
-
     private SharedPreferenceManager sharedPreferenceManager;
     private Intent serviceIntent;
     private AppUpdateManager appUpdateManager;
     private ActivityMainBinding mBinding;
-
-    private final SwitchMaterial.OnCheckedChangeListener onCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
-        @Override
-        public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-            // fixed: Resource IDs will be non-final in Android Gradle Plugin version 5.0, avoid using them in switch case statements
-            // fix source : http://tools.android.com/tips/non-constant-fields
-            int id = compoundButton.getId();
-            if (id == R.id.mainSwitch) {
-                if (b) {
-                    checkForAccessibilityAndStart();
-                    TRIGGERED_START = true;
-                } else {
-                    stopService();
-                    TRIGGERED_START = false;
-                }
-            } else if (id == R.id.vibrationSwitch) {
-                sharedPreferenceManager.setVibrationEnabled(b);
-
-            } else if (id == R.id.experienceSwitch) {
-                sharedPreferenceManager.setAnalyticsEnabled(b);
-                showSnack("Changes will be applied on app restart");
-
-            }
-
-        }
-    };
-
-    public static boolean accessibilityPermission(Context context, Class<?> cls) {
-        ComponentName componentName = new ComponentName(context, cls);
-        String string = Settings.Secure.getString(context.getContentResolver(), "enabled_accessibility_services");
-        if (string == null) {
-            return false;
-        }
-        TextUtils.SimpleStringSplitter simpleStringSplitter = new TextUtils.SimpleStringSplitter(':');
-        simpleStringSplitter.setString(string);
-        while (simpleStringSplitter.hasNext()) {
-            ComponentName unflattenFromString = ComponentName.unflattenFromString(simpleStringSplitter.next());
-            if (unflattenFromString != null && unflattenFromString.equals(componentName)) {
-                return true;
-            }
-        }
-        return false;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,7 +64,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void init() {
-        mBinding.versionText.setText("Version - " + BuildConfig.VERSION_NAME);
+        mBinding.mainSwitch.setChecked(sharedPreferenceManager.isServiceEnabled() && checkAccessibility());
+        mBinding.vibrationSwitch.setChecked(sharedPreferenceManager.isVibrationEnabled());
+
+        mBinding.vibrationSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> sharedPreferenceManager.setVibrationEnabled(isChecked));
+        mBinding.mainSwitch.setOnCheckedChangeListener((buttonView, b) -> {
+            if (b) {
+                checkForAccessibilityAndStart();
+                TRIGGERED_START = true;
+            } else {
+                stopService();
+                TRIGGERED_START = false;
+            }
+        });
         mBinding.align.setOnCheckedChangeListener((group, i) -> {
             // fixed: Resource IDs will be non-final in Android Gradle Plugin version 5.0, avoid using them in switch case statements
             // fix source : http://tools.android.com/tips/non-constant-fields
@@ -120,19 +86,16 @@ public class MainActivity extends AppCompatActivity {
                 sharedPreferenceManager.setPosition(1);
             }
         });
-        mBinding.mainSwitch.setChecked(sharedPreferenceManager.isServiceEnabled() && checkAccessibility());
-        mBinding.vibrationSwitch.setChecked(sharedPreferenceManager.isVibrationEnabled());
-
-        mBinding.vibrationSwitch.setOnCheckedChangeListener(onCheckedChangeListener);
 
         mBinding.twitterButton.setOnClickListener(v -> openWeb("https://www.twitter.com/kamaravichow"));
         mBinding.githubButton.setOnClickListener(v -> openWeb("https://www.github.com/kamaravichow"));
         mBinding.premiumVersion.setOnClickListener(view -> openWeb("https://play.google.com/store/apps/details?id=com.aravi.dotpro"));
-
         mBinding.logsOption.setOnClickListener(view -> {
             Intent intent = new Intent(MainActivity.this, LogsActivity.class);
             startActivity(intent);
         });
+
+        mBinding.versionText.setText("Version - " + BuildConfig.VERSION_NAME);
     }
 
     private void checkForAccessibilityAndStart() {
@@ -160,18 +123,17 @@ public class MainActivity extends AppCompatActivity {
         showSnack(getString(R.string.close_app_note));
     }
 
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        if (TRIGGERED_START) {
-//            TRIGGERED_START = false;
-//            checkForAccessibilityAndStart();
-//        }
-//        if (!sharedPreferenceManager.isServiceEnabled()) {
-//            mainSwitch.setChecked(checkAccessibility());
-//        }
-//    }
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (TRIGGERED_START) {
+            TRIGGERED_START = false;
+            checkForAccessibilityAndStart();
+        }
+        if (!sharedPreferenceManager.isServiceEnabled()) {
+            mBinding.mainSwitch.setChecked(checkAccessibility());
+        }
+    }
 
     private void checkForAppUpdates() {
         appUpdateManager = AppUpdateManagerFactory.create(MainActivity.this);
@@ -200,6 +162,28 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * @param context
+     * @param cls
+     * @return
+     */
+    public static boolean accessibilityPermission(Context context, Class<?> cls) {
+        ComponentName componentName = new ComponentName(context, cls);
+        String string = Settings.Secure.getString(context.getContentResolver(), "enabled_accessibility_services");
+        if (string == null) {
+            return false;
+        }
+        TextUtils.SimpleStringSplitter simpleStringSplitter = new TextUtils.SimpleStringSplitter(':');
+        simpleStringSplitter.setString(string);
+        while (simpleStringSplitter.hasNext()) {
+            ComponentName unflattenFromString = ComponentName.unflattenFromString(simpleStringSplitter.next());
+            if (unflattenFromString != null && unflattenFromString.equals(componentName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     private void sendFeedbackEmail() {
         Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", getString(R.string.feedback_email_address), null));
@@ -209,27 +193,42 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * @return
+     */
     private boolean checkAccessibility() {
         AccessibilityManager manager = (AccessibilityManager) getSystemService(Context.ACCESSIBILITY_SERVICE);
         return manager.isEnabled();
     }
 
+    /**
+     * @return
+     */
     private boolean isAccessibilityServiceRunning() {
         String prefString = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES);
         return prefString != null && prefString.contains(this.getPackageName() + "/" + DotService.class.getName());
     }
 
 
+    /**
+     * @param message
+     */
     private void showSnack(String message) {
         Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG).show();
     }
 
+    /**
+     * @param url
+     */
     private void openWeb(String url) {
         Intent i = new Intent(Intent.ACTION_VIEW);
         i.setData(Uri.parse(url));
         startActivity(i);
     }
 
+    /**
+     * Chinese ROM's kill the app services frequently so AutoStart Permission is required
+     */
     private void checkAutoStartRequirement() {
         String manufacturer = android.os.Build.MANUFACTURER;
         if (sharedPreferenceManager.isFirstLaunch()) {

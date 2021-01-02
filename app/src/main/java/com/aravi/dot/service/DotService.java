@@ -41,7 +41,6 @@ import static com.aravi.dot.Constants.NOTIFICATION_ID;
 
 
 public class DotService extends AccessibilityService {
-
     private static final String TAG = "DotService";
 
     private LogsRepository mLogsRepository;
@@ -126,6 +125,9 @@ public class DotService extends AccessibilityService {
         return cameraCallback;
     }
 
+    /**
+     * @return
+     */
     private AudioManager.AudioRecordingCallback getMicCallback() {
         micCallback = new AudioManager.AudioRecordingCallback() {
             @Override
@@ -164,6 +166,9 @@ public class DotService extends AccessibilityService {
         notificationManager = NotificationManagerCompat.from(getApplicationContext());
     }
 
+    /**
+     * @return
+     */
     private String getNotificationTitle() {
         if (isCameraUnavailable && isMicUnavailable)
             return "Camera and Mic are being accessed";
@@ -174,6 +179,10 @@ public class DotService extends AccessibilityService {
         return "Your Camera or Mic is ON";
     }
 
+    /**
+     * @param appUsingComponent
+     * @return
+     */
     private String getNotificationDescription(String appUsingComponent) {
         if (appUsingComponent.isEmpty() || appUsingComponent.equals("(unknown)")) {
             appUsingComponent = "some app";
@@ -204,6 +213,9 @@ public class DotService extends AccessibilityService {
         }
     }
 
+    /**
+     * @return
+     */
     private PendingIntent getPendingIntent() {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         return PendingIntent.getActivity(getApplicationContext(), 1, intent, FLAG_UPDATE_CURRENT);
@@ -243,6 +255,10 @@ public class DotService extends AccessibilityService {
         setViewTint(dotMic, "#FF9800");
     }
 
+    /**
+     * @param imageView
+     * @param hex
+     */
     private void setViewTint(ImageView imageView, String hex) {
         imageView.setColorFilter(Color.parseColor(hex), android.graphics.PorterDuff.Mode.SRC_IN);
     }
@@ -289,6 +305,9 @@ public class DotService extends AccessibilityService {
         windowManager.updateViewLayout(hoverLayout, layoutParams);
     }
 
+    /**
+     * @return
+     */
     private int getLayoutGravity() {
         int position = sharedPreferenceManager.getPosition();
         switch (position) {

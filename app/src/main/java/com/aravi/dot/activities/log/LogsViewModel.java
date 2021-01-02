@@ -31,24 +31,20 @@ import com.aravi.dot.model.Logs;
 import java.util.List;
 
 public class LogsViewModel extends AndroidViewModel {
-
     private LogsRepository logsRepository;
-
     private final LiveData<List<Logs>> mLogsList;
 
-
+    /**
+     * @param application
+     */
     public LogsViewModel(Application application) {
         super(application);
         logsRepository = new LogsRepository(application);
         mLogsList = logsRepository.getLogs();
     }
 
-    public LiveData<List<Logs>> getAllWords() {
+    public LiveData<List<Logs>> getmLogsList() {
         return mLogsList;
-    }
-
-    public void insert(Logs logs) {
-        logsRepository.insertLog(logs);
     }
 
     public void clearLogs() {

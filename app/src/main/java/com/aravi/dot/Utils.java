@@ -16,11 +16,18 @@ import java.util.List;
 
 public class Utils {
 
+    /**
+     * @param input
+     * @return
+     */
     public static String capitalizeFirstLetterOfString(String input) {
         if (input.isEmpty()) return "";
         return input.substring(0, 1).toUpperCase() + input.substring(1);
     }
 
+    /**
+     * @param context
+     */
     public static void showAutoStartDialog(Context context) {
         new MaterialAlertDialogBuilder(context)
                 .setTitle("Enable AutoStart")
@@ -32,6 +39,9 @@ public class Utils {
                 .show();
     }
 
+    /**
+     * @param context
+     */
     private static void openAutoStartAccordingToManufacturer(Context context) {
         try {
             Intent intent = new Intent();
@@ -56,6 +66,11 @@ public class Utils {
     }
 
 
+    /**
+     * @param context
+     * @param packageName
+     * @return
+     */
     public static String getNameFromPackageName(Context context, String packageName) {
         final PackageManager packageManager = context.getPackageManager();
         ApplicationInfo applicationInfo;
@@ -67,7 +82,10 @@ public class Utils {
         return (String) (applicationInfo != null ? packageManager.getApplicationLabel(applicationInfo) : "(unknown)");
     }
 
-
+    /**
+     * @param millis
+     * @return
+     */
     public static String convertSecondsToHMmSs(long millis) {
         Date date = new Date(millis);
         Calendar cal = Calendar.getInstance();

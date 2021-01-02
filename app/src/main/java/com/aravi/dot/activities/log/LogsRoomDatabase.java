@@ -37,14 +37,16 @@ import java.util.concurrent.Executors;
 
 @Database(entities = {Logs.class}, version = 1, exportSchema = true)
 public abstract class LogsRoomDatabase extends RoomDatabase {
-
     private static final int NUMBER_OF_THREADS = 4;
 
     public abstract LogsDao logsDao();
-
     private static volatile LogsRoomDatabase INSTANCE;
     static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
+    /**
+     * @param context
+     * @return
+     */
     static LogsRoomDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
             synchronized (LogsRoomDatabase.class) {

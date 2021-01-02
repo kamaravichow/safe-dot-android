@@ -22,7 +22,6 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.aravi.dot.R;
 import com.aravi.dot.adapter.LogAdapter;
@@ -34,7 +33,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LogsActivity extends AppCompatActivity {
-
     private ActivityLogsBinding mBinding;
     private LogsViewModel mLogsViewModel;
     private List<Logs> logsList;
@@ -58,14 +56,24 @@ public class LogsActivity extends AppCompatActivity {
         return super.onSupportNavigateUp();
     }
 
-    private void init() {
+
+    @Override
+    protected void onStart() {
+        // Hides the clear button and shows progress bar on start
         mBinding.clearLogsButton.hide();
-
         mBinding.progressBar.setVisibility(View.VISIBLE);
-        logsList = new ArrayList<>();
-        mBinding.logsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        super.onStart();
+    }
 
-        mLogsViewModel.getAllWords().observe(this, logs -> {
+    private void init() {
+        // Creates a new array-list object on initialisation
+        logsList = new ArrayList<>();
+
+        // I've set the linear layout manager in the layout file
+        // mBinding.logsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        // get all the log list live data from the view model
+        mLogsViewModel.getmLogsList().observe(this, logs -> {
             mBinding.progressBar.setVisibility(View.INVISIBLE);
             adapter = new LogAdapter(LogsActivity.this, logs);
             mBinding.logsRecyclerView.setAdapter(adapter);
@@ -83,6 +91,10 @@ public class LogsActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Snack-bar Method
+     * Gets String As Input
+     */
     private void showSnackBar(String message) {
         Snackbar.make(mBinding.getRoot(), message, Snackbar.LENGTH_SHORT).show();
     }
