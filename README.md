@@ -18,13 +18,16 @@ App is currently available for Production & Open Beta Testing on Google Play Sto
 ## Libraries Used
 Firebase Crashylitics & Analytics [View Source](https://github.com/firebase/firebase-android-sdk/tree/master/firebase-crashlytics)
 
-Facebook Audience Network SDK 
+Facebook Audience Network SDK  [REMOVED RECENTLY]
+
+- Most of you did'nt like to have facebook SDK integrated in a privacy focused application so I've pulled it out in the latest update
 
 Gson Google [View Source](https://github.com/google/gson)
 
 Circle Image View [View Source](https://github.com/hdodenhof/CircleImageView)
 
 ## Issue Tracking
+
 Use the issues tab to report issues and request features 
 [Go to Issues](https://github.com/kamaravichow/safe-dot-android/issues)
 
