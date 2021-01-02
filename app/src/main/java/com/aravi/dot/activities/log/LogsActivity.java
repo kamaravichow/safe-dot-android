@@ -22,7 +22,6 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -66,7 +65,7 @@ public class LogsActivity extends AppCompatActivity {
 
         mLogsViewModel.getAllWords().observe(this, logs -> {
             progressBar.setVisibility(View.INVISIBLE);
-//            adapter = new LogAdapter(LogsActivity.this, logs);
+            adapter = new LogAdapter(LogsActivity.this, logs);
             recyclerView.setAdapter(adapter);
             if (logs.isEmpty()) {
                 clearLogsButton.hide();

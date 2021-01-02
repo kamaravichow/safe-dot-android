@@ -28,18 +28,19 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.aravi.dot.R;
-import com.aravi.dot.model.Log;
+import com.aravi.dot.Utils;
+import com.aravi.dot.model.Logs;
 
 import java.util.List;
 
 public class LogAdapter extends RecyclerView.Adapter<LogHolder> {
 
     private final Context context;
-    private final List<Log> logList;
+    private final List<Logs> logsList;
 
-    public LogAdapter(Context context, List<Log> logList) {
+    public LogAdapter(Context context, List<Logs> logsList) {
         this.context = context;
-        this.logList = logList;
+        this.logsList = logsList;
     }
 
     @NonNull
@@ -52,18 +53,18 @@ public class LogAdapter extends RecyclerView.Adapter<LogHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull final LogHolder holder, int position) {
-        final Log item = logList.get(position);
-        holder.appName.setText(item.getAppName());
-        holder.appPackage.setText(item.getAppPackage());
+        final Logs item = logsList.get(position);
+        holder.appName.setText(Utils.getNameFromPackageName(context, item.getPackageName()));
+        holder.appPackage.setText(item.getPackageName());
         try {
-            Drawable icon = context.getPackageManager().getApplicationIcon(item.getAppPackage());
+            Drawable icon = context.getPackageManager().getApplicationIcon(item.getPackageName());
             holder.appIcon.setImageDrawable(icon);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-        holder.appTimestamp.setText(item.getTimestamp());
+        holder.appTimestamp.setText(Utils.convertSecondsToHMmSs(item.getTimestamp()));
 
-        switch (item.getCamera()) {
+        switch (item.getCamera_state()) {
             case 0:
                 holder.cameraStart.setVisibility(View.INVISIBLE);
                 holder.cameraStop.setVisibility(View.INVISIBLE);
@@ -81,7 +82,7 @@ public class LogAdapter extends RecyclerView.Adapter<LogHolder> {
                 break;
         }
 
-        switch (item.getMic()) {
+        switch (item.getMic_state()) {
             case 0:
                 holder.micStart.setVisibility(View.INVISIBLE);
                 holder.micStop.setVisibility(View.INVISIBLE);
@@ -103,11 +104,12 @@ public class LogAdapter extends RecyclerView.Adapter<LogHolder> {
 
     @Override
     public int getItemCount() {
-        if (logList != null) {
-            return logList.size();
+        if (logsList != null) {
+            return logsList.size();
         }
         return 0;
     }
+
 
 
 }

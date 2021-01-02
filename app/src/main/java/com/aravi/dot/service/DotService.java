@@ -1,20 +1,3 @@
-/*
- * Copyright (C) 2020.  Aravind Chowdary (@kamaravichow)
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
- */
-
 package com.aravi.dot.service;
 
 import android.accessibilityservice.AccessibilityService;
@@ -46,18 +29,22 @@ import com.aravi.dot.BuildConfig;
 import com.aravi.dot.Constants;
 import com.aravi.dot.R;
 import com.aravi.dot.Utils;
+import com.aravi.dot.activities.log.LogsRepository;
 import com.aravi.dot.activities.main.MainActivity;
 import com.aravi.dot.manager.SharedPreferenceManager;
+import com.aravi.dot.model.Logs;
 
 import java.util.List;
 
 import static android.app.PendingIntent.FLAG_UPDATE_CURRENT;
 import static com.aravi.dot.Constants.NOTIFICATION_ID;
 
+
 public class DotService extends AccessibilityService {
 
     private static final String TAG = "DotService";
 
+    private LogsRepository mLogsRepository;
     private boolean isCameraUnavailable = false;
     private boolean isMicUnavailable = false;
     private final boolean isOnUseNotificationEnabled = true;
@@ -95,6 +82,7 @@ public class DotService extends AccessibilityService {
     }
 
     private void getDefaults() {
+        mLogsRepository = new LogsRepository(getApplication());
         sharedPreferenceManager = SharedPreferenceManager.getInstance(getApplicationContext());
     }
 
@@ -111,22 +99,28 @@ public class DotService extends AccessibilityService {
             @Override
             public void onCameraAvailable(String cameraId) {
                 super.onCameraAvailable(cameraId);
-                isCameraUnavailable = false;
-                didCameraUseStart = true;
-                dismissOnUseNotification();
-                hideCamDot();
-                makeLog();
+                if (sharedPreferenceManager.isCameraIndicatorEnabled()) {
+                    isCameraUnavailable = false;
+                    didCameraUseStart = true;
+                    dismissOnUseNotification();
+                    hideCamDot();
+                    makeLog();
+                }
+
             }
 
             @Override
             public void onCameraUnavailable(String cameraId) {
                 super.onCameraUnavailable(cameraId);
-                isCameraUnavailable = true;
-                didCameraUseStart = true;
-                showOnUseNotification();
-                showCamDot();
-                triggerVibration();
-                makeLog();
+                if (sharedPreferenceManager.isCameraIndicatorEnabled()) {
+                    isCameraUnavailable = true;
+                    didCameraUseStart = true;
+                    showOnUseNotification();
+                    showCamDot();
+                    triggerVibration();
+                    makeLog();
+                }
+
             }
         };
         return cameraCallback;
@@ -136,19 +130,22 @@ public class DotService extends AccessibilityService {
         micCallback = new AudioManager.AudioRecordingCallback() {
             @Override
             public void onRecordingConfigChanged(List<AudioRecordingConfiguration> configs) {
-                if (configs.size() > 0) {
-                    showMicDot();
-                    triggerVibration();
-                    isMicUnavailable = true;
-                    showOnUseNotification();
+                if (sharedPreferenceManager.isMicIndicatorEnabled()) {
+                    if (configs.size() > 0) {
+                        showMicDot();
+                        triggerVibration();
+                        isMicUnavailable = true;
+                        showOnUseNotification();
 
-                } else {
-                    hideMicDot();
-                    isMicUnavailable = false;
-                    dismissOnUseNotification();
+                    } else {
+                        hideMicDot();
+                        isMicUnavailable = false;
+                        dismissOnUseNotification();
+                    }
+                    didMicUseStart = true;
+                    makeLog();
                 }
-                didMicUseStart = true;
-                makeLog();
+
 
             }
         };
@@ -234,7 +231,11 @@ public class DotService extends AccessibilityService {
                 didMicUseStart = false;
             }
         }
-        Utils.createNewLog(getApplicationContext(), currentRunningAppPackage, cameraState, micState);
+        if (!currentRunningAppPackage.equals("com.aravi.dotpro")) {
+            Logs log = new Logs(System.currentTimeMillis(), currentRunningAppPackage, cameraState, micState);
+            mLogsRepository.insertLog(log);
+        }
+
     }
 
     private void setDotCustomColors() {
@@ -295,6 +296,10 @@ public class DotService extends AccessibilityService {
                 return Gravity.TOP | Gravity.START;
             case 1:
                 return Gravity.TOP | Gravity.END;
+            case 2:
+                return Gravity.BOTTOM | Gravity.START;
+            case 3:
+                return Gravity.BOTTOM | Gravity.END;
             default:
                 return Gravity.TOP | Gravity.END;
         }
