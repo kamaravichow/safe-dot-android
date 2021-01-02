@@ -110,7 +110,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@+id/vibrationSwitch"
+                    android:layout_toStartOf="@+id/vibrationSwitch"
                     android:gravity="center_vertical"
                     android:padding="5dp">
 
@@ -169,14 +169,11 @@
 
 
             <RelativeLayout
-                android:id="@+id/alignment_layout"
+                android:id="@+id/alignmentOption"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                android:background="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true"
                 android:orientation="horizontal"
                 android:padding="5dp">
 
@@ -184,7 +181,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@+id/align"
+                    android:layout_toStartOf="@+id/align"
                     android:gravity="center_vertical"
                     android:padding="5dp">
 
@@ -252,12 +249,6 @@
 
             </RelativeLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/grey_100"
-                android:visibility="visible" />
-
 
             <View
                 android:layout_width="match_parent"
@@ -277,7 +268,7 @@
 
 
             <RelativeLayout
-                android:id="@+id/logsClickable"
+                android:id="@+id/logsOption"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -292,7 +283,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@+id/logs_arrow"
+                    android:layout_toStartOf="@+id/logs_arrow"
                     android:gravity="center_vertical"
                     android:padding="5dp">
 
@@ -362,7 +353,7 @@
                 android:textStyle="bold" />
 
             <RelativeLayout
-                android:id="@+id/shareClickable"
+                android:id="@+id/shareOption"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -453,7 +444,7 @@
                 android:layout_marginTop="10dp"
                 android:drawablePadding="10dp"
                 android:fontFamily="@font/product_sans_regular"
-                android:gravity="center"
+                android:gravity="start"
                 android:text="@string/premium_reason_1"
                 android:textSize="16sp"
                 app:drawableStartCompat="@drawable/ic_analytics" />
@@ -465,7 +456,7 @@
                 android:layout_marginTop="10dp"
                 android:drawablePadding="10dp"
                 android:fontFamily="@font/product_sans_regular"
-                android:gravity="center"
+                android:gravity="start"
                 android:text="@string/premium_reason_2"
                 android:textSize="16sp"
                 app:drawableStartCompat="@drawable/ic_internet" />
@@ -477,7 +468,7 @@
                 android:layout_marginTop="10dp"
                 android:drawablePadding="10dp"
                 android:fontFamily="@font/product_sans_regular"
-                android:gravity="center"
+                android:gravity="start"
                 android:text="@string/premium_reason_3"
                 android:textSize="16sp"
                 app:drawableStartCompat="@drawable/ic_baseline_battery_charging_full_24" />
@@ -489,7 +480,7 @@
                 android:layout_marginTop="10dp"
                 android:drawablePadding="10dp"
                 android:fontFamily="@font/product_sans_regular"
-                android:gravity="center"
+                android:gravity="start"
                 android:text="@string/premium_reason_4"
                 android:textSize="16sp"
                 app:drawableStartCompat="@drawable/ic_attach_money" />
@@ -503,6 +494,11 @@
                 android:layout_margin="10dp"
                 android:text="@string/get_premium_version" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_margin="10dp"
+                android:background="@color/grey_100" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -519,7 +515,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@+id/analyticsSwitch"
+                    android:layout_toLeftOf="@+id/experienceSwitch"
                     android:gravity="center_vertical"
                     android:padding="5dp">
 
@@ -539,7 +535,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
-                            android:text="Analytics Data"
+                            android:text="User Experience Program"
                             android:textColor="@android:color/black"
                             android:textSize="16sp"
                             android:textStyle="bold" />
@@ -560,13 +556,14 @@
 
 
                 <com.google.android.material.switchmaterial.SwitchMaterial
-                    android:id="@+id/analyticsSwitch"
+                    android:id="@+id/experienceSwitch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp" />
+                    android:layout_marginBottom="10dp"
+                    android:checked="true" />
 
 
             </RelativeLayout>

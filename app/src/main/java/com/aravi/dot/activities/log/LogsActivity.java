@@ -19,17 +19,15 @@ package com.aravi.dot.activities.log;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.aravi.dot.R;
 import com.aravi.dot.adapter.LogAdapter;
+import com.aravi.dot.databinding.ActivityLogsBinding;
 import com.aravi.dot.model.Logs;
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -37,55 +35,56 @@ import java.util.List;
 
 public class LogsActivity extends AppCompatActivity {
 
+    private ActivityLogsBinding mBinding;
     private LogsViewModel mLogsViewModel;
     private List<Logs> logsList;
-    private ProgressBar progressBar;
-    private RecyclerView recyclerView;
     private LogAdapter adapter;
-    private ExtendedFloatingActionButton clearLogsButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_logs);
+        mBinding = ActivityLogsBinding.inflate(getLayoutInflater());
+        setContentView(mBinding.getRoot());
         mLogsViewModel = ViewModelProviders.of(this).get(LogsViewModel.class);
+        setSupportActionBar(mBinding.toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
         init();
     }
 
-    private void init() {
-        recyclerView = findViewById(R.id.logsRecyclerView);
-        progressBar = findViewById(R.id.progressBar);
-        clearLogsButton = findViewById(R.id.clearLogsButton);
-        clearLogsButton.hide();
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return super.onSupportNavigateUp();
+    }
 
-        progressBar.setVisibility(View.VISIBLE);
+    private void init() {
+        mBinding.clearLogsButton.hide();
+
+        mBinding.progressBar.setVisibility(View.VISIBLE);
         logsList = new ArrayList<>();
-        logsList.clear();
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mBinding.logsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         mLogsViewModel.getAllWords().observe(this, logs -> {
-            progressBar.setVisibility(View.INVISIBLE);
+            mBinding.progressBar.setVisibility(View.INVISIBLE);
             adapter = new LogAdapter(LogsActivity.this, logs);
-            recyclerView.setAdapter(adapter);
+            mBinding.logsRecyclerView.setAdapter(adapter);
             if (logs.isEmpty()) {
-                clearLogsButton.hide();
+                mBinding.clearLogsButton.hide();
                 findViewById(R.id.emptyListImage).setVisibility(View.VISIBLE);
             } else {
-                clearLogsButton.show();
-                clearLogsButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mLogsViewModel.clearLogs();
-                        showSnackBar("Logs Cleared");
-                    }
+                mBinding.clearLogsButton.show();
+                mBinding.clearLogsButton.setOnClickListener(v -> {
+                    mLogsViewModel.clearLogs();
+                    showSnackBar("Logs Cleared");
                 });
-                findViewById(R.id.emptyListImage).setVisibility(View.INVISIBLE);
+                mBinding.emptyListImage.setVisibility(View.INVISIBLE);
             }
         });
     }
 
     private void showSnackBar(String message) {
-        Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(mBinding.getRoot(), message, Snackbar.LENGTH_SHORT).show();
     }
 
 
