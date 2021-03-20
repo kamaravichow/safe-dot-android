@@ -26,6 +26,7 @@
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
+        style="@style/Widget.MaterialComponents.Toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:title="@string/access_log_title"
@@ -63,6 +64,7 @@
         android:layout_margin="16dp"
         android:text="@string/clear_logs"
         android:textColor="@android:color/white"
+        app:backgroundTint="@color/colorAccent"
         app:icon="@drawable/ic_round_clear_24"
         app:iconTint="@android:color/white" />
 

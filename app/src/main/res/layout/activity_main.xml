@@ -59,6 +59,7 @@
                         android:src="@drawable/transparent" />
 
                     <TextView
+                        style="@style/TextAppearance.MaterialComponents.Subtitle1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
@@ -89,11 +90,12 @@
 
 
             <TextView
+                style="@style/TextAppearance.MaterialComponents.Caption"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/product_sans_regular"
-                android:text="Preferences"
+                android:text="Customise"
                 android:textSize="@dimen/sub_head_size"
                 android:textStyle="bold" />
 
@@ -127,6 +129,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            style="@style/TextAppearance.MaterialComponents.Subtitle1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
@@ -136,6 +139,7 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            style="@style/TextAppearance.MaterialComponents.Caption"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
@@ -198,6 +202,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            style="@style/TextAppearance.MaterialComponents.Subtitle1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
@@ -207,6 +212,7 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            style="@style/TextAppearance.MaterialComponents.Caption"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
@@ -258,11 +264,12 @@
 
 
             <TextView
+                style="@style/TextAppearance.MaterialComponents.Caption"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/product_sans_regular"
-                android:text="Additional Options"
+                android:text="Options"
                 android:textSize="@dimen/sub_head_size"
                 android:textStyle="bold" />
 
@@ -300,6 +307,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            style="@style/TextAppearance.MaterialComponents.Subtitle1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
@@ -309,6 +317,7 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            style="@style/TextAppearance.MaterialComponents.Caption"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
@@ -337,20 +346,6 @@
 
             </RelativeLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_margin="10dp"
-                android:background="@color/grey_100" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:fontFamily="@font/product_sans_regular"
-                android:text="Others"
-                android:textSize="@dimen/sub_head_size"
-                android:textStyle="bold" />
 
             <RelativeLayout
                 android:id="@+id/shareOption"
@@ -384,6 +379,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            style="@style/TextAppearance.MaterialComponents.Subtitle1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
@@ -393,6 +389,7 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            style="@style/TextAppearance.MaterialComponents.Caption"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
@@ -427,154 +424,6 @@
                 android:layout_margin="10dp"
                 android:background="@color/grey_100" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:fontFamily="@font/product_sans_regular"
-                android:text="@string/why_premium"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/minor_heading_size"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:drawablePadding="10dp"
-                android:fontFamily="@font/product_sans_regular"
-                android:gravity="start"
-                android:text="@string/premium_reason_1"
-                android:textSize="16sp"
-                app:drawableStartCompat="@drawable/ic_analytics" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:drawablePadding="10dp"
-                android:fontFamily="@font/product_sans_regular"
-                android:gravity="start"
-                android:text="@string/premium_reason_2"
-                android:textSize="16sp"
-                app:drawableStartCompat="@drawable/ic_internet" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:drawablePadding="10dp"
-                android:fontFamily="@font/product_sans_regular"
-                android:gravity="start"
-                android:text="@string/premium_reason_3"
-                android:textSize="16sp"
-                app:drawableStartCompat="@drawable/ic_baseline_battery_charging_full_24" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:drawablePadding="10dp"
-                android:fontFamily="@font/product_sans_regular"
-                android:gravity="start"
-                android:text="@string/premium_reason_4"
-                android:textSize="16sp"
-                app:drawableStartCompat="@drawable/ic_attach_money" />
-
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/premiumVersion"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="@string/get_premium_version" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_margin="10dp"
-                android:background="@color/grey_100" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:background="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true"
-                android:orientation="horizontal"
-                android:padding="5dp">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@+id/experienceSwitch"
-                    android:gravity="center_vertical"
-                    android:padding="5dp">
-
-                    <ImageView
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
-                        android:padding="5dp"
-                        android:src="@drawable/ic_analytics"
-                        app:tint="@color/blue_500" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:text="User Experience Program"
-                            android:textColor="@android:color/black"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginEnd="10dp"
-                            android:text="@string/analytics_description"
-                            android:textSize="12sp" />
-
-                    </LinearLayout>
-
-
-                </LinearLayout>
-
-
-                <com.google.android.material.switchmaterial.SwitchMaterial
-                    android:id="@+id/experienceSwitch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:checked="true" />
-
-
-            </RelativeLayout>
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_margin="10dp"
-                android:background="@color/grey_100" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -599,6 +448,7 @@
             </LinearLayout>
 
             <TextView
+                style="@style/TextAppearance.MaterialComponents.Subtitle1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -608,6 +458,7 @@
 
             <TextView
                 android:id="@+id/versionText"
+                style="@style/TextAppearance.MaterialComponents.Caption"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

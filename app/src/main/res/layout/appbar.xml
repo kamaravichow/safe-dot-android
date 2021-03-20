@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) 2020.  Aravind Chowdary (@kamaravichow)
   ~
   ~ This program is free software: you can redistribute it and/or modify
@@ -18,6 +17,7 @@
 
 <com.google.android.material.appbar.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/Widget.MaterialComponents.AppBarLayout.PrimarySurface"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@android:color/white"
@@ -31,12 +31,14 @@
         app:titleEnabled="false">
 
         <com.google.android.material.appbar.MaterialToolbar
+            style="@style/Widget.MaterialComponents.Toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:gravity="start"
             app:layout_collapseMode="pin">
 
             <ImageView
+                style="@style/MaterialAlertDialog.MaterialComponents.Title.Icon"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:scaleType="fitCenter"
@@ -54,6 +56,7 @@
             app:layout_collapseParallaxMultiplier="0.7">
 
             <TextView
+                style="@style/TextAppearance.MaterialComponents.Headline1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -63,6 +66,7 @@
                 android:textSize="@dimen/title_heading_size" />
 
             <TextView
+                style="@style/TextAppearance.MaterialComponents.Caption"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/product_sans_regular"

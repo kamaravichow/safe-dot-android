@@ -16,7 +16,7 @@
   -->
 
 <resources>
-    <string name="app_name">Dot</string>
+    <string name="app_name">SafeDot</string>
 
     <string name="channel_name">SafeDot</string>
     <string name="channel_description">You will receive a notification when app uses your camera or microphone</string>
@@ -24,8 +24,8 @@
     <string name="service_description">When this service is enabled it lets Dot safe app to display notifications and indicators every time a third-party app or a service uses camera or microphone on any screen.</string>
     <string name="service_summary">Get notified every time a third-party app uses camera or microphone</string>
 
-    <string name="full_app_name">Safe Dot</string>
-    <string name="app_tagline">Puts Your privacy on the Top</string>
+    <string name="full_app_name">Safe Dot Pro</string>
+    <string name="app_tagline">Protects your Camera &amp; Microphone Privacy</string>
 
     <string name="turn_on_string">TURN SAFE DOT ON</string>
     <string name="close_app_note">Disable the accessibility permission to the app</string>
@@ -76,5 +76,6 @@
 
     <string name="access_log_title">Access Log</string>
     <string name="clear_logs">Clear Logs</string>
+    <string name="title_ads">No Interner Adverts</string>
 
 </resources>
