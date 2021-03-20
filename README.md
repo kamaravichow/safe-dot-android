@@ -2,11 +2,13 @@
 ![Android CI](https://github.com/kamaravichow/safe-dot-android/workflows/Android%20CI/badge.svg)
 
 An app that 🔔 alerts you when a third-party application uses your device camera or microphone.
-[READ MORE](https://medium.com/@kamaravichow/youre-being-watched-5ab439fe42ef)
 
-## Screenshots 
-|![Screenshot1](https://github.com/kamaravichow/safe-dot-android/raw/master/docs/screenshot1.png)|![Screenshot2](https://github.com/kamaravichow/safe-dot-android/raw/master/docs/screenshot2.png)|![Screenshot2](https://github.com/kamaravichow/safe-dot-android/raw/master/docs/screenshot3.png)|
-|---|---|---|
+**Stack :**
+- Minimum SDK 21
+- MVVM Architecture (View - ViewModel - Model)
+- View Binding
+- Room Database
+- Accessibility Service
 
 ## Download Now
 App is currently available for Production & Open Beta Testing on Google Play Store & Samsung's Galaxy Store. Use the below links to get redirected to the app page.
@@ -41,16 +43,31 @@ git clone https://github.com/kamaravichow/safe-dot-android.git
 
 or just fork the repository.
 
-[READ MORE](https://github.com/kamaravichow/safe-dot-android/blob/master/CONTRIBUTING.md)
+[CONTRIBUTING.MD](https://github.com/kamaravichow/safe-dot-android/blob/master/CONTRIBUTING.md)
+
+## Screenshots 
+|![Screenshot1](https://github.com/kamaravichow/safe-dot-android/raw/master/docs/screenshot1.png)|![Screenshot2](https://github.com/kamaravichow/safe-dot-android/raw/master/docs/screenshot2.png)|![Screenshot2](https://github.com/kamaravichow/safe-dot-android/raw/master/docs/screenshot3.png)|
+|---|---|---|
+
+
 
 ## Licence
 
 ```
-Designed and developed by 2020 kamaravichow (Aravind Chowdary)
+Copyright (C) 2020-2021  Aravind Chowdary (@kamaravichow)
 
-Licensed under the The GNU General Public License, Version 3 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at 
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 ```
-[LICENCE](https://github.com/kamaravichow/safe-dot-android/blob/master/LICENSE)
+[FULL LICENCE](https://github.com/kamaravichow/safe-dot-android/blob/master/LICENSE)
