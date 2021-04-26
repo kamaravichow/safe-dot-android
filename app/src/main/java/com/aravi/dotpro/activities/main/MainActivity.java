@@ -34,7 +34,7 @@ import com.aravi.dotpro.R;
 import com.aravi.dotpro.Utils;
 import com.aravi.dotpro.activities.log.LogsActivity;
 import com.aravi.dotpro.databinding.ActivityMainBinding;
-import com.aravi.dotpro.manager.SharedPreferenceManager;
+import com.aravi.dotpro.manager.PreferenceManager;
 import com.aravi.dotpro.service.DotService;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
@@ -43,7 +43,8 @@ import com.google.android.material.snackbar.Snackbar;
 public class MainActivity extends AppCompatActivity {
     private static final int MY_REQUEST_CODE = 1802;
     private boolean TRIGGERED_START = false;
-    private SharedPreferenceManager sharedPreferenceManager;
+
+    private PreferenceManager sharedPreferenceManager;
     private Intent serviceIntent;
     private ActivityMainBinding mBinding;
 
@@ -60,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         mBinding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(mBinding.getRoot());
-        sharedPreferenceManager = SharedPreferenceManager.getInstance(this);
+        sharedPreferenceManager = PreferenceManager.getInstance(getApplication());
         init();
         checkAutoStartRequirement();
     }

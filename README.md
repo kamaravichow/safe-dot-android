@@ -13,20 +13,14 @@ An app that 🔔 alerts you when a third-party application uses your device came
 ## Download Now
 App is currently available for Production & Open Beta Testing on Google Play Store & Samsung's Galaxy Store. Use the below links to get redirected to the app page.
 
-|[<img src="https://github.com/kamaravichow/safe-dot-android/raw/master/docs/google-play-badge.png" width="200">](https://play.google.com/store/apps/details?id=com.aravi.dot)| [<img src="https://github.com/kamaravichow/safe-dot-android/raw/master/docs/galaxy-store-badge.png" width="200">](https://galaxy.store/dotsafe)|
+|[<img src="https://github.com/kamaravichow/safe-dot-android/raw/master/docs/google-play-badge.png" width="200">](https://play.google.com/store/apps/details?id=com.aravi.dotpro)| [<img src="https://github.com/kamaravichow/safe-dot-android/raw/master/docs/galaxy-store-badge.png" width="200">](https://galaxy.store/dotsafe)|
 |---|---|
 
 
 ## Libraries Used
-Firebase Crashylitics & Analytics [View Source](https://github.com/firebase/firebase-android-sdk/tree/master/firebase-crashlytics)
 
-Facebook Audience Network SDK  [REMOVED RECENTLY]
-
-- Most of you did'nt like to have facebook SDK integrated in a privacy focused application so I've pulled it out in the latest update
-
-Gson Google [View Source](https://github.com/google/gson)
-
-Circle Image View [View Source](https://github.com/hdodenhof/CircleImageView)
+**Gson Google** [View Source](https://github.com/google/gson)
+**Circle Image View** [View Source](https://github.com/hdodenhof/CircleImageView)
 
 ## Issue Tracking
 

@@ -18,6 +18,7 @@
 package com.aravi.dotpro
 
 import android.app.Application
+import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.os.Build
@@ -25,6 +26,7 @@ import android.os.Build
 class App : Application() {
     override fun onCreate() {
         super.onCreate()
+        createServiceNotificationChannel()
         createNotificationChannels()
     }
 
@@ -38,6 +40,24 @@ class App : Application() {
             mChannel.description = descriptionText
             // Register the channel with the system; you can't change the importance
             // or other notification behaviors after this
+            val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(mChannel)
+        }
+    }
+
+
+    private fun createServiceNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // Create the NotificationChannel
+            val name = "Monitoring Service"
+            val descriptionText = "SafeDot is looking at apps which are trying to access your camera or microphone"
+            val importance = NotificationManager.IMPORTANCE_HIGH
+            val visibility = Notification.VISIBILITY_PRIVATE
+
+            val mChannel = NotificationChannel(Constants.SERVICE_NOTIFICATION_CHANNEL, name,importance)
+            mChannel.lockscreenVisibility = visibility // Hides the notification in lockscreen
+            mChannel.description = "Service running notification (Disabling this might cause issues with app)"
+
             val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(mChannel)
         }
