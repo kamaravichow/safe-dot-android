@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.aravi.dotpro.activities.log;
+package com.aravi.dot.activities.log;
 
 /**
  * Created by Aravind Chowdary on
@@ -26,7 +26,8 @@ import android.app.Application;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.aravi.dotpro.model.Logs;
+import com.aravi.dot.activities.log.database.LogsRepository;
+import com.aravi.dot.model.Logs;
 
 import java.util.List;
 

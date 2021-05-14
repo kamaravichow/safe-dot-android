@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.aravi.dotpro.activities.log;
+package com.aravi.dot.activities.log;
 
 import android.os.Bundle;
 import android.view.View;
@@ -23,10 +23,10 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.aravi.dotpro.R;
-import com.aravi.dotpro.adapter.LogAdapter;
-import com.aravi.dotpro.databinding.ActivityLogsBinding;
-import com.aravi.dotpro.model.Logs;
+import com.aravi.dot.R;
+import com.aravi.dot.activities.log.adapter.LogAdapter;
+import com.aravi.dot.databinding.ActivityLogsBinding;
+import com.aravi.dot.model.Logs;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -102,14 +102,14 @@ public class LogsActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 //        try {
-//            Intent adIntent = new Intent().setClassName(this, "com.aravi.dotpro.ads.AdvertisementActivity");
+//            Intent adIntent = new Intent().setClassName(this, "com.aravi.dot.ads.AdvertisementActivity");
 //            startActivity(adIntent);
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
 
 
-//        Intent launchIntent = getPackageManager().getLaunchIntentForPackage("com.aravi.dotpro.ads.AdvertisementActivity");
+//        Intent launchIntent = getPackageManager().getLaunchIntentForPackage("com.aravi.dot.ads.AdvertisementActivity");
 //        if (launchIntent != null) {
 //            startActivity(launchIntent);//null pointer check in case package name was not found
 //        }

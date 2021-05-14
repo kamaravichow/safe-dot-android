@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020.  Aravind Chowdary (@kamaravichow)
+ * Copyright (C) 2021.  Aravind Chowdary (@kamaravichow)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.aravi.dotpro.activities.log;
+package com.aravi.dot.activities.log.database;
 
 
 import android.content.Context;
@@ -26,7 +26,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import com.aravi.dotpro.model.Logs;
+import com.aravi.dot.model.Logs;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -35,11 +35,12 @@ import java.util.concurrent.Executors;
  * Created by Aravind Chowdary on
  **/
 
-@Database(entities = {Logs.class}, version = 1, exportSchema = true)
+@Database(entities = {Logs.class}, version = 3, exportSchema = true)
 public abstract class LogsRoomDatabase extends RoomDatabase {
     private static final int NUMBER_OF_THREADS = 4;
 
     public abstract LogsDao logsDao();
+
     private static volatile LogsRoomDatabase INSTANCE;
     static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
@@ -52,7 +53,7 @@ public abstract class LogsRoomDatabase extends RoomDatabase {
             synchronized (LogsRoomDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            LogsRoomDatabase.class, "logs_database")
+                            LogsRoomDatabase.class, "logsfree")
                             .addCallback(sRoomDatabaseCallback)
                             .build();
                 }

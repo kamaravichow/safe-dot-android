@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "957309260090",
+    "firebase_url": "https://clapoutsocial.firebaseio.com",
+    "project_id": "clapoutsocial",
+    "storage_bucket": "clapoutsocial.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:957309260090:android:4c0b28fe3e19c793d60003",
+        "android_client_info": {
+          "package_name": "com.aravi.dot"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "957309260090-4i41f1areom9obbifkj2bduoavo4kqoq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.aravi.dot",
+            "certificate_hash": "fd2cbfcce4368a6e2264f20857921cd9196d675b"
+          }
+        },
+        {
+          "client_id": "957309260090-f0mo8sm1kva49kepuupk86in153n5ssu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_FgoC5o4YsU6vji-tEjXovmUzg_ldWzI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "957309260090-f0mo8sm1kva49kepuupk86in153n5ssu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

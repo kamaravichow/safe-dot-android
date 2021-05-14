@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020.  Aravind Chowdary (@kamaravichow)
+ * Copyright (C) 2021.  Aravind Chowdary (@kamaravichow)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.aravi.dotpro.activities.log;
+package com.aravi.dot.activities.log.database;
 
 /**
  * Created by Aravind Chowdary on
@@ -25,7 +25,9 @@ import android.app.Application;
 
 import androidx.lifecycle.LiveData;
 
-import com.aravi.dotpro.model.Logs;
+import com.aravi.dot.activities.log.database.LogsDao;
+import com.aravi.dot.activities.log.database.LogsRoomDatabase;
+import com.aravi.dot.model.Logs;
 
 import java.util.List;
 
@@ -46,7 +48,7 @@ public class LogsRepository {
     /**
      * @return
      */
-    LiveData<List<Logs>> getLogs() {
+    public LiveData<List<Logs>> getLogs() {
         // Room executes all queries on a separate thread.
         // Observed LiveData will notify the observer when the data has changed.
         return logLiveData;

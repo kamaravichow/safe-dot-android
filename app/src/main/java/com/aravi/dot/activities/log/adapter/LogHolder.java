@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.aravi.dotpro.adapter;
+package com.aravi.dot.activities.log.adapter;
 
 import android.view.View;
 import android.widget.ImageView;
@@ -24,7 +24,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.aravi.dotpro.R;
+import com.aravi.dot.R;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -35,9 +35,9 @@ public class LogHolder extends RecyclerView.ViewHolder {
 
     public final RelativeLayout item;
     public final CircleImageView appIcon;
-    public final ImageView logCamDot, logMicDot;
+    public final ImageView logCamDot, logMicDot, logLocDot;
     public final TextView appName, appPackage, appTimestamp;
-    public final View cameraStart, cameraStop, micStart, micStop;
+    public final View cameraStart, cameraStop, micStart, micStop, locStart, locStop;
 
     public LogHolder(View itemView) {
         super(itemView);
@@ -49,10 +49,13 @@ public class LogHolder extends RecyclerView.ViewHolder {
 
         logCamDot = itemView.findViewById(R.id.logCameraDot);
         logMicDot = itemView.findViewById(R.id.logMicDot);
+        logLocDot = itemView.findViewById(R.id.logLocDot);
 
         cameraStart = itemView.findViewById(R.id.lineCameraStart);
         cameraStop = itemView.findViewById(R.id.lineCameraStop);
         micStart = itemView.findViewById(R.id.lineMicStart);
         micStop = itemView.findViewById(R.id.lineMicStop);
+        locStart = itemView.findViewById(R.id.lineLocStart);
+        locStop = itemView.findViewById(R.id.lineLocStop);
     }
 }

@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.aravi.dotpro.adapter;
+package com.aravi.dot.activities.log.adapter;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -27,9 +27,9 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.aravi.dotpro.R;
-import com.aravi.dotpro.Utils;
-import com.aravi.dotpro.model.Logs;
+import com.aravi.dot.R;
+import com.aravi.dot.util.Utils;
+import com.aravi.dot.model.Logs;
 
 import java.util.List;
 
@@ -100,6 +100,26 @@ public class LogAdapter extends RecyclerView.Adapter<LogHolder> {
                 break;
 
         }
+
+
+        switch (item.getLoc_state()) {
+            case 0:
+                holder.locStart.setVisibility(View.INVISIBLE);
+                holder.locStop.setVisibility(View.INVISIBLE);
+                holder.logLocDot.setVisibility(View.INVISIBLE);
+                break;
+            case 1:
+                holder.logLocDot.setVisibility(View.VISIBLE);
+                holder.locStart.setVisibility(View.VISIBLE);
+                holder.locStop.setVisibility(View.INVISIBLE);
+                break;
+            case 2:
+                holder.logLocDot.setVisibility(View.VISIBLE);
+                holder.locStart.setVisibility(View.INVISIBLE);
+                holder.locStop.setVisibility(View.VISIBLE);
+                break;
+
+        }
     }
 
     @Override
@@ -109,7 +129,6 @@ public class LogAdapter extends RecyclerView.Adapter<LogHolder> {
         }
         return 0;
     }
-
 
 
 }
