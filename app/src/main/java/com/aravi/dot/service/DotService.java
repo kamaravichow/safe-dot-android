@@ -1,4 +1,4 @@
-package com.aravi.dotpro.service;
+package com.aravi.dot.service;
 
 import android.Manifest;
 import android.accessibilityservice.AccessibilityService;
@@ -9,13 +9,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ServiceInfo;
-import android.graphics.Color;
 import android.graphics.PixelFormat;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.hardware.camera2.CameraManager;
 import android.location.GnssStatus;
-import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.AudioRecordingConfiguration;
 import android.os.Build;
@@ -30,24 +31,26 @@ import android.view.accessibility.AccessibilityEvent;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
+import androidx.lifecycle.MutableLiveData;
 
-import com.aravi.dotpro.BuildConfig;
-import com.aravi.dotpro.Constants;
-import com.aravi.dotpro.R;
-import com.aravi.dotpro.Utils;
-import com.aravi.dotpro.activities.log.LogsRepository;
-import com.aravi.dotpro.activities.main.MainActivity;
-import com.aravi.dotpro.manager.PreferenceManager;
-import com.aravi.dotpro.model.Logs;
+import com.aravi.dot.BuildConfig;
+import com.aravi.dot.constant.Constants;
+import com.aravi.dot.R;
+import com.aravi.dot.util.Utils;
+import com.aravi.dot.activities.log.database.LogsRepository;
+import com.aravi.dot.activities.main.MainActivity;
+import com.aravi.dot.manager.PreferenceManager;
+import com.aravi.dot.model.Logs;
 
 import java.util.List;
 
+import static android.app.PendingIntent.FLAG_IMMUTABLE;
 import static android.app.PendingIntent.FLAG_UPDATE_CURRENT;
-import static com.aravi.dotpro.Constants.NOTIFICATION_ID;
+import static com.aravi.dot.constant.Constants.NOTIFICATION_ID;
 
 
 public class DotService extends AccessibilityService {
@@ -56,10 +59,12 @@ public class DotService extends AccessibilityService {
     private LogsRepository mLogsRepository;
     private boolean isCameraUnavailable = false;
     private boolean isMicUnavailable = false;
+    private boolean isLocUnavailable = false;
     private final boolean isOnUseNotificationEnabled = true;
 
     private boolean didCameraUseStart = false;
     private boolean didMicUseStart = false;
+    private boolean didLocUseStart = false;
 
     private FrameLayout hoverLayout;
     private ImageView dotCamera, dotMic, dotLoc;
@@ -79,6 +84,7 @@ public class DotService extends AccessibilityService {
     private NotificationManagerCompat notificationManager;
     private NotificationCompat.Builder notificationCompatBuilder;
     private String currentRunningAppPackage = BuildConfig.APPLICATION_ID;
+    private MutableLiveData<String> currentLivePackage = new MutableLiveData<>();
 
 
     @Override
@@ -90,19 +96,27 @@ public class DotService extends AccessibilityService {
     public void onCreate() {
         super.onCreate();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            final NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), Constants.SERVICE_NOTIFICATION_CHANNEL);
-            final Notification n = builder.setLocalOnly(true)
-                    .setCategory(Notification.CATEGORY_SERVICE)
-                    .setPriority(NotificationCompat.PRIORITY_MIN)
+            Intent notificationIntent = new Intent(this, MainActivity.class);
+            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
+
+            Notification notification = new Notification.Builder(this, Constants.SERVICE_NOTIFICATION_CHANNEL)
+                    .setContentTitle("SafeDot")
+                    .setContentText("SafeDot is protecting your privacy")
                     .setSmallIcon(R.drawable.transparent)
+                    .setContentIntent(pendingIntent)
+                    .setTicker("Safedot protection is now turned on")
                     .build();
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                startForeground(3, n, ServiceInfo.FOREGROUND_SERVICE_TYPE_CAMERA | ServiceInfo.FOREGROUND_SERVICE_TYPE_MICROPHONE);
-            } else {
-                startForeground(3, n);
-            }
+            currentLivePackage.setValue(BuildConfig.APPLICATION_ID);
 
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                startForeground(3, notification,
+                        ServiceInfo.FOREGROUND_SERVICE_TYPE_CAMERA
+                                | ServiceInfo.FOREGROUND_SERVICE_TYPE_MICROPHONE
+                                | ServiceInfo.FOREGROUND_SERVICE_TYPE_LOCATION);
+            } else {
+                startForeground(3, notification);
+            }
         }
 
         getDefaults();
@@ -134,33 +148,10 @@ public class DotService extends AccessibilityService {
             locationManager.removeUpdates(locationListener);
 
         } else {
-
+            sharedPreferenceManager.setLocationEnabled(false);
         }
 
     }
-
-
-    // Location service Callbacks
-    private LocationListener locationListener = new LocationListener() {
-        @Override
-        public void onLocationChanged(@NonNull Location location) {
-
-        }
-    };
-
-    private GnssStatus.Callback locationCallback = new GnssStatus.Callback() {
-        @Override
-        public void onStarted() {
-            super.onStarted();
-            Log.i(TAG, "location: started");
-        }
-
-        @Override
-        public void onStopped() {
-            super.onStopped();
-            Log.i(TAG, "location: stopped");
-        }
-    };
 
 
     // Camera service callbacks
@@ -216,12 +207,47 @@ public class DotService extends AccessibilityService {
                     didMicUseStart = true;
                     makeLog();
                 }
-
-
             }
         };
         return micCallback;
     }
+
+
+    // Location service Callbacks
+    private LocationListener locationListener = location -> {
+        if (Constants.isDebug()) {
+            Log.i(TAG, "location: " + location.toString());
+        }
+    };
+
+    private GnssStatus.Callback locationCallback = new GnssStatus.Callback() {
+        @Override
+        public void onStarted() {
+            super.onStarted();
+            if (sharedPreferenceManager.isLocationEnabled()) {
+                didLocUseStart = true;
+                isLocUnavailable = true;
+                showLocDot();
+                triggerVibration();
+                makeLog();
+                showOnUseNotification();
+            }
+
+        }
+
+        @Override
+        public void onStopped() {
+            super.onStopped();
+            if (sharedPreferenceManager.isLocationEnabled()) {
+                hideLocDot();
+                isLocUnavailable = false;
+                didLocUseStart = true;
+                makeLog();
+                dismissOnUseNotification();
+            }
+
+        }
+    };
 
 
     /*
@@ -240,20 +266,24 @@ public class DotService extends AccessibilityService {
         notificationManager = NotificationManagerCompat.from(getApplicationContext());
     }
 
-    /*
-    Generates the notification title
+    /**
+     * Generates the notification title
      */
     private String getNotificationTitle() {
-        if (isCameraUnavailable && isMicUnavailable)
-            return "Camera and Mic are being accessed";
-        if (isCameraUnavailable && !isMicUnavailable)
-            return "Camera is being accessed";
-        if (!isCameraUnavailable && isMicUnavailable)
-            return "Mic is being accessed";
-        return "Your Camera or Mic is ON";
+        String title = "Your ";
+        if (isCameraUnavailable) {
+            title = title + "CAMERA, ";
+        }
+        if (isMicUnavailable) {
+            title = title + "MIC, ";
+        }
+        if (isLocUnavailable) {
+            title = title + "LOCATION";
+        }
+        return title + " are being monitored";
     }
 
-    /*
+    /**
      * Generates the notification description
      * Takes in the currently running application name from last accessibility event
      */
@@ -261,13 +291,17 @@ public class DotService extends AccessibilityService {
         if (appUsingComponent.isEmpty() || appUsingComponent.equals("(unknown)")) {
             appUsingComponent = "some app";
         }
-        if (isCameraUnavailable && isMicUnavailable)
-            return "Hey, " + appUsingComponent + " is watching and hearing you";
-        if (isCameraUnavailable && !isMicUnavailable)
-            return "You're being watched by " + appUsingComponent + "!";
-        if (!isCameraUnavailable && isMicUnavailable)
-            return Utils.capitalizeFirstLetterOfString(appUsingComponent) + " is hearing you !";
-        return "Looks like " + appUsingComponent + " is using your camera and mic...";
+        String description = appUsingComponent + " is using your ";
+        if (isCameraUnavailable) {
+            description = description + "CAMERA, ";
+        }
+        if (isMicUnavailable) {
+            description = description + "MIC, ";
+        }
+        if (isLocUnavailable) {
+            description = description + "LOCATION";
+        }
+        return description;
     }
 
 
@@ -302,6 +336,7 @@ public class DotService extends AccessibilityService {
         int micState = 0;
         int locState = 0;
 
+        // sets the state of camera
         if (didCameraUseStart && isCameraUnavailable) {
             cameraState = 1;
         } else {
@@ -311,6 +346,7 @@ public class DotService extends AccessibilityService {
             }
         }
 
+        // sets the state of mic
         if (didMicUseStart && isMicUnavailable) {
             micState = 1;
         } else {
@@ -319,8 +355,20 @@ public class DotService extends AccessibilityService {
                 didMicUseStart = false;
             }
         }
-        if (!currentRunningAppPackage.equals("com.aravi.dotpro")) {
-            Logs log = new Logs(System.currentTimeMillis(), currentRunningAppPackage, cameraState, micState);
+
+        // sets the state of location
+        if (didLocUseStart && isLocUnavailable) {
+            locState = 1;
+        } else {
+            if (didLocUseStart && !isLocUnavailable) {
+                locState = 2;
+                didLocUseStart = false;
+            }
+        }
+
+
+        if (!currentRunningAppPackage.equals(BuildConfig.APPLICATION_ID)) {
+            Logs log = new Logs(System.currentTimeMillis(), currentRunningAppPackage, cameraState, micState, locState);
             mLogsRepository.insertLog(log);
         }
     }
@@ -329,39 +377,91 @@ public class DotService extends AccessibilityService {
     // CUSTOMISATION SETTINGS
 
     private void setDotCustomColors() {
-        setViewTint(dotCamera, "#4CAF50");
-        setViewTint(dotMic, "#FF9800");
+        setViewTint(dotCamera, sharedPreferenceManager.getCameraDotColor());
+        setViewTint(dotMic, sharedPreferenceManager.getMicDotColor());
+        setViewTint(dotLoc, sharedPreferenceManager.getLocationDotColor());
     }
 
-    private void setViewTint(ImageView imageView, String hex) {
-        imageView.setColorFilter(Color.parseColor(hex), android.graphics.PorterDuff.Mode.SRC_IN);
+    private void setViewTint(ImageView imageView, int color) {
+        Drawable drawable = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_dot);
+        drawable.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
+        Log.i(TAG, "setViewTint: camera color " + color);
+        imageView.setBackground(drawable);
     }
 
+    /**
+     * For android versions below oreo gives a vibration of 500ms
+     * For O above with effect - DEFAULT_AMPLITUDE
+     * for Q above with effect - EFFECT_HEAVY_CLICK
+     * todo make vibration pattern
+     */
     private void triggerVibration() {
+
+        AudioAttributes audioAttributes = new AudioAttributes.Builder()
+                .setFlags(FLAG_IMMUTABLE)
+                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                .build();
+
         if (sharedPreferenceManager.isVibrationEnabled()) {
             Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 v.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
+            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                v.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.EFFECT_HEAVY_CLICK));
             } else {
                 v.vibrate(500);
+
             }
         }
     }
 
+    private void getIconsEnabled() {
+        if (sharedPreferenceManager.isIconsEnabled()) {
+            dotCamera.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_round_camera));
+            dotMic.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_round_mic));
+            dotLoc.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_round_location));
+        } else {
+            dotCamera.setImageDrawable(null);
+            dotMic.setImageDrawable(null);
+            dotLoc.setImageDrawable(null);
+        }
+    }
 
+
+    /**
+     * get's alignment of dots
+     *
+     * @return
+     */
     private int getLayoutGravity() {
         int position = sharedPreferenceManager.getDotPosition();
         switch (position) {
             case 0:
+                // left
                 return Gravity.TOP | Gravity.START;
             case 1:
+                //right
                 return Gravity.TOP | Gravity.END;
             case 2:
-                return Gravity.BOTTOM | Gravity.START;
-            case 3:
-                return Gravity.BOTTOM | Gravity.END;
+                // center
+                return Gravity.TOP | Gravity.CENTER_HORIZONTAL;
             default:
+                // right on default
                 return Gravity.TOP | Gravity.END;
+        }
+    }
+
+
+    /// show dots functions ---------------------------
+
+    private void showCamDot() {
+        if (sharedPreferenceManager.isCameraEnabled()) {
+            updateLayoutGravity();
+            setDotCustomColors();
+            getIconsEnabled();
+            upScaleView(dotCamera);
+            dotCamera.setVisibility(View.VISIBLE);
         }
     }
 
@@ -369,23 +469,28 @@ public class DotService extends AccessibilityService {
         if (sharedPreferenceManager.isMicEnabled()) {
             updateLayoutGravity();
             setDotCustomColors();
+            getIconsEnabled();
             upScaleView(dotMic);
             dotMic.setVisibility(View.VISIBLE);
         }
     }
 
+
+    private void showLocDot() {
+        if (sharedPreferenceManager.isLocationEnabled()) {
+            updateLayoutGravity();
+            setDotCustomColors();
+            getIconsEnabled();
+            upScaleView(dotLoc);
+            dotLoc.setVisibility(View.VISIBLE);
+        }
+    }
+
+    /// hide dots functions ---------------------------
+
     private void hideMicDot() {
         downScaleView(dotMic);
         dotMic.setVisibility(View.GONE);
-    }
-
-    private void showCamDot() {
-        if (sharedPreferenceManager.isCameraEnabled()) {
-            updateLayoutGravity();
-            setDotCustomColors();
-            upScaleView(dotCamera);
-            dotCamera.setVisibility(View.VISIBLE);
-        }
     }
 
     private void hideCamDot() {
@@ -394,19 +499,13 @@ public class DotService extends AccessibilityService {
     }
 
 
-    private void showLocDot() {
-        if (sharedPreferenceManager.isCameraEnabled()) {
-            updateLayoutGravity();
-            setDotCustomColors();
-            upScaleView(dotCamera);
-            dotCamera.setVisibility(View.VISIBLE);
-        }
+    private void hideLocDot() {
+        downScaleView(dotLoc);
+        dotLoc.setVisibility(View.GONE);
     }
 
-    private void hideLocDot() {
-        downScaleView(dotCamera);
-        dotCamera.setVisibility(View.GONE);
-    }
+
+    // Dot animations
 
     public void upScaleView(View view) {
         view.animate().scaleX(1f).scaleY(1f).setDuration(500);
@@ -421,13 +520,14 @@ public class DotService extends AccessibilityService {
     private void initDotViews() {
         dotCamera = hoverLayout.findViewById(R.id.dot_camera);
         dotMic = hoverLayout.findViewById(R.id.dot_mic);
-
+        dotLoc = hoverLayout.findViewById(R.id.dot_location);
         setDotCustomColors();
 
         dotCamera.postDelayed(() -> {
             dotCamera.setVisibility(View.GONE);
             dotMic.setVisibility(View.GONE);
-        }, 500);
+            dotLoc.setVisibility(View.GONE);
+        }, 300);
 
     }
 
@@ -458,7 +558,9 @@ public class DotService extends AccessibilityService {
 
     @Override
     public void onInterrupt() {
-
+        if (Constants.isDebug()) {
+            Log.i(TAG, "onInterrupt: ");
+        }
     }
 
     @Override
@@ -467,9 +569,12 @@ public class DotService extends AccessibilityService {
             if (accessibilityEvent.getEventType() == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED && accessibilityEvent.getPackageName() != null) {
                 ComponentName componentName = new ComponentName(accessibilityEvent.getPackageName().toString(), accessibilityEvent.getClassName().toString());
                 currentRunningAppPackage = componentName.getPackageName();
+                currentLivePackage.setValue(componentName.getPackageName());
             }
         } catch (Exception ignored) {
-            Log.i(TAG, "onAccessibilityEvent:" + new Exception(ignored).getMessage());
+            if (Constants.isDebug()) {
+                Log.i(TAG, "onAccessibilityEvent:" + new Exception(ignored).getMessage());
+            }
         }
 
     }
@@ -484,6 +589,7 @@ public class DotService extends AccessibilityService {
         if (notificationManager != null) {
             notificationManager.cancel(3);
         }
+        // we cannot remove accessibility service
         stopForeground(true);
         super.onDestroy();
 

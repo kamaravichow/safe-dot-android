@@ -1,4 +1,4 @@
-package com.aravi.dotpro.model;
+package com.aravi.dot.model;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
@@ -15,12 +15,14 @@ public class Logs implements Serializable {
     private String packageName;
     private int camera_state;
     private int mic_state;
+    private int loc_state;
 
-    public Logs(long timestamp, String packageName, int camera_state, int mic_state) {
+    public Logs(long timestamp, String packageName, int camera_state, int mic_state, int loc_state) {
         this.timestamp = timestamp;
         this.packageName = packageName;
         this.camera_state = camera_state;
         this.mic_state = mic_state;
+        this.loc_state = loc_state;
     }
 
     public long getTimestamp() {
@@ -53,5 +55,13 @@ public class Logs implements Serializable {
 
     public void setMic_state(int mic_state) {
         this.mic_state = mic_state;
+    }
+
+    public int getLoc_state() {
+        return loc_state;
+    }
+
+    public void setLoc_state(int loc_state) {
+        this.loc_state = loc_state;
     }
 }

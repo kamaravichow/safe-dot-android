@@ -1,4 +1,21 @@
-package com.aravi.dotpro;
+/*
+ * Copyright (C) 2021.  Aravind Chowdary (@kamaravichow)
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+package com.aravi.dot.util;
 
 import android.content.ComponentName;
 import android.content.Context;
@@ -28,10 +45,10 @@ public class Utils {
     /**
      * @param context
      */
-    public static void showAutoStartDialog(Context context) {
+    public static void showAutoStartDialog(Context context, String manufacturer) {
         new MaterialAlertDialogBuilder(context)
-                .setTitle("Enable AutoStart")
-                .setMessage("You're required to provide the auto start permission to the app to keep app running as expected. ")
+                .setTitle("Enable AutoStart ")
+                .setMessage(manufacturer.toUpperCase() + " devices will kill the useful services to free up ram. You're required to provide the auto start permission to the app to keep app running as expected. ")
                 .setPositiveButton("Setup Now", (dialog, which) -> {
                     openAutoStartAccordingToManufacturer(context);
                 })

@@ -15,27 +15,35 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.aravi.dotpro.activities.main;
+package com.aravi.dot.activities.main;
 
+import android.Manifest;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.view.accessibility.AccessibilityManager;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
-import com.aravi.dotpro.BuildConfig;
-import com.aravi.dotpro.R;
-import com.aravi.dotpro.Utils;
-import com.aravi.dotpro.activities.log.LogsActivity;
-import com.aravi.dotpro.databinding.ActivityMainBinding;
-import com.aravi.dotpro.manager.PreferenceManager;
-import com.aravi.dotpro.service.DotService;
+import com.aravi.dot.BuildConfig;
+import com.aravi.dot.R;
+import com.aravi.dot.activities.custom.CustomisationActivity;
+import com.aravi.dot.activities.log.LogsActivity;
+import com.aravi.dot.databinding.ActivityMainBinding;
+import com.aravi.dot.manager.AdvertisementManager;
+import com.aravi.dot.manager.PreferenceManager;
+import com.aravi.dot.service.DotService;
+import com.aravi.dot.util.Utils;
+import com.facebook.ads.InterstitialAd;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -43,10 +51,11 @@ import com.google.android.material.snackbar.Snackbar;
 public class MainActivity extends AppCompatActivity {
     private static final int MY_REQUEST_CODE = 1802;
     private boolean TRIGGERED_START = false;
-
     private PreferenceManager sharedPreferenceManager;
     private Intent serviceIntent;
+    private AdvertisementManager advertisementManager;
     private ActivityMainBinding mBinding;
+    private InterstitialAd interstitialAd;
 
     @Override
     protected void onStart() {
@@ -62,13 +71,44 @@ public class MainActivity extends AppCompatActivity {
         mBinding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(mBinding.getRoot());
         sharedPreferenceManager = PreferenceManager.getInstance(getApplication());
+        advertisementManager = AdvertisementManager.getInstance(getApplication());
+        loadFromPrefs();
         init();
+        loadAd();
         checkAutoStartRequirement();
     }
 
-    private void init() {
-        mBinding.vibrationSwitch.setChecked(sharedPreferenceManager.isVibrationEnabled());
+    private void loadAd() {
+        interstitialAd = new InterstitialAd(this, "-----");
+        interstitialAd.loadAd();
+        advertisementManager.setBannerAd(mBinding.adLayout);
+    }
 
+    private void loadFromPrefs() {
+        mBinding.vibrationSwitch.setChecked(sharedPreferenceManager.isVibrationEnabled());
+        mBinding.locationSwitch.setChecked(sharedPreferenceManager.isLocationEnabled());
+        mBinding.mainSwitch.setChecked(sharedPreferenceManager.isServiceEnabled());
+    }
+
+    private void init() {
+        mBinding.locationSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    new MaterialAlertDialogBuilder(MainActivity.this)
+                            .setIcon(ContextCompat.getDrawable(MainActivity.this, R.drawable.ic_round_location))
+                            .setTitle("Requires Location Permission")
+                            .setMessage("This features requires LOCATION PERMISSION to work as expected\n\nNOTE: This app doesn't have permission to connect to internet so your data is safe on your device.")
+                            .setNeutralButton("Later", (dialog, which) -> mBinding.locationSwitch.setChecked(false))
+                            .setPositiveButton("Continue", (dialog, which) -> {
+                                askPermission(Manifest.permission.ACCESS_FINE_LOCATION);
+                            })
+                            .show();
+                } else {
+                    sharedPreferenceManager.setLocationEnabled(true);
+                }
+            }
+
+        });
         mBinding.vibrationSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> sharedPreferenceManager.setVibrationEnabled(isChecked));
         mBinding.mainSwitch.setOnCheckedChangeListener((buttonView, b) -> {
             if (b) {
@@ -79,22 +119,14 @@ public class MainActivity extends AppCompatActivity {
                 TRIGGERED_START = false;
             }
         });
-        mBinding.align.setOnCheckedChangeListener((group, i) -> {
-            // fixed: Resource IDs will be non-final in Android Gradle Plugin version 5.0, avoid using them in switch case statements
-            // fix source : http://tools.android.com/tips/non-constant-fields
-            if (i == R.id.topLeft) {
-                sharedPreferenceManager.setPosition(0);
-            } else if (i == R.id.topRight) {
-                sharedPreferenceManager.setPosition(1);
-            }
-        });
-
         mBinding.twitterButton.setOnClickListener(v -> openWeb("https://www.twitter.com/kamaravichow"));
         mBinding.githubButton.setOnClickListener(v -> openWeb("https://www.github.com/kamaravichow"));
         mBinding.logsOption.setOnClickListener(view -> {
             Intent intent = new Intent(MainActivity.this, LogsActivity.class);
             startActivity(intent);
         });
+        mBinding.customisationOption.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, CustomisationActivity.class)));
+
         mBinding.shareOption.setOnClickListener(v -> {
             Intent shareIntent = new Intent();
             shareIntent.setAction(Intent.ACTION_SEND);
@@ -102,10 +134,12 @@ public class MainActivity extends AppCompatActivity {
             shareIntent.setType("text/plain");
             startActivity(shareIntent);
         });
+
         mBinding.versionText.setText("Version - " + BuildConfig.VERSION_NAME);
     }
 
     private void checkForAccessibilityAndStart() {
+
         if (!accessibilityPermission(getApplicationContext(), DotService.class)) {
             mBinding.mainSwitch.setChecked(false);
             new MaterialAlertDialogBuilder(this)
@@ -130,11 +164,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void stopService() {
         if (isAccessibilityServiceRunning()) {
-            sharedPreferenceManager.setServiceEnabled(false);
+//            sharedPreferenceManager.setServiceEnabled(false);
             Intent intent = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
             startActivity(intent);
+            Toast.makeText(this, getString(R.string.close_app_note), Toast.LENGTH_SHORT).show();
         }
-        showSnack(getString(R.string.close_app_note));
     }
 
 //    @Override
@@ -172,12 +206,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void sendFeedbackEmail() {
-        Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", getString(R.string.feedback_email_address), null));
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.feedback_subject));
-        emailIntent.putExtra(Intent.EXTRA_TEXT, "Device Information : \n----- Don't clear these ----\n " + Build.DEVICE + " ,\n " + Build.BOARD + " ,\n " + Build.BRAND + " , " + Build.MANUFACTURER + " ,\n " + Build.MODEL + "\n ------ ");
-        startActivity(Intent.createChooser(emailIntent, "Send feedback..."));
-    }
+//    private void sendFeedbackEmail() {
+//        Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", getString(R.string.feedback_email_address), null));
+//        emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.feedback_subject));
+//        emailIntent.putExtra(Intent.EXTRA_TEXT, "Device Information : \n----- Don't clear these ----\n " + Build.DEVICE + " ,\n " + Build.BOARD + " ,\n " + Build.BRAND + " , " + Build.MANUFACTURER + " ,\n " + Build.MODEL + "\n ------ ");
+//        startActivity(Intent.createChooser(emailIntent, "Send feedback..."));
+//    }
 
 
     /**
@@ -213,6 +247,19 @@ public class MainActivity extends AppCompatActivity {
         startActivity(i);
     }
 
+
+    /**
+     * Asks permission runtime
+     *
+     * @param permission
+     */
+    private void askPermission(String permission) {
+        if (!(ContextCompat.checkSelfPermission(this, permission) == 0)) {
+            requestPermissions(new String[]{permission}, 0);
+            sharedPreferenceManager.setLocationEnabled(true);
+        }
+    }
+
     /**
      * Chinese ROM's kill the app services frequently so AutoStart Permission is required
      */
@@ -223,10 +270,20 @@ public class MainActivity extends AppCompatActivity {
                     || ("oppo".equalsIgnoreCase(manufacturer))
                     || ("vivo".equalsIgnoreCase(manufacturer))
                     || ("Honor".equalsIgnoreCase(manufacturer))) {
-                Utils.showAutoStartDialog(MainActivity.this);
+                Utils.showAutoStartDialog(MainActivity.this, manufacturer);
                 sharedPreferenceManager.setFirstLaunch();
             }
         }
+    }
+
+
+    @Override
+    protected void onPostResume() {
+        assert interstitialAd != null;
+        if (interstitialAd.isAdLoaded()) {
+            interstitialAd.show();
+        }
+        super.onPostResume();
     }
 
     @Override
