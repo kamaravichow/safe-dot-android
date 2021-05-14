@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.aravi.dotpro;
+package com.aravi.dot;
 
 import org.junit.Test;
 

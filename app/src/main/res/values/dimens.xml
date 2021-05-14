@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) 2020.  Aravind Chowdary (@kamaravichow)
   ~
   ~ This program is free software: you can redistribute it and/or modify
@@ -17,9 +16,24 @@
   -->
 
 <resources>
-    <dimen name="dot_size">24dp</dimen>
+    <dimen name="dot_size">20dp</dimen>
     <dimen name="footer_text_size">10sp</dimen>
     <dimen name="sub_head_size">11sp</dimen>
     <dimen name="minor_heading_size">14sp</dimen>
-    <dimen name="title_heading_size">20sp</dimen>
+    <dimen name="title_heading_size">24sp</dimen>
+    <!--
+    Because the window insets on round devices are larger than 15dp, this padding only applies
+    to square screens.
+    -->
+    <dimen name="box_inset_layout_padding">0dp</dimen>
+
+    <!--
+    This padding applies to both square and round screens. The total padding between the buttons
+    and the window insets is box_inset_layout_padding (above variable) on square screens and
+    inner_frame_layout_padding (below variable) on round screens.
+    -->
+    <dimen name="inner_frame_layout_padding">5dp</dimen>
+    <dimen name="dot_size_v">11dp</dimen>
+    <dimen name="dot_size_l">14dp</dimen>
+    <dimen name="minor_text_size">13sp</dimen>
 </resources>

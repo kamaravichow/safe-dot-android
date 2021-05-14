@@ -31,7 +31,9 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fadingEdge="vertical"
         android:fitsSystemWindows="true"
+        android:overScrollMode="never"
         android:scrollbars="none"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
@@ -39,7 +41,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="20dp">
+            android:padding="10dp">
+
+            <LinearLayout
+                android:id="@+id/ad_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:minHeight="100dp"
+                android:orientation="vertical" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -59,11 +69,11 @@
                         android:src="@drawable/transparent" />
 
                     <TextView
-                        style="@style/TextAppearance.MaterialComponents.Subtitle1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
-                        android:text="Safe Dots"
+                        android:fontFamily="@font/product_sans_bold"
+                        android:text="Enable Safe Dots"
                         android:textColor="@android:color/black"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -105,11 +115,76 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@+id/locationSwitch"
+                    android:gravity="center_vertical"
+                    android:padding="10dp">
+
+                    <ImageView
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:padding="5dp"
+                        android:src="@drawable/ic_round_location"
+                        app:tint="@color/purple_500" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:fontFamily="@font/product_sans_bold"
+                            android:text="Enable Location"
+                            android:textColor="@android:color/black"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="@font/product_sans_regular"
+                            android:text="Turning this on will enable location dot which monitors app which use GPS service on your phone."
+                            android:textSize="@dimen/minor_text_size" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/locationSwitch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp" />
+
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:orientation="horizontal"
                 android:padding="5dp">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toStartOf="@+id/vibrationSwitch"
@@ -120,7 +195,7 @@
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:padding="5dp"
-                        android:src="@drawable/ic_round_vibration_24"
+                        android:src="@drawable/ic_mobile_vibrate"
                         app:tint="@color/orange_300" />
 
                     <LinearLayout
@@ -129,23 +204,23 @@
                         android:orientation="vertical">
 
                         <TextView
-                            style="@style/TextAppearance.MaterialComponents.Subtitle1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
+                            android:fontFamily="@font/product_sans_bold"
                             android:text="Enable Vibration"
                             android:textColor="@android:color/black"
                             android:textSize="16sp"
                             android:textStyle="bold" />
 
                         <TextView
-                            style="@style/TextAppearance.MaterialComponents.Caption"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="5dp"
+                            android:fontFamily="@font/product_sans_regular"
                             android:text="@string/vibrate_description"
-                            android:textSize="12sp" />
+                            android:textSize="@dimen/minor_text_size" />
 
                     </LinearLayout>
 
@@ -172,28 +247,41 @@
                 android:visibility="visible" />
 
 
+            <TextView
+                style="@style/TextAppearance.MaterialComponents.Caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/product_sans_regular"
+                android:text="Advanced"
+                android:textSize="@dimen/sub_head_size"
+                android:textStyle="bold" />
+
             <RelativeLayout
-                android:id="@+id/alignmentOption"
+                android:id="@+id/customisationOption"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
                 android:orientation="horizontal"
                 android:padding="5dp">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_toStartOf="@+id/align"
+                    android:layout_toStartOf="@+id/customs_arrow"
                     android:gravity="center_vertical"
-                    android:padding="5dp">
+                    android:padding="10dp">
 
                     <ImageView
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:padding="5dp"
-                        android:src="@drawable/ic_round_format_align_center_24"
+                        android:src="@drawable/ic_sliders_v_alt"
                         app:tint="@color/purple_300" />
 
                     <LinearLayout
@@ -202,23 +290,23 @@
                         android:orientation="vertical">
 
                         <TextView
-                            style="@style/TextAppearance.MaterialComponents.Subtitle1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
-                            android:text="@string/dot_alignment_string"
+                            android:fontFamily="@font/product_sans_bold"
+                            android:text="Customisation Center"
                             android:textColor="@android:color/black"
                             android:textSize="16sp"
                             android:textStyle="bold" />
 
                         <TextView
-                            style="@style/TextAppearance.MaterialComponents.Caption"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="5dp"
-                            android:text="@string/dot_alignment_description"
-                            android:textSize="12sp" />
+                            android:fontFamily="@font/product_sans_regular"
+                            android:text="A place to customise the dots size, color and alignment"
+                            android:textSize="@dimen/minor_text_size" />
 
                     </LinearLayout>
 
@@ -226,52 +314,19 @@
                 </LinearLayout>
 
 
-                <RadioGroup
-                    android:id="@+id/align"
+                <ImageView
+                    android:id="@+id/customs_arrow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
                     android:layout_marginTop="10dp"
-                    android:orientation="vertical"
-                    android:saveEnabled="true">
-
-                    <RadioButton
-                        android:id="@+id/topRight"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checked="true"
-                        android:fontFamily="@font/product_sans_bold"
-                        android:text="@string/top_right_corner" />
-
-                    <RadioButton
-                        android:id="@+id/topLeft"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/product_sans_bold"
-                        android:text="@string/top_left_corner" />
-
-                </RadioGroup>
+                    android:layout_marginBottom="10dp"
+                    android:src="@drawable/ic_round_keyboard_arrow_right_24"
+                    app:tint="@color/blue_500" />
 
 
             </RelativeLayout>
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_margin="10dp"
-                android:background="@color/grey_100" />
-
-
-            <TextView
-                style="@style/TextAppearance.MaterialComponents.Caption"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:fontFamily="@font/product_sans_regular"
-                android:text="Options"
-                android:textSize="@dimen/sub_head_size"
-                android:textStyle="bold" />
 
 
             <RelativeLayout
@@ -287,7 +342,7 @@
                 android:padding="5dp">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toStartOf="@+id/logs_arrow"
@@ -298,7 +353,7 @@
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:padding="5dp"
-                        android:src="@drawable/ic_round_calendar_view_day_24"
+                        android:src="@drawable/ic_list_ui_alt"
                         app:tint="@color/blue_500" />
 
                     <LinearLayout
@@ -307,24 +362,24 @@
                         android:orientation="vertical">
 
                         <TextView
-                            style="@style/TextAppearance.MaterialComponents.Subtitle1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
+                            android:fontFamily="@font/product_sans_bold"
                             android:text="Access Logs"
                             android:textColor="@android:color/black"
                             android:textSize="16sp"
                             android:textStyle="bold" />
 
                         <TextView
-                            style="@style/TextAppearance.MaterialComponents.Caption"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="5dp"
                             android:layout_marginEnd="10dp"
+                            android:fontFamily="@font/product_sans_regular"
                             android:text="@string/access_log_description"
-                            android:textSize="12sp" />
+                            android:textSize="@dimen/minor_text_size" />
 
                     </LinearLayout>
 
@@ -346,6 +401,22 @@
 
             </RelativeLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_margin="10dp"
+                android:background="@color/grey_100" />
+
+            <TextView
+                style="@style/TextAppearance.MaterialComponents.Caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/product_sans_regular"
+                android:text="Others"
+                android:textSize="@dimen/sub_head_size"
+                android:textStyle="bold" />
+
 
             <RelativeLayout
                 android:id="@+id/shareOption"
@@ -360,7 +431,7 @@
                 android:padding="5dp">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:gravity="center_vertical"
@@ -370,7 +441,7 @@
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:padding="5dp"
-                        android:src="@drawable/ic_round_share_24"
+                        android:src="@drawable/ic_share"
                         app:tint="@color/red_500" />
 
                     <LinearLayout
@@ -379,24 +450,24 @@
                         android:orientation="vertical">
 
                         <TextView
-                            style="@style/TextAppearance.MaterialComponents.Subtitle1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
+                            android:fontFamily="@font/product_sans_bold"
                             android:text="Tell Friends &amp; Family"
                             android:textColor="@android:color/black"
                             android:textSize="16sp"
                             android:textStyle="bold" />
 
                         <TextView
-                            style="@style/TextAppearance.MaterialComponents.Caption"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="5dp"
                             android:layout_marginEnd="10dp"
+                            android:fontFamily="@font/product_sans_regular"
                             android:text="Help your friends and family stay private too by sharing the app with them"
-                            android:textSize="12sp" />
+                            android:textSize="@dimen/minor_text_size" />
 
                     </LinearLayout>
 
@@ -448,7 +519,6 @@
             </LinearLayout>
 
             <TextView
-                style="@style/TextAppearance.MaterialComponents.Subtitle1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -458,7 +528,6 @@
 
             <TextView
                 android:id="@+id/versionText"
-                style="@style/TextAppearance.MaterialComponents.Caption"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

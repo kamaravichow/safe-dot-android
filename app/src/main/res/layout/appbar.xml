@@ -56,21 +56,19 @@
             app:layout_collapseParallaxMultiplier="0.7">
 
             <TextView
-                style="@style/TextAppearance.MaterialComponents.Headline1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:fontFamily="@font/product_sans_bold"
-                android:text="@string/full_app_name"
+                android:text="@string/app_name"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/title_heading_size" />
 
             <TextView
-                style="@style/TextAppearance.MaterialComponents.Caption"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/product_sans_regular"
-                android:text="@string/app_tagline"
+                android:text="Protects your Privacy"
                 android:textSize="@dimen/sub_head_size"
                 android:textStyle="bold" />
 

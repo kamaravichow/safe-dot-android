@@ -29,8 +29,8 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp">
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp">
 
         <LinearLayout
             android:id="@+id/lineCamera"
@@ -49,10 +49,13 @@
 
             <ImageView
                 android:id="@+id/logCameraDot"
-                android:layout_width="12dp"
-                android:layout_height="12dp"
-                android:src="@drawable/ic_dot"
-                app:tint="@color/green_500" />
+                android:layout_width="@dimen/dot_size_l"
+                android:layout_height="@dimen/dot_size_l"
+                android:background="@drawable/ic_dot"
+                android:backgroundTint="@color/green_500"
+                android:padding="3dp"
+                android:src="@drawable/ic_round_camera"
+                app:tint="@android:color/white" />
 
             <View
                 android:id="@+id/lineCameraStop"
@@ -82,14 +85,53 @@
 
             <ImageView
                 android:id="@+id/logMicDot"
-                android:layout_width="12dp"
-                android:layout_height="12dp"
-                android:src="@drawable/ic_dot"
-                android:tint="@color/orange_500"
-                tools:ignore="UseAppTint" />
+                android:layout_width="@dimen/dot_size_l"
+                android:layout_height="@dimen/dot_size_l"
+                android:background="@drawable/ic_dot"
+                android:backgroundTint="@color/orange_500"
+                android:padding="2dp"
+                android:src="@drawable/ic_round_mic"
+                app:tint="@android:color/white" />
 
             <View
                 android:id="@+id/lineMicStop"
+                android:layout_width="1dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/grey_500"
+                android:visibility="invisible" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/lineLoc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <View
+                android:id="@+id/lineLocStart"
+                android:layout_width="1dp"
+                android:layout_height="20dp"
+                android:layout_marginBottom="5dp"
+                android:background="@color/grey_500"
+                android:visibility="invisible" />
+
+            <ImageView
+                android:id="@+id/logLocDot"
+                android:layout_width="@dimen/dot_size_l"
+                android:layout_height="@dimen/dot_size_l"
+                android:background="@drawable/ic_dot"
+                android:backgroundTint="@color/purple_500"
+                android:padding="2dp"
+                android:src="@drawable/ic_round_location"
+                app:tint="@android:color/white" />
+
+            <View
+                android:id="@+id/lineLocStop"
                 android:layout_width="1dp"
                 android:layout_height="20dp"
                 android:layout_marginTop="5dp"
@@ -104,14 +146,15 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/logAppIcon"
-        style="@style/MaterialAlertDialog.MaterialComponents.Title.Icon"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="46dp"
+        android:layout_height="46dp"
         android:layout_centerVertical="true"
         android:layout_marginStart="5dp"
         android:layout_toEndOf="@+id/lineHolder"
         android:scaleType="centerCrop"
-        android:src="@drawable/transparent" />
+        android:src="@drawable/transparent"
+        app:civ_border_color="@color/grey_300"
+        app:civ_border_width="1dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -119,46 +162,43 @@
         android:layout_centerVertical="true"
         android:layout_toEndOf="@+id/logAppIcon"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:padding="8dp">
 
         <TextView
             android:id="@+id/logAppName"
-            style="@style/TextAppearance.MaterialComponents.Headline4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:fontFamily="@font/product_sans_bold"
-            android:maxLength="16"
-            android:text="Safe Dot"
+            android:maxLength="24"
+            tools:text="Safe Dot"
             android:textColor="@android:color/black"
             android:textSize="16sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/logAppPackage"
-            style="@style/TextAppearance.MaterialComponents.Caption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
-            android:fontFamily="@font/product_sans_bold"
-            android:maxLength="26"
-            android:text="com.aravi.dot"
-            android:textAllCaps="true"
-            android:textSize="@dimen/footer_text_size" />
+            android:fontFamily="@font/product_sans_regular"
+            android:maxLength="32"
+            tools:text="com.aravi.dot"
+            android:textAllCaps="false"
+            android:textSize="12sp" />
 
     </LinearLayout>
 
 
     <TextView
         android:id="@+id/logTimestamp"
-        style="@style/TextAppearance.MaterialComponents.Caption"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:layout_margin="5dp"
+        android:layout_margin="6dp"
         android:fontFamily="@font/product_sans_bold"
-        android:text="12:00 AM"
+        tools:text="12:00 AM"
         android:textAllCaps="true"
         android:textSize="12sp"
         android:textStyle="bold" />

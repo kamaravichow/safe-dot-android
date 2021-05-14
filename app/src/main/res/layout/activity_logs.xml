@@ -22,50 +22,69 @@
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:orientation="vertical"
+    android:theme="@style/AppTheme"
     tools:context=".activities.log.LogsActivity">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar"
-        style="@style/Widget.MaterialComponents.Toolbar"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        app:title="@string/access_log_title"
-        app:titleTextAppearance="@style/ToolbarTitleAppearance" />
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        app:elevation="0dp">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            style="@style/Widget.MaterialComponents.Toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@drawable/ic_round_keyboard_backspace_24"
+            app:title="@string/access_log_title"
+            app:titleTextAppearance="@style/ToolbarTitleAppearance" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/logsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+        android:layout_below="@+id/appbar"
+        android:fadingEdge="vertical"
+        android:overScrollMode="never"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_log" />
 
     <ProgressBar
         android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
         android:layout_centerInParent="true"
         android:layout_gravity="center" />
 
     <ImageView
         android:id="@+id/emptyListImage"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
         android:layout_centerInParent="true"
-        android:src="@drawable/empty_v"
-        android:visibility="gone" />
+        android:src="@drawable/ic_undraw_empty"
+        android:visibility="invisible" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/clearLogsButton"
-        style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
+        style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton.Icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_margin="16dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:shadowColor="@android:color/transparent"
         android:text="@string/clear_logs"
         android:textColor="@android:color/white"
+        android:textSize="12sp"
         app:backgroundTint="@color/colorAccent"
-        app:icon="@drawable/ic_round_clear_24"
+        app:elevation="0dp"
+        app:icon="@drawable/ic_list_ui_alt"
         app:iconTint="@android:color/white" />
 
 
