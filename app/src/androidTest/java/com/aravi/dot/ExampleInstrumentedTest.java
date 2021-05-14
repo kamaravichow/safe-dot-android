@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.aravi.dotpro;
+package com.aravi.dot;
 
 import android.content.Context;
 
@@ -38,6 +38,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.aravi.dotpro", appContext.getPackageName());
+        assertEquals("com.aravi.dot", appContext.getPackageName());
     }
 }
