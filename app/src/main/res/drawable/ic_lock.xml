@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright (C) 2020.  Aravind Chowdary (@kamaravichow)
+  ~ Copyright (C) 2021.  Aravind Chowdary (@kamaravichow)
   ~
   ~ This program is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -16,15 +16,14 @@
   -->
 
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="512dp"
-    android:height="512dp"
-    android:alpha="0.9"
-    android:viewportWidth="512"
-    android:viewportHeight="512">
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
     <path
-        android:fillColor="@android:color/black"
-        android:pathData="m512,256c0,141.387 -114.613,256 -256,256s-256,-114.613 -256,-256 114.613,-256 256,-256 256,114.613 256,256zM512,256" />
+        android:fillColor="#a2a1ff"
+        android:pathData="M16,11H8a0.9997,0.9997 0,0 1,-1 -1V7A5,5 0,0 1,17 7v3A0.9997,0.9997 0,0 1,16 11ZM9,9h6V7A3,3 0,0 0,9 7Z" />
     <path
-        android:fillColor="@android:color/black"
-        android:pathData="m384,256c0,70.691 -57.309,128 -128,128s-128,-57.309 -128,-128 57.309,-128 128,-128 128,57.309 128,128zM384,256" />
+        android:fillColor="@color/colorPrimary"
+        android:pathData="M7,9L17,9A3,3 0,0 1,20 12L20,19A3,3 0,0 1,17 22L7,22A3,3 0,0 1,4 19L4,12A3,3 0,0 1,7 9z" />
 </vector>

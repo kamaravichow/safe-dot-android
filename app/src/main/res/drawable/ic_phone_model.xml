@@ -1,0 +1,66 @@
+<!--
+  ~ Copyright (C) 2021.  Aravind Chowdary (@kamaravichow)
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="4267dp"
+    android:height="2500dp"
+    android:viewportWidth="4267"
+    android:viewportHeight="2500">
+  <path
+      android:pathData="M3479.29,352.91c0,-86.35 -70.1,-156.45 -156.45,-156.45l-2223.01,0c-86.35,0 -156.45,70.1 -156.45,156.45l-0,2402.71c-0,86.35 70.1,156.45 156.45,156.45l2223.01,-0c86.35,-0 156.45,-70.1 156.45,-156.45l0,-2402.71Z">
+    <aapt:attr name="android:fillColor">
+      <gradient 
+          android:startY="1554.26"
+          android:startX="943.39"
+          android:endY="1554.26"
+          android:endX="3479.29"
+          android:type="linear">
+        <item android:offset="0" android:color="#FFD9D9D9"/>
+        <item android:offset="1" android:color="#FFEBEBEB"/>
+      </gradient>
+    </aapt:attr>
+  </path>
+  <path
+      android:pathData="M3412.73,435c-0,-100.41 -81.52,-181.93 -181.93,-181.93l-2036.57,0c-100.41,0 -181.93,81.52 -181.93,181.93l0,2175.62c0,100.41 81.52,181.93 181.93,181.93l2036.57,0c100.41,0 181.93,-81.52 181.93,-181.93l-0,-2175.62Z">
+    <aapt:attr name="android:fillColor">
+      <gradient 
+          android:startY="1522.81"
+          android:startX="1012.31"
+          android:endY="1522.81"
+          android:endX="3412.73"
+          android:type="linear">
+        <item android:offset="0" android:color="#FFFFFFFF"/>
+        <item android:offset="1" android:color="#FFFFFFFF"/>
+      </gradient>
+    </aapt:attr>
+  </path>
+  <path
+      android:pathData="M2360.28,334.67c-0,-13.1 -10.64,-23.74 -23.74,-23.74l-223.75,0c-13.1,0 -23.74,10.64 -23.74,23.74c0,13.1 10.64,23.74 23.74,23.74l223.75,0c13.1,0 23.74,-10.64 23.74,-23.74Z">
+    <aapt:attr name="android:fillColor">
+      <gradient 
+          android:startY="334.668"
+          android:startX="2089.05"
+          android:endY="334.668"
+          android:endX="2360.277"
+          android:type="linear">
+        <item android:offset="0" android:color="#FFD9D9D9"/>
+        <item android:offset="1" android:color="#FFE6E6E6"/>
+      </gradient>
+    </aapt:attr>
+  </path>
+</vector>
