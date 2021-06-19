@@ -39,11 +39,9 @@ import com.aravi.dot.R;
 import com.aravi.dot.activities.custom.CustomisationActivity;
 import com.aravi.dot.activities.log.LogsActivity;
 import com.aravi.dot.databinding.ActivityMainBinding;
-import com.aravi.dot.manager.AdvertisementManager;
 import com.aravi.dot.manager.PreferenceManager;
 import com.aravi.dot.service.DotService;
 import com.aravi.dot.util.Utils;
-import com.facebook.ads.InterstitialAd;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -53,9 +51,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean TRIGGERED_START = false;
     private PreferenceManager sharedPreferenceManager;
     private Intent serviceIntent;
-    private AdvertisementManager advertisementManager;
     private ActivityMainBinding mBinding;
-    private InterstitialAd interstitialAd;
 
     @Override
     protected void onStart() {
@@ -71,18 +67,11 @@ public class MainActivity extends AppCompatActivity {
         mBinding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(mBinding.getRoot());
         sharedPreferenceManager = PreferenceManager.getInstance(getApplication());
-        advertisementManager = AdvertisementManager.getInstance(getApplication());
         loadFromPrefs();
         init();
-        loadAd();
         checkAutoStartRequirement();
     }
 
-    private void loadAd() {
-        interstitialAd = new InterstitialAd(this, "-----");
-        interstitialAd.loadAd();
-        advertisementManager.setBannerAd(mBinding.adLayout);
-    }
 
     private void loadFromPrefs() {
         mBinding.vibrationSwitch.setChecked(sharedPreferenceManager.isVibrationEnabled());
@@ -139,7 +128,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void checkForAccessibilityAndStart() {
-
         if (!accessibilityPermission(getApplicationContext(), DotService.class)) {
             mBinding.mainSwitch.setChecked(false);
             new MaterialAlertDialogBuilder(this)
@@ -279,10 +267,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onPostResume() {
-        assert interstitialAd != null;
-        if (interstitialAd.isAdLoaded()) {
-            interstitialAd.show();
-        }
         super.onPostResume();
     }
 

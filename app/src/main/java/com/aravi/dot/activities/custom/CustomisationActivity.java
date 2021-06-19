@@ -26,7 +26,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.aravi.dot.databinding.ActivityCustomisationBinding;
 import com.aravi.dot.manager.AnalyticsManager;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -35,7 +34,6 @@ import java.util.Objects;
 public class CustomisationActivity extends AppCompatActivity {
     private ActivityCustomisationBinding mBinding;
     private AnalyticsManager analyticsManager;
-    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +41,6 @@ public class CustomisationActivity extends AppCompatActivity {
         mBinding = ActivityCustomisationBinding.inflate(getLayoutInflater());
         setContentView(mBinding.getRoot());
         analyticsManager = AnalyticsManager.getInstance(this);
-        mAuth = FirebaseAuth.getInstance();
         setSupportActionBar(mBinding.toolbar);
 
         mBinding.saveButton.setOnClickListener(v -> {
@@ -51,13 +48,6 @@ public class CustomisationActivity extends AppCompatActivity {
                     .setTitle("Requires Upgrade")
                     .setMessage("Customisation Center and more other features will be available only in the PRO version of the app.")
                     .setPositiveButton("Get Premium", (dialog, which) -> {
-
-                        Bundle bundle = new Bundle();
-                        bundle.putString("user_id", Objects.requireNonNull(mAuth.getCurrentUser()).getUid());
-                        bundle.putString("language", Locale.getDefault().getDisplayLanguage());
-                        bundle.putString("location", Locale.getDefault().getCountry());
-                        analyticsManager.getAnalytics().logEvent("likely_purchaser", bundle);
-
                         String url = "https://play.google.com/store/apps/details?id=com.aravi.dotpro";
                         Intent i = new Intent(Intent.ACTION_VIEW);
                         i.setData(Uri.parse(url));

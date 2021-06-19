@@ -25,35 +25,20 @@ import android.os.Build;
 import com.aravi.dot.constant.Constants;
 import com.aravi.dot.helper.ApplicationHelper;
 import com.aravi.dot.manager.AnalyticsManager;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+
 
 import java.util.Objects;
 
 public class App extends Application {
-    private FirebaseAuth mAuth;
     private AnalyticsManager analyticsManager;
 
     @Override
     public void onCreate() {
         super.onCreate();
         ApplicationHelper.initApplicationHelper(this);
-        mAuth = FirebaseAuth.getInstance();
         analyticsManager = AnalyticsManager.getInstance(this);
-        checkAuth();
         localNotificationSetup(this);
     }
-
-
-    private void checkAuth() {
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser == null) {
-            mAuth.signInAnonymously().addOnSuccessListener(authResult -> analyticsManager.setUserId(Objects.requireNonNull(authResult.getUser()).getUid()));
-        } else {
-            analyticsManager.setUserId(currentUser.getUid());
-        }
-    }
-
 
     private static void localNotificationSetup(Application application) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
