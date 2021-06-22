@@ -1,18 +1,18 @@
 # SafeDot
-![Android CI](https://github.com/kamaravichow/safe-dot-android/workflows/Android%20CI/badge.svg)
+![Android CI](https://github.com/kamaravichow/safe-dot-android/workflows/Android%20CI/badge.svg) [![Github All Releases](https://img.shields.io/github/downloads/kamaravichow/safe-dot-android/total.svg)](https://github.com/kamaravichow/safe-dot-android/releases)
 
 An app that 🔔 alerts you when a third-party application uses your device camera or microphone.
 
 
 [![GooglePlay](https://img.shields.io/badge/Play%20Store-4.1K-blueviolet?style=for-the-badge&logo=appveyor)](https://play.google.com/store/apps/details?id=com.aravi.dot)
-[![GooglePlay](https://img.shields.io/badge/Galaxy%20Store-1.1K-ff69b4?style=for-the-badge&logo=appveyor)](https://galaxy.store/dotsafe)
+[![Galaxy Store](https://img.shields.io/badge/Galaxy%20Store-1.1K-ff69b4?style=for-the-badge&logo=appveyor)](https://galaxy.store/dotsafe)
 
 
 ## Download Now
 App is currently available for Production & Open Beta Testing on Google Play Store & Samsung's Galaxy Store. Use the below links to get redirected to the app page.
 
-|[<img src="https://github.com/kamaravichow/safe-dot-android/raw/master/docs/google-play-badge.png" width="200">](https://play.google.com/store/apps/details?id=com.aravi.dotpro)| [<img src="https://github.com/kamaravichow/safe-dot-android/raw/master/docs/galaxy-store-badge.png" width="200">](https://galaxy.store/dotsafe)|
-|---|---|
+|[<img src="https://github.com/kamaravichow/safe-dot-android/raw/master/docs/google-play-badge.png" width="200">](https://play.google.com/store/apps/details?id=com.aravi.dotpro)| [<img src="https://github.com/kamaravichow/safe-dot-android/raw/master/docs/galaxy-store-badge.png" width="200">](https://galaxy.store/dotsafe)| [<img src="https://oculavis.de/img/apk_badge.png" width="200">](https://github.com/kamaravichow/safe-dot-android/releases/download/v3.0.6/app-3_0_6.apk) |
+|---|---|---|
 
 
 ## Stack :
