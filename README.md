@@ -3,12 +3,10 @@
 
 An app that 🔔 alerts you when a third-party application uses your device camera or microphone.
 
-**Stack :**
-- Minimum SDK 21
-- MVVM Architecture (View - ViewModel - Model)
-- View Binding
-- Room Database
-- Accessibility Service
+
+[![GooglePlay](https://img.shields.io/badge/Play%20Store-4.1K-blueviolet?style=for-the-badge&logo=appveyor)](https://play.google.com/store/apps/details?id=com.aravi.dot)
+[![GooglePlay](https://img.shields.io/badge/Galaxy%20Store-1.1K-ff69b4?style=for-the-badge&logo=appveyor)](https://galaxy.store/dotsafe)
+
 
 ## Download Now
 App is currently available for Production & Open Beta Testing on Google Play Store & Samsung's Galaxy Store. Use the below links to get redirected to the app page.
@@ -16,6 +14,13 @@ App is currently available for Production & Open Beta Testing on Google Play Sto
 |[<img src="https://github.com/kamaravichow/safe-dot-android/raw/master/docs/google-play-badge.png" width="200">](https://play.google.com/store/apps/details?id=com.aravi.dotpro)| [<img src="https://github.com/kamaravichow/safe-dot-android/raw/master/docs/galaxy-store-badge.png" width="200">](https://galaxy.store/dotsafe)|
 |---|---|
 
+
+## Stack :
+- Minimum SDK 21
+- MVVM Architecture (View - ViewModel - Model)
+- View Binding
+- Room Database
+- Accessibility Service
 
 ## Libraries Used
 
