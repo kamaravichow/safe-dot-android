@@ -24,8 +24,8 @@ App is currently available for Production & Open Beta Testing on Google Play Sto
 
 ## Libraries Used
 
-**Gson Google** [View Source](https://github.com/google/gson)
-**Circle Image View** [View Source](https://github.com/hdodenhof/CircleImageView)
+- **Circle Image View** [View Source](https://github.com/hdodenhof/CircleImageView)
+- ~~Gson Google [View Source](https://github.com/google/gson)~~
 
 ## Issue Tracking
 
