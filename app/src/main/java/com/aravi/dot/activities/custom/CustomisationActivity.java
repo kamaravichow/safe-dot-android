@@ -24,7 +24,6 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.aravi.dot.databinding.ActivityCustomisationBinding;
-import com.aravi.dot.manager.AnalyticsManager;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.Locale;
@@ -33,21 +32,19 @@ import java.util.Objects;
 
 public class CustomisationActivity extends AppCompatActivity {
     private ActivityCustomisationBinding mBinding;
-    private AnalyticsManager analyticsManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = ActivityCustomisationBinding.inflate(getLayoutInflater());
         setContentView(mBinding.getRoot());
-        analyticsManager = AnalyticsManager.getInstance(this);
         setSupportActionBar(mBinding.toolbar);
 
         mBinding.saveButton.setOnClickListener(v -> {
             new MaterialAlertDialogBuilder(CustomisationActivity.this)
                     .setTitle("Requires Upgrade")
                     .setMessage("Customisation Center and more other features will be available only in the PRO version of the app.")
-                    .setPositiveButton("Get Premium", (dialog, which) -> {
+                    .setPositiveButton("Upgrade to PRO Version", (dialog, which) -> {
                         String url = "https://play.google.com/store/apps/details?id=com.aravi.dotpro";
                         Intent i = new Intent(Intent.ACTION_VIEW);
                         i.setData(Uri.parse(url));
