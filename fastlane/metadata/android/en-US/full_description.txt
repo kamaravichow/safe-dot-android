@@ -1,0 +1,11 @@
+Do you feel envious about the new iOS 14's privacy feature that shows a dot indicator whenever CAMERA or MICROPHONE is accessed?
+
+<i>Safe Dots</i> adds the same iOS 14 style indicators (few pixels light up as a dot) to the top right (default) corner of your screen whenever any third-party app or service uses your phone's camera or microphone.
+
+<i>Safe Dots</i> will be visible even on your lock screen. Configuring the App is as simple as enabling the Safe Dots Accessibility Service (Toggle switch in the App › (More) Downloaded Services/Installed Services › Dot › Enable).
+
+By default, the App is configured to show iOS 14 style colored access dots - green for camera access, orange for microphone access. The App itself does not request for the camera or microphone access so, don't worry!.
+
+The app displays <i>Safe Dots</i> whenever the phone's camera or microphone is engaged by a third-party App.
+
+Maintain an Access Log, which can be accessed from the App's main settings screen. The Access Log shows when the camera/microphone was accessed, which App was in the foreground at the time of access initiation and how long did the access last.

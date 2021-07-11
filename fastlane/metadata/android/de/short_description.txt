@@ -1,0 +1,1 @@
+alarmiert Dich, wenn eine App auf Kamera oder Mikrofon zugreift
