@@ -15,13 +15,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.aravi.dot.model;
+package com.aravi.dot.activities.log.filter;
 
-import androidx.room.Entity;
+import androidx.room.Dao;
 
-@Entity(tableName = "filter_list")
-public class Ignore {
-    private String packageName;
+@Dao
+public class FilterDao {
 
-    
+
+
 }
