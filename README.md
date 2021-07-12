@@ -1,11 +1,33 @@
-# SafeDot
-![Android CI](https://github.com/kamaravichow/safe-dot-android/workflows/Android%20CI/badge.svg) [![Github All Releases](https://img.shields.io/github/downloads/kamaravichow/safe-dot-android/total.svg)](https://github.com/kamaravichow/safe-dot-android/releases)
+<p align="center">
+ <img width="100px" src="https://github.com/kamaravichow/safe-dot-android/blob/master/fastlane/metadata/android/en-US/images/icon.png?raw=true" align="center" alt="Safe Dot" />
+ <h2 align="center">Safe Dot</h2>
+ <p align="center">iOS 14 Privacy Indicators for Android</p>
+</p>
 
-An app that 🔔 alerts you when a third-party application uses your device camera or microphone.
+<p align="center">
+    <a href="https://github.com/kamaravichow/safe-dot-android/actions">
+      <img alt="Tests Passing" src="https://github.com/kamaravichow/safe-dot-android/workflows/Android%20CI/badge.svg" />
+    </a>
+    <a href="https://github.com/kamaravichow/safe-dot-android/releases">
+      <img src="https://img.shields.io/github/downloads/kamaravichow/safe-dot-android/total.svg" />
+    </a>
+    <a href="https://github.com/kamaravichow/safe-dot-android/issues">
+      <img alt="Issues" src="https://img.shields.io/github/issues/kamaravichow/safe-dot-android?color=0088ff" />
+    </a>
+    <a href="https://github.com/kamaravichow/safe-dot-android/pulls">
+      <img alt="GitHub pull requests" src="https://img.shields.io/github/issues-pr/kamaravichow/safe-dot-android?color=0088ff" />
+    </a>
+    <br />
+    <br />
+    <a href="https://play.google.com/store/apps/details?id=com.aravi.dot">
+      <img src="https://img.shields.io/badge/Play%20Store-4.5K-blueviolet?style=for-the-badge"/>
+    </a>
+    <a href="https://galaxy.store/dotsafe">
+      <img src="https://img.shields.io/badge/Galaxy%20Store-1.2K-ff69b4?style=for-the-badge"/>
+    </a>
+    
+  </p>
 
-
-[![GooglePlay](https://img.shields.io/badge/Play%20Store-4.1K-blueviolet?style=for-the-badge&logo=appveyor)](https://play.google.com/store/apps/details?id=com.aravi.dot)
-[![Galaxy Store](https://img.shields.io/badge/Galaxy%20Store-1.1K-ff69b4?style=for-the-badge&logo=appveyor)](https://galaxy.store/dotsafe)
 
 
 ## Download Now
