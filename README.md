@@ -5,7 +5,9 @@
 </p>
 
 <p align="center">
- <img width="150px" src="https://1.bp.blogspot.com/-7UhYtVu5Xz8/YO7kLo-0E7I/AAAAAAAAmgU/s7X7pOr9EE8uyqo8sJ7HRFu1baOlHLArACNcBGAsYHQ/s1090/bmc-button.png" align="center" alt="Support"/>
+ <a href="https://www.buymeacoffee.com/kamaravichow">
+  <img width="150px" src="https://1.bp.blogspot.com/-7UhYtVu5Xz8/YO7kLo-0E7I/AAAAAAAAmgU/s7X7pOr9EE8uyqo8sJ7HRFu1baOlHLArACNcBGAsYHQ/s1090/bmc-button.png" align="center" alt="Support"/>
+ </a>
 </p>
 
 <p align="center">
