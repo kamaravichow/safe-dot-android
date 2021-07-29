@@ -38,7 +38,7 @@
 ## README
 When any permission is in use, my app checks for the app which is currently running in the foreground. 
 
-In your case, I think smoother app is trying to access your sensors when another app is running in foreground(which doesn't have any permissions) which makes my app think that the app in the foreground is using those sensors.
+In your case, I think some other app is trying to access your sensors when another app is running in foreground(which doesn't have any permissions) which makes my app think that the app in the foreground is using those sensors.
 
 So don't completely depend on the access logs, as for now we cannot get the information about what app is exactly using your sensors.
 
