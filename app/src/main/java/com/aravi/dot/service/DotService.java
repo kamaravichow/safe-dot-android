@@ -101,7 +101,7 @@ public class DotService extends AccessibilityService {
 
             Notification notification = new Notification.Builder(this, Constants.SERVICE_NOTIFICATION_CHANNEL)
                     .setContentTitle("SafeDot")
-                    .setContentText("SafeDot is protecting your privacy")
+                    .setContentText("Click on the notification and you can disable it's channel")
                     .setSmallIcon(R.drawable.transparent)
                     .setContentIntent(pendingIntent)
                     .setTicker("Safedot protection is now turned on")
