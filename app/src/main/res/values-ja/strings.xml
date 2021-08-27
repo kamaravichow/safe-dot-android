@@ -76,6 +76,21 @@
     <string name="enable_autostart_message"> デバイスは、RAMを解放するために有用なサービスを自動的に停止することがあります。アプリが期待通りに動作するためには、アプリに自動起動の許可を与える必要があります。</string>
     <string name="button_later">後で</string>
     <string name="button_continue">続行</string>
+    <string name="enable_safe_dots">Safe Dotsを有効化</string>
+    <string name="enable_location">位置情報を有効化</string>
+    <string name="enable_location_description">これをオンにすると、携帯電話のGPSサービスを利用するアプリを通知するドットが有効になります。.</string>
+    <string name="enable_vibration">バイブレーション</string>
+    <string name="advanced">高度</string>
+    <string name="customisation_center">カスタマイズセンター</string>
+    <string name="customisation_center_description">ドットのサイズ、色、配置をカスタマイズできます</string>
+    <string name="tell_friends_family">家族や友人にこのアプリを伝える</string>
+    <string name="others">その他</string>
+    <string name="access_logs">アクセスログ</string>
+    <string name="customise">カスタマイズ</string>
+    <string name="tell_friends_family_description">友達や家族とアプリを共有して、共にプライバシーを確保しましょう！</string>
+    <string name="protects_your_privacy">プライバシーを保護します</string>
+    <string name="contents_locked">コンテンツはロックされています</string>
+    <string name="unlock_with_premium">プレミアム版でアンロック</string>
 
 
 </resources>
