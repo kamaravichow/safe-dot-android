@@ -22,11 +22,11 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.os.Build;
 
+import com.aravi.dot.R;
 import com.aravi.dot.constant.Constants;
 
 public class ApplicationHelper {
     private static final String TAG = ApplicationHelper.class.getSimpleName();
-    private static final String REMAINDER_CHANNEL = "REMINDER_CHANNEL";
 
     public static void initApplicationHelper(Application application) {
         localNotificationSetup(application);
@@ -36,7 +36,7 @@ public class ApplicationHelper {
     private static void localNotificationSetup(Application application) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(Constants.SERVICE_NOTIFICATION_CHANNEL, "Service Notification", NotificationManager.IMPORTANCE_LOW);
-            channel.setDescription("This keeps the app alive. We recommend not to disable this notification.");
+            channel.setDescription(application.getString(R.string.notification_service_description));
             channel.enableLights(false);
             channel.setShowBadge(true);
             channel.enableVibration(false);
@@ -47,7 +47,7 @@ public class ApplicationHelper {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(Constants.DEFAULT_NOTIFICATION_CHANNEL, "Default Notification", NotificationManager.IMPORTANCE_DEFAULT);
-            channel.setDescription("This shows what app is using the camera or mic or location");
+            channel.setDescription(application.getString(R.string.notification_default_description));
             channel.enableLights(true);
             channel.setShowBadge(true);
             channel.enableVibration(false);

@@ -24,6 +24,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 
+import com.aravi.dot.R;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.text.SimpleDateFormat;
@@ -47,9 +48,9 @@ public class Utils {
      */
     public static void showAutoStartDialog(Context context, String manufacturer) {
         new MaterialAlertDialogBuilder(context)
-                .setTitle("Enable AutoStart ")
-                .setMessage(manufacturer.toUpperCase() + " devices will kill the useful services to free up ram. You're required to provide the auto start permission to the app to keep app running as expected. ")
-                .setPositiveButton("Setup Now", (dialog, which) -> {
+                .setTitle(R.string.enable_autostart)
+                .setMessage(manufacturer.toUpperCase() + context.getString(R.string.enable_autostart_message))
+                .setPositiveButton(R.string.setupnow, (dialog, which) -> {
                     openAutoStartAccordingToManufacturer(context);
                 })
                 .setCancelable(true)
