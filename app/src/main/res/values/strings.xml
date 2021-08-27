@@ -76,6 +76,21 @@
     <string name="enable_autostart_message"> devices will kill the useful services to free up ram. You\'re required to provide the auto start permission to the app to keep app running as expected. </string>
     <string name="button_later">Later</string>
     <string name="button_continue">Continue</string>
+    <string name="enable_safe_dots">Enable Safe Dots</string>
+    <string name="enable_location">Enable Location</string>
+    <string name="enable_location_description">Turning this on will enable location dot which monitors app which use GPS service on your phone.</string>
+    <string name="enable_vibration">Enable Vibration</string>
+    <string name="advanced">Advanced</string>
+    <string name="customisation_center">Customisation Center</string>
+    <string name="customisation_center_description">A place to customise the dots size, color and alignment</string>
+    <string name="tell_friends_family"><![CDATA[Tell Friends & Family]]></string>
+    <string name="others">Others</string>
+    <string name="access_logs">Access Logs</string>
+    <string name="customise">Customise</string>
+    <string name="tell_friends_family_description">Help your friends and family stay private too by sharing the app with them</string>
+    <string name="protects_your_privacy">Protects your Privacy</string>
+    <string name="contents_locked">Contents Locked</string>
+    <string name="unlock_with_premium">Unlock with Premium</string>
 
 
 </resources>
