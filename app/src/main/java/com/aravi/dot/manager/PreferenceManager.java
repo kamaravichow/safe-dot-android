@@ -23,9 +23,14 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import androidx.core.content.res.ResourcesCompat;
+import androidx.security.crypto.EncryptedSharedPreferences;
+import androidx.security.crypto.MasterKey;
 
 import com.aravi.dot.constant.Constants;
 import com.aravi.dot.R;
+
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 
 public class PreferenceManager {
     private static PreferenceManager instance;
@@ -60,7 +65,32 @@ public class PreferenceManager {
     @SuppressLint("CommitPrefEdits")
     public PreferenceManager(Application application) {
         this.application = application;
-        this.sharedPreferences = application.getSharedPreferences(Constants.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE);
+
+        if (application.getSharedPreferences(Constants.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE).contains(PREF_CONSTANTS.CAMERA_KEY)){
+            this.sharedPreferences = application.getSharedPreferences(Constants.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE);
+        }
+        else {
+            try {
+                MasterKey mainKey = new MasterKey.Builder(application)
+                        .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
+                        .build();
+                // encrypts shared preferences so that they cannot be easily changed
+                this.sharedPreferences = EncryptedSharedPreferences
+                        .create(
+                                application,
+                                Constants.SHARED_PREFERENCE_NAME,
+                                mainKey,
+                                EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+                                EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+                        );
+            } catch (GeneralSecurityException e) {
+                e.printStackTrace();
+                this.sharedPreferences = application.getSharedPreferences(Constants.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE);
+            } catch (IOException e) {
+                e.printStackTrace();
+                this.sharedPreferences = application.getSharedPreferences(Constants.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE);
+            }
+        }
         this.prefEditor = sharedPreferences.edit();
     }
 
