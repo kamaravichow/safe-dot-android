@@ -65,7 +65,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:fontFamily="@font/product_sans_bold"
-                        android:text="Enable Safe Dots"
+                        android:text="@string/enable_safe_dots"
                         android:textColor="@android:color/black"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -97,7 +97,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/product_sans_regular"
-                android:text="Customise"
+                android:text="@string/customise"
                 android:textSize="@dimen/sub_head_size"
                 android:textStyle="bold" />
 
@@ -134,7 +134,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:fontFamily="@font/product_sans_bold"
-                            android:text="Enable Location"
+                            android:text="@string/enable_location"
                             android:textColor="@android:color/black"
                             android:textSize="16sp"
                             android:textStyle="bold" />
@@ -145,7 +145,7 @@
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="5dp"
                             android:fontFamily="@font/product_sans_regular"
-                            android:text="Turning this on will enable location dot which monitors app which use GPS service on your phone."
+                            android:text="@string/enable_location_description"
                             android:textSize="@dimen/minor_text_size" />
 
                     </LinearLayout>
@@ -200,7 +200,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:fontFamily="@font/product_sans_bold"
-                            android:text="Enable Vibration"
+                            android:text="@string/enable_vibration"
                             android:textColor="@android:color/black"
                             android:textSize="16sp"
                             android:textStyle="bold" />
@@ -245,7 +245,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/product_sans_regular"
-                android:text="Advanced"
+                android:text="@string/advanced"
                 android:textSize="@dimen/sub_head_size"
                 android:textStyle="bold" />
 
@@ -286,7 +286,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:fontFamily="@font/product_sans_bold"
-                            android:text="Customisation Center"
+                            android:text="@string/customisation_center"
                             android:textColor="@android:color/black"
                             android:textSize="16sp"
                             android:textStyle="bold" />
@@ -297,7 +297,7 @@
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="5dp"
                             android:fontFamily="@font/product_sans_regular"
-                            android:text="A place to customise the dots size, color and alignment"
+                            android:text="@string/customisation_center_description"
                             android:textSize="@dimen/minor_text_size" />
 
                     </LinearLayout>
@@ -358,7 +358,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:fontFamily="@font/product_sans_bold"
-                            android:text="Access Logs"
+                            android:text="@string/access_logs"
                             android:textColor="@android:color/black"
                             android:textSize="16sp"
                             android:textStyle="bold" />
@@ -405,7 +405,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/product_sans_regular"
-                android:text="Others"
+                android:text="@string/others"
                 android:textSize="@dimen/sub_head_size"
                 android:textStyle="bold" />
 
@@ -446,7 +446,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:fontFamily="@font/product_sans_bold"
-                            android:text="Tell Friends &amp; Family"
+                            android:text="@string/tell_friends_family"
                             android:textColor="@android:color/black"
                             android:textSize="16sp"
                             android:textStyle="bold" />
@@ -458,7 +458,7 @@
                             android:layout_marginTop="5dp"
                             android:layout_marginEnd="10dp"
                             android:fontFamily="@font/product_sans_regular"
-                            android:text="Help your friends and family stay private too by sharing the app with them"
+                            android:text="@string/tell_friends_family_description"
                             android:textSize="@dimen/minor_text_size" />
 
                     </LinearLayout>

@@ -23,6 +23,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.aravi.dot.R;
 import com.aravi.dot.databinding.ActivityCustomisationBinding;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
@@ -42,15 +43,15 @@ public class CustomisationActivity extends AppCompatActivity {
 
         mBinding.saveButton.setOnClickListener(v -> {
             new MaterialAlertDialogBuilder(CustomisationActivity.this)
-                    .setTitle("Requires Upgrade")
-                    .setMessage("Customisation Center and more other features will be available only in the PRO version of the app.")
-                    .setPositiveButton("Upgrade to PRO Version", (dialog, which) -> {
+                    .setTitle(R.string.requires_upgrade)
+                    .setMessage(R.string.requires_upgrade_message)
+                    .setPositiveButton(R.string.requires_upgrade_button, (dialog, which) -> {
                         String url = "https://play.google.com/store/apps/details?id=com.aravi.dotpro";
                         Intent i = new Intent(Intent.ACTION_VIEW);
                         i.setData(Uri.parse(url));
                         startActivity(i);
                     })
-                    .setNeutralButton("Never Mind", null)
+                    .setNeutralButton(R.string.requires_upgrade_nevermind, null)
                     .show();
         });
     }

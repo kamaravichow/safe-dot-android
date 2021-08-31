@@ -100,11 +100,11 @@ public class DotService extends AccessibilityService {
             PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
 
             Notification notification = new Notification.Builder(this, Constants.SERVICE_NOTIFICATION_CHANNEL)
-                    .setContentTitle("SafeDot")
-                    .setContentText("SafeDot is protecting your privacy")
+                    .setContentTitle(getString(R.string.app_name))
+                    .setContentText(getString(R.string.notification_ContentText))
                     .setSmallIcon(R.drawable.transparent)
                     .setContentIntent(pendingIntent)
-                    .setTicker("Safedot protection is now turned on")
+                    .setTicker(getString(R.string.notification_ticker))
                     .build();
 
             currentLivePackage.setValue(BuildConfig.APPLICATION_ID);
@@ -216,7 +216,7 @@ public class DotService extends AccessibilityService {
     // Location service Callbacks
     private LocationListener locationListener = location -> {
         if (Constants.isDebug()) {
-            Log.i(TAG, "location: " + location.toString());
+            Log.i(TAG, getString(R.string.dotservice_location) + location.toString());
         }
     };
 
@@ -270,17 +270,17 @@ public class DotService extends AccessibilityService {
      * Generates the notification title
      */
     private String getNotificationTitle() {
-        String title = "Your ";
+        String title = getString(R.string.dotservice_monitored_your);
         if (isCameraUnavailable) {
-            title = title + "CAMERA, ";
+            title = title + getString(R.string.dotservice_monitored_camera);
         }
         if (isMicUnavailable) {
-            title = title + "MIC, ";
+            title = title + getString(R.string.dotservice_monitored_mic);
         }
         if (isLocUnavailable) {
-            title = title + "LOCATION";
+            title = title + getString(R.string.dotservice_monitored_location);
         }
-        return title + " are being monitored";
+        return title + getString(R.string.dotservice_monitored);
     }
 
     /**
@@ -288,18 +288,18 @@ public class DotService extends AccessibilityService {
      * Takes in the currently running application name from last accessibility event
      */
     private String getNotificationDescription(String appUsingComponent) {
-        if (appUsingComponent.isEmpty() || appUsingComponent.equals("(unknown)")) {
-            appUsingComponent = "some app";
+        if (appUsingComponent.isEmpty() || appUsingComponent.equals(getString(R.string.dotservice_unknown))) {
+            appUsingComponent = getString(R.string.dotservice_someapp);
         }
-        String description = appUsingComponent + " is using your ";
+        String description = appUsingComponent + getString(R.string.dotservice_isusingyour);
         if (isCameraUnavailable) {
-            description = description + "CAMERA, ";
+            description = description + getString(R.string.dotservice_monitored_camera);
         }
         if (isMicUnavailable) {
-            description = description + "MIC, ";
+            description = description + getString(R.string.dotservice_monitored_mic);
         }
         if (isLocUnavailable) {
-            description = description + "LOCATION";
+            description = description + getString(R.string.dotservice_monitored_location);
         }
         return description;
     }

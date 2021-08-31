@@ -84,7 +84,7 @@ public class LogsActivity extends AppCompatActivity {
                 mBinding.clearLogsButton.show();
                 mBinding.clearLogsButton.setOnClickListener(v -> {
                     mLogsViewModel.clearLogs();
-                    showSnackBar("Logs Cleared");
+                    showSnackBar(getString(R.string.logs_cleared));
                 });
                 mBinding.emptyListImage.setVisibility(View.INVISIBLE);
             }
