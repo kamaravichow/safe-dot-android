@@ -35,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:navigationIcon="@drawable/ic_round_keyboard_backspace_24"
-            app:title="Customisation Center"
+            app:title="@string/customisation_center"
             app:titleTextAppearance="@style/ToolbarTitleAppearance" />
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -146,7 +146,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:fontFamily="@font/product_sans_bold"
-                android:text="Contents Locked"
+                android:text="@string/contents_locked"
                 android:textSize="18sp" />
 
         </LinearLayout>
@@ -167,7 +167,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="56dp"
-            android:text="Unlock with Premium" />
+            android:text="@string/unlock_with_premium" />
 
 
     </RelativeLayout>

@@ -85,10 +85,10 @@ public class MainActivity extends AppCompatActivity {
                 if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     new MaterialAlertDialogBuilder(MainActivity.this)
                             .setIcon(ContextCompat.getDrawable(MainActivity.this, R.drawable.ic_round_location))
-                            .setTitle("Requires Location Permission")
-                            .setMessage("This features requires LOCATION PERMISSION to work as expected\n\nNOTE: This app doesn't have permission to connect to internet so your data is safe on your device.")
-                            .setNeutralButton("Later", (dialog, which) -> mBinding.locationSwitch.setChecked(false))
-                            .setPositiveButton("Continue", (dialog, which) -> {
+                            .setTitle(R.string.requires_locationperm)
+                            .setMessage(R.string.requires_locationperm_message)
+                            .setNeutralButton(R.string.button_later, (dialog, which) -> mBinding.locationSwitch.setChecked(false))
+                            .setPositiveButton(R.string.button_continue, (dialog, which) -> {
                                 askPermission(Manifest.permission.ACCESS_FINE_LOCATION);
                             })
                             .show();
@@ -119,23 +119,23 @@ public class MainActivity extends AppCompatActivity {
         mBinding.shareOption.setOnClickListener(v -> {
             Intent shareIntent = new Intent();
             shareIntent.setAction(Intent.ACTION_SEND);
-            shareIntent.putExtra(Intent.EXTRA_TEXT, "Protect your camera and microphone privacy with SafeDot. Download from Google Play : https://play.google.com/store/apps/details?id=com.aravi.dotpro");
+            shareIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_text));
             shareIntent.setType("text/plain");
             startActivity(shareIntent);
         });
 
-        mBinding.versionText.setText("Version - " + BuildConfig.VERSION_NAME);
+        mBinding.versionText.setText(getString(R.string.version) + BuildConfig.VERSION_NAME);
     }
 
     private void checkForAccessibilityAndStart() {
         if (!accessibilityPermission(getApplicationContext(), DotService.class)) {
             mBinding.mainSwitch.setChecked(false);
             new MaterialAlertDialogBuilder(this)
-                    .setTitle("Requires Accessibility Permission")
-                    .setMessage("You're required to enable accessibility permission to Safe Dot Pro to enable the safe dots")
+                    .setTitle(R.string.requires_accessibility)
+                    .setMessage(R.string.requires_accessibility_message)
                     .setIcon(R.drawable.ic_baseline_accessibility_24)
-                    .setPositiveButton("Open Accessibility", (dialog, which) -> startActivity(new Intent("android.settings.ACCESSIBILITY_SETTINGS")))
-                    .setNegativeButton("Cancel", null)
+                    .setPositiveButton(R.string.requires_accessibility_open, (dialog, which) -> startActivity(new Intent("android.settings.ACCESSIBILITY_SETTINGS")))
+                    .setNegativeButton(R.string.cancel, null)
                     .setCancelable(true)
                     .show();
         } else {
