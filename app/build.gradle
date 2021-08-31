@@ -21,8 +21,8 @@ android {
     buildToolsVersion "30.0.3"
 
     def versionMajor = 3
-    def versionMinor = 0
-    def versionPatch = 9
+    def versionMinor = 1
+    def versionPatch = 0
 
     defaultConfig {
         applicationId "com.aravi.dot"
