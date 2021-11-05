@@ -82,3 +82,5 @@ lint/outputs/
 lint/tmp/
 # lint/reports/
 .idea/compiler.xml
+
+.DS_Store
