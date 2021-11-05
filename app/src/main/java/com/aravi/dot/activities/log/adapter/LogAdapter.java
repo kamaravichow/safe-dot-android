@@ -28,8 +28,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.aravi.dot.R;
-import com.aravi.dot.util.Utils;
 import com.aravi.dot.model.Logs;
+import com.aravi.dot.util.Utils;
+import com.github.marlonlom.utilities.timeago.TimeAgo;
 
 import java.util.List;
 
@@ -62,7 +63,7 @@ public class LogAdapter extends RecyclerView.Adapter<LogHolder> {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-        holder.appTimestamp.setText(Utils.convertSecondsToHMmSs(item.getTimestamp()));
+        holder.appTimestamp.setText(TimeAgo.using(item.getTimestamp()));
 
         switch (item.getCamera_state()) {
             case 0:
