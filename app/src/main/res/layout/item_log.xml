@@ -171,10 +171,10 @@
             android:ellipsize="end"
             android:fontFamily="@font/product_sans_bold"
             android:maxLength="24"
-            tools:text="Safe Dot"
             android:textColor="@android:color/black"
             android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:text="Safe Dot" />
 
         <TextView
             android:id="@+id/logAppPackage"
@@ -183,9 +183,9 @@
             android:ellipsize="end"
             android:fontFamily="@font/product_sans_regular"
             android:maxLength="32"
-            tools:text="com.aravi.dot"
             android:textAllCaps="false"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            tools:text="com.aravi.dot" />
 
     </LinearLayout>
 
@@ -196,12 +196,15 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:layout_margin="6dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="6dp"
+        android:layout_marginBottom="6dp"
         android:fontFamily="@font/product_sans_bold"
-        tools:text="12:00 AM"
         android:textAllCaps="true"
         android:textSize="12sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        tools:text="12:00 AM" />
 
 
     <View

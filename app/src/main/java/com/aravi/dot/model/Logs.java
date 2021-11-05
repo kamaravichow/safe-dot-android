@@ -1,11 +1,13 @@
 package com.aravi.dot.model;
 
+import androidx.annotation.Keep;
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 
+@Keep
 @Entity(tableName = "logs_database")
 public class Logs implements Serializable {
 

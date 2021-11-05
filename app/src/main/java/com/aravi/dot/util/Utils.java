@@ -17,6 +17,7 @@
 
 package com.aravi.dot.util;
 
+import android.annotation.SuppressLint;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -104,6 +105,7 @@ public class Utils {
      * @param millis
      * @return
      */
+    @SuppressLint("SimpleDateFormat")
     public static String convertSecondsToHMmSs(long millis) {
         Date date = new Date(millis);
         Calendar cal = Calendar.getInstance();
