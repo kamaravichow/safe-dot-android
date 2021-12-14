@@ -1,0 +1,95 @@
+<!--
+  ~ Copyright (C) 2020.  Aravind Chowdary (@kamaravichow)
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<resources>
+    
+    <string name="service_description">Quando este serviço é ativado, ele permite que o SafeDot app exiba notificações e indicadores cada vez que um app ou serviço de terceiros usa câmera ou microfone em qualquer instância.</string>
+    <string name="service_summary">Ative isto para permitir pontos de segurança</string>
+
+    <string name="close_app_note">Desativar a permissão de acesso ao app</string>
+    <string name="preferences">Preferências</string>
+
+    <string name="vibrate_description">Você terá uma curta vibração sempre que um app ou serviço usar microfone ou câmera</string>
+    <string name="dot_alignment_string">Alinhamento de pontos</string>
+    <string name="dot_alignment_description">Alinhe os pontos de maneira que você quer e acha confortável</string>
+
+    <string name="default_version_text">Versão - 1.0</string>
+    <string name="clear_dialog_title">Você tem certeza?</string>
+    <string name="clear_dialog_description">Isto removerá todos os registros que não poderão ser recuperados de volta.\nVocê quer prosseguir?</string>
+    <string name="clear_dialog_yes">Sim, remover</string>
+    <string name="clear_dialog_no">Não, agora não</string>
+
+    <string name="creator_attribution">Feito para você por Aravind Chowdary</string>
+
+    <string name="access_logs_title">Ver registros</string>
+    <string name="access_log_description">Linha do tempo com registros de uso do app. Você pode encontrar qual app usou sua câmera e microfone em que intervalos.</string>
+
+    <string name="update_failed_note">Atualização falhou! Tentando novamente...</string>
+
+    <string name="access_log_title">Ver registro</string>
+    <string name="clear_logs">Limpar registros</string>
+    <string name="title_ads">Sem anúncios</string>
+    <string name="title_activity_customisation">Atividade de personalização</string>
+    <string name="notification_ContentText">O SafeDot está protegendo sua privacidade</string>
+    <string name="notification_ticker">A proteção do Safedot está ativada agora</string>
+    <string name="notification_service_description">Isto mantém o app ativo. Recomendamos não desativar esta notificação.</string>
+    <string name="notification_default_description">Isto mostra qual app está usando a câmera, microfone ou localização</string>
+    <string name="requires_upgrade">Requer atualização</string>
+    <string name="requires_upgrade_message">Centro de personalização e outras funcionalidades estarão disponíveis apenas na versão PRO do app.</string>
+    <string name="requires_upgrade_button">Atualizar para a versão PRO</string>
+    <string name="requires_upgrade_nevermind">Deixa pra lá</string>
+    <string name="dotservice_location">localização: </string>
+    <string name="dotservice_monitored_your">Sua </string>
+    <string name="dotservice_monitored_camera">CÂMERA, </string>
+    <string name="dotservice_monitored_mic">MIC, </string>
+    <string name="dotservice_monitored_location">LOCALIZAÇÃO</string>
+    <string name="dotservice_monitored"> estão sendo monitorados</string>
+    <string name="dotservice_unknown">(desconhecido)</string>
+    <string name="dotservice_someapp">algum app</string>
+    <string name="dotservice_isusingyour"> está usando sua </string>
+    <string name="logs_cleared">Registros removidos</string>
+    <string name="requires_locationperm">Requer permissão de localização</string>
+    <string name="requires_locationperm_message">Esta funcionalidade requer a PERMISSÃO DE LOCALIZAÇÃO para funcionar como esperado\n\nOBSERVE: Este app não tem permissão para conectar-se à internet e seus dados estão protegidos em seu dispositivo.</string>
+    <string name="share_text">Proteja a privacidade de sua câmera e microfone com o SafeDot. Baixar do Google Play : https://play.google.com/store/apps/details?id=com.aravi.dotpro</string>
+    <string name="requires_accessibility">Requer permissão de acessibilidade</string>
+    <string name="requires_accessibility_message">Você precisa conceder a permissão de acessibilidade para Safe Dot Pro para ativar os pontos de segurança</string>
+    <string name="requires_accessibility_open">Abrir acessibilidade</string>
+    <string name="cancel">Cancelar</string>
+    <string name="version">Versão - </string>
+    <string name="enable_autostart">Ativar início automático </string>
+    <string name="setupnow">Configurar agora</string>
+    <string name="enable_autostart_message"> dispositivos cortam os serviços úteis para liberar a memória. Você precisa conceder a permissão de início automático ao app para manter o app funcionando como esperado. </string>
+    <string name="button_later">Mais tarde</string>
+    <string name="button_continue">Continuar</string>
+    <string name="enable_safe_dots">Ativar os pontos de segurança</string>
+    <string name="enable_location">Ativar localização</string>
+    <string name="enable_location_description">Ao habilitar isso, você ativará um ponto de localização que monitorará o app que utiliza o serviço GPS em seu telefone.</string>
+    <string name="enable_vibration">Ativar vibração</string>
+    <string name="advanced">Avançado</string>
+    <string name="customisation_center">Centro de personalização</string>
+    <string name="customisation_center_description">Um lugar para personalizar o tamanho, a cor e o alinhamento dos pontos</string>
+    <string name="tell_friends_family"><![CDATA[Fale aos amigos e familiares]]></string>
+    <string name="others">Outros</string>
+    <string name="access_logs">Ver registros</string>
+    <string name="customise">Personalizar</string>
+    <string name="tell_friends_family_description">Ajude aos seus amigos e familiares proteger sua privacidade compartilhando este app com eles</string>
+    <string name="protects_your_privacy">Protege sua privacidade</string>
+    <string name="contents_locked">Conteúdo bloqueado</string>
+    <string name="unlock_with_premium">Desbloquear com o Premium</string>
+
+
+</resources>
