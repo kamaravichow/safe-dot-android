@@ -20,7 +20,7 @@
     <br />
     <br />
     <a href="https://play.google.com/store/apps/details?id=com.aravi.dot">
-      <img src="https://img.shields.io/badge/Play%20Store-4.5K-blueviolet?style=for-the-badge"/>
+      <img src="https://img.shields.io/badge/Play%20Store-5K-blueviolet?style=for-the-badge"/>
     </a>
     <a href="https://galaxy.store/dotsafe">
       <img src="https://img.shields.io/badge/Galaxy%20Store-1.2K-ff69b4?style=for-the-badge"/>
