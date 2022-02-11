@@ -18,7 +18,7 @@
 <resources>
     <string name="app_name" translatable="false">SafeDot</string>
 
-    <string name="service_description">Когда служба специальных возможностей SafeDot включена, приложение может уведомлять и показывать индикаторы о получении доступа к камере, микрофону и местоположению сторонними приложениями и службами.</string>
+    <string name="service_description">Когда служба специальных возможностей SafeDot включена, приложение может уведомлять и показывать индикаторы о получении доступа к камере, микрофону и местоположению приложениями и службами.</string>
     <string name="service_summary">Включите это, чтобы приложение SafeDot работало нормально</string>
 
     <string name="close_app_note">Отключите службу специальных возможностей SafeDot</string>
