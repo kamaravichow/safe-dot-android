@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright (C) 2020.  Aravind Chowdary (@kamaravichow)
+  ~ Copyright (C) 2022.  Aravind Chowdary (@kamaravichow)
   ~
   ~ This program is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -63,12 +63,12 @@
     <string name="dotservice_someapp">приложение</string>
     <string name="dotservice_isusingyour"> использует ваши </string>
     <string name="logs_cleared">Записи удалены</string>
-    <string name="requires_locationperm">Требуется разрешение местоположения</string>
+    <string name="requires_locationperm">Требуется доступ к местоположению</string>
     <string name="requires_locationperm_message">Для этой функции приложению нужен доступ к местоположению\n\nПримечание: Это приложение не имеет доступа к интернету, поэтому все ваши данные находятся в безопасности на вашем устройстве.</string>
-    <string name="share_text">Защитите камеру, микрофон и местоположение с помощью SafeDot. Загрузите из Google Play: https://play.google.com/store/apps/details?id=com.aravi.dotpro</string>
+    <string name="share_text">Защитите приватность камеры, микрофона и местоположения с помощью SafeDot. Доступно в Google Play: https://play.google.com/store/apps/details?id=com.aravi.dotpro</string>
     <string name="requires_accessibility">Требуется включение специальной службы SafeDot</string>
     <string name="requires_accessibility_message">Необходимо включить специальную службу SafeDot, чтобы получить доступ к точкам безопасности.</string>
-    <string name="requires_accessibility_open">Открыть список установленных служб</string>
+    <string name="requires_accessibility_open">Открыть список доступных специальных служб</string>
     <string name="cancel">Отмена</string>
     <string name="version">Версия - </string>
     <string name="enable_autostart">Включить автозапуск </string>
