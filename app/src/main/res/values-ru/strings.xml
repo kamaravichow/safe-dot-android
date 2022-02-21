@@ -1,0 +1,96 @@
+<!--
+  ~ Copyright (C) 2022.  Aravind Chowdary (@kamaravichow)
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<resources>
+    <string name="app_name" translatable="false">SafeDot</string>
+
+    <string name="service_description">Когда служба специальных возможностей SafeDot включена, приложение может уведомлять и показывать индикаторы о получении доступа к камере, микрофону и местоположению приложениями и службами.</string>
+    <string name="service_summary">Включите это, чтобы приложение SafeDot работало нормально</string>
+
+    <string name="close_app_note">Отключите службу специальных возможностей SafeDot</string>
+    <string name="preferences">Настройки</string>
+
+    <string name="vibrate_description">Телефон будет вибрировать, когда приложение или служба получит доступ к камере, микрофону или местоположению</string>
+    <string name="dot_alignment_string">Расположение точек</string>
+    <string name="dot_alignment_description">Расположите точки там, где вы хотите их видеть</string>
+
+    <string name="default_version_text">Версия - 1.0</string>
+    <string name="clear_dialog_title">Вы уверены?</string>
+    <string name="clear_dialog_description">Все записи будут удалены без возможности восстановления.\nХотите продолжить?</string>
+    <string name="clear_dialog_yes">Да, удалить их</string>
+    <string name="clear_dialog_no">Нет, не сейчас</string>
+
+    <string name="creator_attribution">Создано Aravind Chowdary</string>
+
+    <string name="access_logs_title">Записи доступа</string>
+    <string name="access_log_description">Журнал доступа приложений. Можно посмотреть, сколько времени каждое приложение использовало камеру, микрофон и местоположение.</string>
+
+    <string name="update_failed_note">Обновление не удалось! Ещё одна попытка...</string>
+
+    <string name="access_log_title">Записи доступа</string>
+    <string name="clear_logs">Очистить все записи</string>
+    <string name="title_ads">Нет интернет-рекламы</string>
+    <string name="title_activity_customisation">Настройка активности</string>
+    <string name="notification_ContentText">SafeDot защищает вашу приватность</string>
+    <string name="notification_ticker">Защита SafeDot включена</string>
+    <string name="notification_service_description">Это уведомление поддерживает состояние приложения. Не рекомендуется отключать его.</string>
+    <string name="notification_default_description">Оно показывает, какое приложение или служба использует камеру, микрофон или местоположение</string>
+    <string name="requires_upgrade">Необходимо обновление</string>
+    <string name="requires_upgrade_message">Центр персонализации и другие преимущества доступны только в платной версии.</string>
+    <string name="requires_upgrade_button">Обновиться до платной версии</string>
+    <string name="requires_upgrade_nevermind">Никогда</string>
+    <string name="dotservice_location">местоположение: </string>
+    <string name="dotservice_monitored_your">Ваши </string>
+    <string name="dotservice_monitored_camera">камера, </string>
+    <string name="dotservice_monitored_mic">микрофон, </string>
+    <string name="dotservice_monitored_location">местоположение</string>
+    <string name="dotservice_monitored"> отслеживаются</string>
+    <string name="dotservice_unknown">(неизвестно)</string>
+    <string name="dotservice_someapp">приложение</string>
+    <string name="dotservice_isusingyour"> использует ваши </string>
+    <string name="logs_cleared">Записи удалены</string>
+    <string name="requires_locationperm">Требуется доступ к местоположению</string>
+    <string name="requires_locationperm_message">Для этой функции приложению нужен доступ к местоположению\n\nПримечание: Это приложение не имеет доступа к интернету, поэтому все ваши данные находятся в безопасности на вашем устройстве.</string>
+    <string name="share_text">Защитите приватность камеры, микрофона и местоположения с помощью SafeDot. Доступно в Google Play: https://play.google.com/store/apps/details?id=com.aravi.dotpro</string>
+    <string name="requires_accessibility">Требуется включение специальной службы SafeDot</string>
+    <string name="requires_accessibility_message">Необходимо включить специальную службу SafeDot, чтобы получить доступ к точкам безопасности.</string>
+    <string name="requires_accessibility_open">Открыть список доступных специальных служб</string>
+    <string name="cancel">Отмена</string>
+    <string name="version">Версия - </string>
+    <string name="enable_autostart">Включить автозапуск </string>
+    <string name="setupnow">Запустить сейчас</string>
+    <string name="enable_autostart_message"> устройства завершают полезные сервисы, чтобы освободить оперативную память. Требуется дать разрешение на автозапуск, чтобы приложение работало нормально. </string>
+    <string name="button_later">Позже</string>
+    <string name="button_continue">Продолжить</string>
+    <string name="enable_safe_dots">Включить точки безопасности</string>
+    <string name="enable_location">Включить точку местоположения</string>
+    <string name="enable_location_description">После включения будет доступна точка местоположения, показывающая, какие приложения и службы используют GPS.</string>
+    <string name="enable_vibration">Включить вибрацию</string>
+    <string name="advanced">Расширенные</string>
+    <string name="customisation_center">Центр персонализации</string>
+    <string name="customisation_center_description">Здесь можно настроить цвет, размер и расположение трёх точек.</string>
+    <string name="tell_friends_family"><![CDATA[Расскажите друзьям и семье]]></string>
+    <string name="others">Ещё</string>
+    <string name="access_logs">Записи доступа</string>
+    <string name="customise">Настройки</string>
+    <string name="tell_friends_family_description">Помогите друзьям и семье оставаться в приватности, поделитесь приложением с ними</string>
+    <string name="protects_your_privacy">Защищает вашу приватность</string>
+    <string name="contents_locked">Недоступные преимущества</string>
+    <string name="unlock_with_premium">Разблокируйте в платной версии</string>
+
+
+</resources>
