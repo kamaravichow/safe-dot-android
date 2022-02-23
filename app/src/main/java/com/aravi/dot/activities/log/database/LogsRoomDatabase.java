@@ -35,7 +35,7 @@ import java.util.concurrent.Executors;
  * Created by Aravind Chowdary on
  **/
 
-@Database(entities = {Logs.class}, version = 3, exportSchema = true)
+@Database(entities = {Logs.class}, version = 5, exportSchema = true)
 public abstract class LogsRoomDatabase extends RoomDatabase {
     private static final int NUMBER_OF_THREADS = 4;
 
@@ -44,10 +44,7 @@ public abstract class LogsRoomDatabase extends RoomDatabase {
     private static volatile LogsRoomDatabase INSTANCE;
     static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
-    /**
-     * @param context
-     * @return
-     */
+
     static LogsRoomDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
             synchronized (LogsRoomDatabase.class) {
@@ -55,6 +52,7 @@ public abstract class LogsRoomDatabase extends RoomDatabase {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             LogsRoomDatabase.class, "logsfree")
                             .addCallback(sRoomDatabaseCallback)
+                            .allowMainThreadQueries()
                             .build();
                 }
             }
