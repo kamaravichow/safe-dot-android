@@ -15,7 +15,7 @@
   ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="app_name" translatable="false">SafeDot</string>
 
     <string name="service_description">When this service is enabled it lets Dot safe app to display notifications and indicators every time a third-party app or a service uses camera or microphone on any screen.</string>

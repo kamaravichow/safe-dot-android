@@ -1,0 +1,79 @@
+<resources>
+    <string name="app_name" translatable="false">SafeDot</string>
+
+    <string name="service_description">Khi dịch vụ này được bật, nó cho phép ứng dụng Dot safe hiển thị thông báo và chỉ báo mỗi khi ứng dụng của bên thứ ba hoặc dịch vụ sử dụng máy ảnh hoặc micrô trên bất kỳ màn hình nào.</string>
+    <string name="service_summary">Bật tùy chọn này để bật dấu chấm an toàn</string>
+
+    <string name="close_app_note">Tắt quyền trợ năng đối với ứng dụng</string>
+    <string name="preferences">Sở thích</string>
+
+    <string name="vibrate_description">Bạn sẽ bị rung nhẹ bất cứ khi nào ứng dụng hoặc dịch vụ sử dụng micrô hoặc máy ảnh</string>
+    <string name="dot_alignment_string">Căn chỉnh dấu chấm</string>
+    <string name="dot_alignment_description">Căn chỉnh các chấm theo cách bạn muốn và bạn cảm thấy thoải mái</string>
+
+    <string name="default_version_text">Phiên bản - 1.0</string>
+    <string name="clear_dialog_title">Bạn có chắc không ?</string>
+    <string name="clear_dialog_description">Thao tác này sẽ xóa tất cả các nhật ký không thể khôi phục lại được. \ NBạn vẫn muốn tiếp tục?</string>
+    <string name="clear_dialog_yes">Có, xóa nó</string>
+    <string name="clear_dialog_no">Không phải bây giơ</string>
+
+    <string name="creator_attribution">Được tạo cho bạn bởi Aravind Chowdary</string>
+
+    <string name="access_logs_title">Truy cập Nhật ký</string>
+    <string name="access_log_description">Dòng thời gian của nhật ký sử dụng ứng dụng. Bạn có thể tìm thấy ứng dụng nào đã sử dụng máy ảnh và micrô của mình vào những khoảng thời gian nào.</string>
+
+    <string name="update_failed_note">Cập nhật không thành công! Đang thử lại ...</string>
+
+    <string name="access_log_title">Nhật ký truy cập</string>
+    <string name="clear_logs">Xóa các bản ghi</string>
+    <string name="title_ads">Không có quảng cáo xen giữa</string>
+    <string name="title_activity_customisation">CustomisationActivity</string>
+    <string name="notification_ContentText">SafeDot đang bảo vệ quyền riêng tư của bạn</string>
+    <string name="notification_ticker">Bảo vệ Safedot hiện đã được bật</string>
+    <string name="notification_service_description">Điều này giữ cho ứng dụng tồn tại. Chúng tôi khuyên bạn không nên tắt thông báo này.</string>
+    <string name="notification_default_description">Điều này cho biết ứng dụng nào đang sử dụng máy ảnh hoặc micrô hoặc vị trí</string>
+    <string name="requires_upgrade">Yêu cầu nâng cấp</string>
+    <string name="requires_upgrade_message">Trung tâm tùy chỉnh và nhiều tính năng khác sẽ chỉ có sẵn trong phiên bản PRO của ứng dụng.</string>
+    <string name="requires_upgrade_button">Nâng lên phiên bản chuyên nghiệp</string>
+    <string name="requires_upgrade_nevermind">Đừng bận tâm</string>
+    <string name="dotservice_location">vị trí:</string>
+    <string name="dotservice_monitored_your">Của bạn</string>
+    <string name="dotservice_monitored_camera">MÁY ẢNH,</string>
+    <string name="dotservice_monitored_mic">MIC,</string>
+    <string name="dotservice_monitored_location">VỊ TRÍ</string>
+    <string name="dotservice_monitored">đang được giám sát</string>
+    <string name="dotservice_unknown">(không xác định)</string>
+    <string name="dotservice_someapp">một số ứng dụng</string>
+    <string name="dotservice_isusingyour">đang sử dụng của bạn</string>
+    <string name="logs_cleared">Nhật ký đã được xóa</string>
+    <string name="requires_locationperm">Yêu cầu Quyền Vị trí</string>
+    <string name="requires_locationperm_message">Tính năng này yêu cầu PHÉP VỊ TRÍ để hoạt động như mong đợi \ n \ nLƯU Ý: Ứng dụng này không có quyền kết nối với Internet để dữ liệu của bạn được an toàn trên thiết bị của bạn.</string>
+    <string name="share_text">Bảo vệ sự riêng tư của máy ảnh và micrô của bạn với SafeDot. Tải xuống từ Google Play: https://play.google.com/store/apps/details?id=com.aravi.dotpro</string>
+    <string name="requires_accessibility">Yêu cầu Quyền truy cập</string>
+    <string name="requires_accessibility_message">Bạn được yêu cầu bật quyền trợ năng cho Safe Dot Pro để bật các dấu chấm an toàn</string>
+    <string name="requires_accessibility_open">Mở khả năng tiếp cận</string>
+    <string name="cancel">Hủy bỏ</string>
+    <string name="version">Phiên bản -</string>
+    <string name="enable_autostart">Bật Tự động Khởi động</string>
+    <string name="setupnow">Thiết lập ngay</string>
+    <string name="enable_autostart_message">thiết bị sẽ giết chết các dịch vụ hữu ích để giải phóng ram. Bạn được yêu cầu cung cấp quyền tự động khởi động ứng dụng để ứng dụng tiếp tục chạy như mong đợi.</string>
+    <string name="button_later">Một lát sau</string>
+    <string name="button_continue">Tiếp tục</string>
+    <string name="enable_safe_dots">Bật dấu chấm an toàn</string>
+    <string name="enable_location">Cho phép vị trí</string>
+    <string name="enable_location_description">Bật tính năng này sẽ bật chấm vị trí giám sát ứng dụng sử dụng dịch vụ GPS trên điện thoại của bạn.</string>
+    <string name="enable_vibration">Bật rung</string>
+    <string name="advanced">Nâng cao</string>
+    <string name="customisation_center">Trung tâm tùy chỉnh</string>
+    <string name="customisation_center_description">Một nơi để tùy chỉnh kích thước chấm, màu sắc và căn chỉnh</string>
+    <string name="tell_friends_family">Nói với bạn bè và gia đình</string>
+    <string name="others">Khác</string>
+    <string name="access_logs">Truy cập Nhật ký</string>
+    <string name="customise">Tùy chỉnh</string>
+    <string name="tell_friends_family_description">Giúp bạn bè và gia đình của bạn luôn ở chế độ riêng tư bằng cách chia sẻ ứng dụng với họ</string>
+    <string name="protects_your_privacy">Bảo vệ quyền riêng tư của bạn</string>
+    <string name="contents_locked">Nội dung đã khóa</string>
+    <string name="unlock_with_premium">Mở khóa bằng Premium</string>
+
+
+</resources>

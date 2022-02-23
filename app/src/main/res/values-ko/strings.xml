@@ -1,0 +1,79 @@
+<resources>
+    <string name="app_name" translatable="false">SafeDot</string>
+
+    <string name="service_description">이 서비스가 활성화되면 Dot safe 앱은 타사 앱 또는 서비스가 모든 화면에서 카메라 또는 마이크를 사용할 때마다 알림 및 표시기를 표시할 수 있습니다.</string>
+    <string name="service_summary">안전한 점을 사용하려면 이 기능을 켜세요.</string>
+
+    <string name="close_app_note">앱에 대한 접근성 권한 비활성화</string>
+    <string name="preferences">기본 설정</string>
+
+    <string name="vibrate_description">응용 프로그램이나 서비스가 마이크나 카메라를 사용할 때마다 짧은 진동을 받습니다.</string>
+    <string name="dot_alignment_string">도트 정렬</string>
+    <string name="dot_alignment_description">원하는 방식으로 점을 정렬하고 편안하게</string>
+
+    <string name="default_version_text">버전 - 1.0</string>
+    <string name="clear_dialog_title">확실해 ?</string>
+    <string name="clear_dialog_description">이렇게 하면 다시 복구할 수 없는 모든 로그가 지워집니다.\n계속하시겠습니까?</string>
+    <string name="clear_dialog_yes">예, 지우십시오</string>
+    <string name="clear_dialog_no">아니요, 지금은 아닙니다</string>
+
+    <string name="creator_attribution">Aravind Chowdary가 당신을 위해 만들었습니다.</string>
+
+    <string name="access_logs_title">액세스 로그</string>
+    <string name="access_log_description">앱 사용 로그의 타임라인. 어떤 앱이 어떤 간격으로 카메라와 마이크를 사용했는지 확인할 수 있습니다.</string>
+
+    <string name="update_failed_note">업데이트가 실패 ! 재시도 중...</string>
+
+    <string name="access_log_title">액세스 로그</string>
+    <string name="clear_logs">로그 지우기</string>
+    <string name="title_ads">내부 광고 없음</string>
+    <string name="title_activity_customisation">커스터마이징 활동</string>
+    <string name="notification_ContentText">SafeDot은 귀하의 개인 정보를 보호합니다</string>
+    <string name="notification_ticker">이제 Safedot 보호가 켜져 있습니다.</string>
+    <string name="notification_service_description">이렇게 하면 앱이 살아 있게 됩니다. 이 알림을 비활성화하지 않는 것이 좋습니다.</string>
+    <string name="notification_default_description">카메라, 마이크 또는 위치를 사용하는 앱이 무엇인지 보여줍니다.</string>
+    <string name="requires_upgrade">업그레이드 필요</string>
+    <string name="requires_upgrade_message">사용자 지정 센터 및 기타 기능은 앱의 PRO 버전에서만 사용할 수 있습니다.</string>
+    <string name="requires_upgrade_button">PRO 버전으로 업그레이드</string>
+    <string name="requires_upgrade_nevermind">괜찮아요</string>
+    <string name="dotservice_location">위치:</string>
+    <string name="dotservice_monitored_your">당신의</string>
+    <string name="dotservice_monitored_camera">카메라,</string>
+    <string name="dotservice_monitored_mic">마이크,</string>
+    <string name="dotservice_monitored_location">위치</string>
+    <string name="dotservice_monitored">감시되고 있다</string>
+    <string name="dotservice_unknown">(알려지지 않은)</string>
+    <string name="dotservice_someapp">어떤 앱</string>
+    <string name="dotservice_isusingyour">당신의</string>
+    <string name="logs_cleared">삭제된 로그</string>
+    <string name="requires_locationperm">위치 권한 필요</string>
+    <string name="requires_locationperm_message">이 기능이 예상대로 작동하려면 LOCATION PERMISSION이 필요합니다.\n\n참고: 이 앱에는 인터넷에 연결할 수 있는 권한이 없으므로 데이터가 기기에서 안전합니다.</string>
+    <string name="share_text">SafeDot으로 카메라와 마이크의 개인 정보를 보호하십시오. 구글 플레이에서 다운로드 : https://play.google.com/store/apps/details?id=com.aravi.dotpro</string>
+    <string name="requires_accessibility">접근성 권한 필요</string>
+    <string name="requires_accessibility_message">Safe Dot Pro를 활성화하려면 Safe Dot Pro에 대한 접근성 권한을 활성화해야 합니다.</string>
+    <string name="requires_accessibility_open">개방형 접근성</string>
+    <string name="cancel">취소</string>
+    <string name="version">버전 -</string>
+    <string name="enable_autostart">자동 시작 활성화</string>
+    <string name="setupnow">지금 설정</string>
+    <string name="enable_autostart_message">장치는 램을 확보하기 위해 유용한 서비스를 종료합니다. 앱이 예상대로 실행되도록 하려면 앱에 자동 시작 권한을 제공해야 합니다.</string>
+    <string name="button_later">나중</string>
+    <string name="button_continue">계속하다</string>
+    <string name="enable_safe_dots">안전한 점 활성화</string>
+    <string name="enable_location">위치 활성화</string>
+    <string name="enable_location_description">이 기능을 켜면 휴대폰에서 GPS 서비스를 사용하는 앱을 모니터링하는 위치 도트가 활성화됩니다.</string>
+    <string name="enable_vibration">진동 활성화</string>
+    <string name="advanced">고급의</string>
+    <string name="customisation_center">커스터마이징 센터</string>
+    <string name="customisation_center_description">도트 크기, 색상 및 정렬을 사용자 정의하는 곳</string>
+    <string name="tell_friends_family">친구 및 가족에게 알리기</string>
+    <string name="others">기타</string>
+    <string name="access_logs">액세스 로그</string>
+    <string name="customise">사용자 정의</string>
+    <string name="tell_friends_family_description">앱을 공유하여 친구와 가족도 비공개로 유지하도록 도와주세요.</string>
+    <string name="protects_your_privacy">개인 정보 보호</string>
+    <string name="contents_locked">콘텐츠 잠김</string>
+    <string name="unlock_with_premium">프리미엄으로 잠금 해제</string>
+
+
+</resources>

@@ -1,0 +1,79 @@
+<resources>
+    <string name="app_name" translatable="false">SafeDot</string>
+
+    <string name="service_description">Wenn dieser Dienst aktiviert ist, kann die Dot Safe App jedes Mal Benachrichtigungen und Indikatoren anzeigen, wenn eine Drittanbieter-App oder ein Dienst Kamera oder Mikrofon auf einem beliebigen Bildschirm verwendet.</string>
+    <string name="service_summary">Schalten Sie dies ein, um Safe-Dots zu aktivieren</string>
+
+    <string name="close_app_note">Deaktivieren Sie die Zugriffsberechtigung für die App</string>
+    <string name="preferences">Einstellungen</string>
+
+    <string name="vibrate_description">Sie erhalten eine kurze Vibration, wenn eine Anwendung oder ein Dienst ein Mikrofon oder eine Kamera verwendet</string>
+    <string name="dot_alignment_string">Punktausrichtung</string>
+    <string name="dot_alignment_description">Richten Sie die Punkte so aus, wie Sie es möchten und mit dem Sie sich wohlfühlen</string>
+
+    <string name="default_version_text">Version - 1.0</string>
+    <string name="clear_dialog_title">Bist du sicher ?</string>
+    <string name="clear_dialog_description">Dadurch werden alle Protokolle gelöscht, die nicht wiederhergestellt werden können.\nMöchten Sie trotzdem fortfahren?</string>
+    <string name="clear_dialog_yes">Ja, klar</string>
+    <string name="clear_dialog_no">Nein nicht jetzt</string>
+
+    <string name="creator_attribution">Für Sie zubereitet von Aravind Chowdary</string>
+
+    <string name="access_logs_title">Zugriffsprotokolle</string>
+    <string name="access_log_description">Zeitachse der App-Nutzungsprotokolle. Sie können herausfinden, welche App Ihre Kamera und Ihr Mikrofon in welchen Abständen verwendet hat.</string>
+
+    <string name="update_failed_note">Update fehlgeschlagen ! Erneuter Versuch...</string>
+
+    <string name="access_log_title">Zugriffsprotokoll</string>
+    <string name="clear_logs">Protokolle löschen</string>
+    <string name="title_ads">Keine interne Werbung</string>
+    <string name="title_activity_customisation">AnpassungAktivität</string>
+    <string name="notification_ContentText">SafeDot schützt Ihre Privatsphäre</string>
+    <string name="notification_ticker">Der Safedot-Schutz ist jetzt aktiviert</string>
+    <string name="notification_service_description">Das hält die App am Leben. Wir empfehlen, diese Benachrichtigung nicht zu deaktivieren.</string>
+    <string name="notification_default_description">Dies zeigt, welche App die Kamera oder das Mikrofon oder den Standort verwendet</string>
+    <string name="requires_upgrade">Upgrade erforderlich</string>
+    <string name="requires_upgrade_message">Das Anpassungszentrum und weitere Funktionen sind nur in der PRO-Version der App verfügbar.</string>
+    <string name="requires_upgrade_button">Upgrade auf die PRO-Version</string>
+    <string name="requires_upgrade_nevermind">Egal</string>
+    <string name="dotservice_location">Lage:</string>
+    <string name="dotservice_monitored_your">Dein</string>
+    <string name="dotservice_monitored_camera">KAMERA,</string>
+    <string name="dotservice_monitored_mic">Mikrofon,</string>
+    <string name="dotservice_monitored_location">LAGE</string>
+    <string name="dotservice_monitored">werden überwacht</string>
+    <string name="dotservice_unknown">(Unbekannt)</string>
+    <string name="dotservice_someapp">irgendeine App</string>
+    <string name="dotservice_isusingyour">verwendet Ihre</string>
+    <string name="logs_cleared">Protokolle gelöscht</string>
+    <string name="requires_locationperm">Standorterlaubnis erforderlich</string>
+    <string name="requires_locationperm_message">Diese Funktion erfordert eine STANDORTERLAUBNIS, um wie erwartet zu funktionieren\n\nHINWEIS: Diese App hat keine Berechtigung, eine Internetverbindung herzustellen, sodass Ihre Daten auf Ihrem Gerät sicher sind.</string>
+    <string name="share_text">Schützen Sie die Privatsphäre Ihrer Kamera und Ihres Mikrofons mit SafeDot. Download von Google Play: https://play.google.com/store/apps/details?id=com.aravi.dotpro</string>
+    <string name="requires_accessibility">Erfordert Zugriffserlaubnis</string>
+    <string name="requires_accessibility_message">Sie müssen die Zugriffsberechtigung für Safe Dot Pro aktivieren, um die Safe Dots zu aktivieren</string>
+    <string name="requires_accessibility_open">Barrierefreiheit öffnen</string>
+    <string name="cancel">Stornieren</string>
+    <string name="version">Ausführung -</string>
+    <string name="enable_autostart">Autostart aktivieren</string>
+    <string name="setupnow">Jetzt einrichten</string>
+    <string name="enable_autostart_message">Geräte beenden die nützlichen Dienste, um RAM freizugeben. Sie müssen der App die Autostart-Berechtigung erteilen, damit die App wie erwartet ausgeführt wird.</string>
+    <string name="button_later">Später</string>
+    <string name="button_continue">Fortsetzen</string>
+    <string name="enable_safe_dots">Sichere Punkte aktivieren</string>
+    <string name="enable_location">Aktiviere Standort</string>
+    <string name="enable_location_description">Wenn Sie dies aktivieren, wird der Standortpunkt aktiviert, der Apps überwacht, die den GPS-Dienst auf Ihrem Telefon verwenden.</string>
+    <string name="enable_vibration">Vibration aktivieren</string>
+    <string name="advanced">Fortschrittlich</string>
+    <string name="customisation_center">Anpassungszentrum</string>
+    <string name="customisation_center_description">Ein Ort zum Anpassen der Punktgröße, -farbe und -ausrichtung</string>
+    <string name="tell_friends_family">Sag es Freunden &amp; Familie</string>
+    <string name="others">Andere</string>
+    <string name="access_logs">Zugriffsprotokolle</string>
+    <string name="customise">Anpassen</string>
+    <string name="tell_friends_family_description">Helfen Sie Ihren Freunden und Ihrer Familie, auch privat zu bleiben, indem Sie die App mit ihnen teilen</string>
+    <string name="protects_your_privacy">Schützt Ihre Privatsphäre</string>
+    <string name="contents_locked">Inhalt gesperrt</string>
+    <string name="unlock_with_premium">Mit Premium freischalten</string>
+
+
+</resources>
