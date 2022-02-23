@@ -1,0 +1,47 @@
+<resources>
+    <string name="app_name" translatable="false">HikeTop</string>
+
+    <string name="text_welcome_heading">خوش آمدید !</string>
+    <string name="text_welcome_description">آئیے آپ کی سماجی موجودگی کی تعمیر کا پہلا قدم اٹھاتے ہیں۔</string>
+    <string name="button_google_sign_in">گوگل کے ساتھ جاری رکھیں</string>
+    <string name="text_privacy_consent">سائن ان کرکے آپ ہماری رازداری کی پالیسی اور سروس کی شرائط کو قبول کرتے ہیں، رازداری کی پالیسی کو پڑھنے کے لیے اس متن پر کلک کریں۔</string>
+    <string name="hello_blank_fragment">ہیلو خالی ٹکڑا</string>
+    <string name="get_premium">پریمیم حاصل کریں۔</string>
+    <string name="instagram_login_title">انسٹاگرام اکاؤنٹ میں لاگ ان کریں۔</string>
+    <string name="instagram_login_message">آپ کو اپنے انسٹاگرام اکاؤنٹ سے متعلق معلومات حاصل کرنے کے لیے اپنے انسٹاگرام اکاؤنٹ کو لنک کرنے کی ضرورت ہوگی جیسے بصیرت، انفالورز اور بہت سے دوسرے تجزیات۔</string>
+    <string name="instagram_login_btn_text">انسٹاگرام کے ساتھ لاگ ان کریں۔</string>
+    <string name="header_at_glance">ایک نظر میں</string>
+    <string name="mutual">باہمی</string>
+    <string name="mutual_message">ایسے اکاؤنٹس جو آپ کی پیروی بھی کرتے ہیں۔</string>
+    <string name="fans">پرستار</string>
+    <string name="fans_message">جن اکاؤنٹس کو آپ فالو بیک نہیں کرتے</string>
+    <string name="unrequited">غیر مطلوب</string>
+    <string name="unrequited_message">اکاؤنٹس آپ کی پیروی نہیں کررہے ہیں۔</string>
+    <string name="recent_posts">حالیہ پوسٹس</string>
+    <string name="more_posts">مزید پوسٹس</string>
+    <string name="followers">پیروکار</string>
+    <string name="following">درج ذیل</string>
+    <string name="most_used">سب سے زیادہ استعمال کیا جاتا ہے</string>
+    <string name="unfollowers">غیر پیروکار</string>
+    <string name="unfollowers_message">وہ لوگ جنہوں نے حال ہی میں آپ کی پیروی ختم کی۔</string>
+    <string name="you_might_also_like">شاید آپ یہ بھی پسند کریں</string>
+    <string name="download_posts">ڈاؤن لوڈ کریں</string>
+    <string name="download_posts_message">انسٹاگرام پوسٹس کی کہانیاں یا ریلز ڈاؤن لوڈ کریں۔</string>
+    <string name="dp_view_message">انسٹاگرام پروفائل تصویر ڈاؤن لوڈ یا دیکھیں</string>
+    <string name="dp_view">ڈی پی ناظر</string>
+    <string name="analytics">تجزیات</string>
+    <string name="analytics_message">اپنے پہنچ سکور اور بہتر بنانے کے لیے تجاویز چیک کریں۔</string>
+    <string name="sign_out">باہر جائیں</string>
+    <string name="setting_title">ترتیبات</string>
+    <string name="settings_message">یہاں پر اعلی درجے کی ترتیبات تلاش کریں۔</string>
+    <string name="theme_title">خیالیہ</string>
+    <string name="theme_message">ایپ کے گہرے اور ہلکے تھیمز کے درمیان ٹوگل کریں۔</string>
+    <string name="language_title">زبان</string>
+    <string name="language_message">ایپ کے مواد کے لیے زبان منتخب کریں۔</string>
+    <string name="feedback_title">تاثرات</string>
+    <string name="feedback_message">ہمیں بتائیں کہ ہم آپ کے تجربے کو کیسے بہتر بنا سکتے ہیں۔</string>
+    <string name="about_title">کے بارے میں</string>
+    <string name="about_message">ڈویلپر کے بارے میں معلومات، کریڈٹس اور ایپ ورژن کی معلومات</string>
+
+
+</resources>

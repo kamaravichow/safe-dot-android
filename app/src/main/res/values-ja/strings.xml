@@ -66,8 +66,6 @@
     <string name="requires_locationperm">位置情報の権限が必要です</string>
     <string name="requires_locationperm_message">この機能を利用するには、位置情報の権限が必要です。\n\n注: このアプリはインターネットに接続しないためこの機能を有効にしても安全です。</string>
     <string name="share_text">SafeDotでカメラやマイクのプライバシーを守りましょう。Google Playからダウンロード: https://play.google.com/store/apps/details?id=com.aravi.dotpro</string>
-    <string name="requires_accessibility">アクセシビリティの権限が必要です。</string>
-    <string name="requires_accessibility_message">セーフドットを有効にするには、システム設定からアクセシビリティ機能を有効にする必要があります。</string>
     <string name="requires_accessibility_open">ユーザー補助設定を開く</string>
     <string name="cancel">キャンセル</string>
     <string name="version">バージョン - </string>

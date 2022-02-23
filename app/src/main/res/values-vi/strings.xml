@@ -1,0 +1,9 @@
+<resources>
+    <string name="by_header_hint_normal">Làm mới thả xuống</string>
+    <string name="by_header_hint_release">Làm mới phát hành</string>
+    <string name="by_refreshing">Làm mới</string>
+    <string name="by_refresh_done">Làm mới xong</string>
+    <string name="by_footer_loading">Đang tải</string>
+    <string name="by_footer_no_more">Không có thêm dữ liệu</string>
+    <string name="by_footer_load_failed">Tải thêm không thành công</string>
+</resources>

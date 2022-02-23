@@ -66,9 +66,11 @@
     <string name="requires_locationperm">Requires Location Permission</string>
     <string name="requires_locationperm_message">This features requires LOCATION PERMISSION to work as expected\n\nNOTE: This app doesn\'t have permission to connect to internet so your data is safe on your device.</string>
     <string name="share_text">Protect your camera and microphone privacy with SafeDot. Download from Google Play : https://play.google.com/store/apps/details?id=com.aravi.dotpro</string>
-    <string name="requires_accessibility">Requires Accessibility Permission</string>
-    <string name="requires_accessibility_message">You\'re required to enable accessibility permission to Safe Dot Pro to enable the safe dots</string>
-    <string name="requires_accessibility_open">Open Accessibility</string>
+
+    <string name="requires_accessibility" translatable="false">Accessibility Permission</string>
+    <string name="requires_accessibility_message" translatable="false">SafeDots requires accessibility service to detect the app that is using your hardware (Camera , Microphone) to enable Privacy Monitoring. \n\nThis whole information is saved only on your device and will be erased when you remove the app or its data.</string>
+    <string name="requires_accessibility_open">Enable Accessibility</string>
+
     <string name="cancel">Cancel</string>
     <string name="version">Version - </string>
     <string name="enable_autostart">Enable AutoStart </string>

@@ -1,0 +1,9 @@
+<resources>
+    <string name="by_header_hint_normal">ड्रॉप डाउन रिफ्रेश</string>
+    <string name="by_header_hint_release">रिलीज रिफ्रेश</string>
+    <string name="by_refreshing">रिफ्रेशिंग</string>
+    <string name="by_refresh_done">रीफ़्रेश किया गया</string>
+    <string name="by_footer_loading">लोड हो रहा है</string>
+    <string name="by_footer_no_more">कोई और डेटा नहीं</string>
+    <string name="by_footer_load_failed">अधिक लोड विफल</string>
+</resources>
