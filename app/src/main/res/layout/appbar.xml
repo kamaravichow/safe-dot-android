@@ -42,7 +42,7 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/transparent" />
+                android:src="@drawable/ic_safedot" />
         </com.google.android.material.appbar.MaterialToolbar>
 
         <LinearLayout
