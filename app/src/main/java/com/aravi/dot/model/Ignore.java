@@ -25,5 +25,5 @@ import androidx.room.Entity;
 public class Ignore {
     private String packageName;
 
-    
+
 }

@@ -1,5 +1,9 @@
 package com.aravi.dot.service;
 
+import static android.app.PendingIntent.FLAG_IMMUTABLE;
+import static android.app.PendingIntent.FLAG_UPDATE_CURRENT;
+import static com.aravi.dot.constant.Constants.NOTIFICATION_ID;
+
 import android.Manifest;
 import android.accessibilityservice.AccessibilityService;
 import android.app.Notification;
@@ -31,6 +35,7 @@ import android.view.accessibility.AccessibilityEvent;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -38,19 +43,15 @@ import androidx.core.content.ContextCompat;
 import androidx.lifecycle.MutableLiveData;
 
 import com.aravi.dot.BuildConfig;
-import com.aravi.dot.constant.Constants;
 import com.aravi.dot.R;
-import com.aravi.dot.util.Utils;
 import com.aravi.dot.activities.log.database.LogsRepository;
 import com.aravi.dot.activities.main.MainActivity;
+import com.aravi.dot.constant.Constants;
 import com.aravi.dot.manager.PreferenceManager;
 import com.aravi.dot.model.Logs;
+import com.aravi.dot.util.Utils;
 
 import java.util.List;
-
-import static android.app.PendingIntent.FLAG_IMMUTABLE;
-import static android.app.PendingIntent.FLAG_UPDATE_CURRENT;
-import static com.aravi.dot.constant.Constants.NOTIFICATION_ID;
 
 
 public class DotService extends AccessibilityService {
@@ -139,13 +140,18 @@ public class DotService extends AccessibilityService {
         cameraManager.registerAvailabilityCallback(getCameraCallback(), null);
 
         audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-        audioManager.registerAudioRecordingCallback(getMicCallback(), null);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            audioManager.registerAudioRecordingCallback(getMicCallback(), null);
+        }
+
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            locationManager.registerGnssStatusCallback(locationCallback);
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 8.4f, locationListener);
-            locationManager.removeUpdates(locationListener);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                locationManager.registerGnssStatusCallback(locationCallback);
+            }
+//            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 8.4f, locationListener);
+//            locationManager.removeUpdates(locationListener);
 
         } else {
             sharedPreferenceManager.setLocationEnabled(false);
@@ -188,6 +194,7 @@ public class DotService extends AccessibilityService {
     }
 
     // Audio manager callbacks
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private AudioManager.AudioRecordingCallback getMicCallback() {
         micCallback = new AudioManager.AudioRecordingCallback() {
             @Override
@@ -220,7 +227,8 @@ public class DotService extends AccessibilityService {
         }
     };
 
-    private GnssStatus.Callback locationCallback = new GnssStatus.Callback() {
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private final GnssStatus.Callback locationCallback = new GnssStatus.Callback() {
         @Override
         public void onStarted() {
             super.onStarted();
@@ -605,13 +613,17 @@ public class DotService extends AccessibilityService {
 
     private void unRegisterMicCallback() {
         if (audioManager != null && micCallback != null) {
-            audioManager.unregisterAudioRecordingCallback(micCallback);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                audioManager.unregisterAudioRecordingCallback(micCallback);
+            }
         }
     }
 
     private void unRegisterLocCallback() {
-        if (locationManager != null && locationCallback != null) {
-            locationManager.unregisterGnssStatusCallback(locationCallback);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            if (locationManager != null) {
+                locationManager.unregisterGnssStatusCallback(locationCallback);
+            }
         }
     }
 

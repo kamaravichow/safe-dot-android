@@ -20,6 +20,7 @@
 # hide the original source file name.
 -renamesourcefileattribute SourceFile
 -optimizationpasses 5
+-flattenpackagehierarchy
 -keepclassmembers class com.aravi.dot.model.* {
   *;
 }

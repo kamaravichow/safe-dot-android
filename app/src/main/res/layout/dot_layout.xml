@@ -26,7 +26,7 @@
 
     <ImageView
         android:id="@+id/dot_camera"
-        android:layout_width="@dimen/dot_size"
+        android:layout_width="@dimen/dot_size_width"
         android:layout_height="@dimen/dot_size"
         android:layout_margin="5dp"
         android:layout_weight="1"
@@ -38,7 +38,7 @@
 
     <ImageView
         android:id="@+id/dot_mic"
-        android:layout_width="@dimen/dot_size"
+        android:layout_width="@dimen/dot_size_width"
         android:layout_height="@dimen/dot_size"
         android:layout_margin="5dp"
         android:layout_weight="1"
@@ -50,7 +50,7 @@
 
     <ImageView
         android:id="@+id/dot_location"
-        android:layout_width="@dimen/dot_size"
+        android:layout_width="@dimen/dot_size_width"
         android:layout_height="@dimen/dot_size"
         android:layout_margin="5dp"
         android:layout_weight="1"

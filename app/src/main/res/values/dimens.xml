@@ -17,6 +17,8 @@
 
 <resources>
     <dimen name="dot_size">20dp</dimen>
+    <dimen name="dot_size_width">40dp</dimen>
+
     <dimen name="footer_text_size">10sp</dimen>
     <dimen name="sub_head_size">11sp</dimen>
     <dimen name="minor_heading_size">14sp</dimen>
@@ -34,6 +36,8 @@
     -->
     <dimen name="inner_frame_layout_padding">5dp</dimen>
     <dimen name="dot_size_v">11dp</dimen>
+    <dimen name="dot_size_v_width">19dp</dimen>
+
     <dimen name="dot_size_l">14dp</dimen>
     <dimen name="minor_text_size">13sp</dimen>
 </resources>

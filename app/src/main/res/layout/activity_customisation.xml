@@ -88,7 +88,7 @@
 
                     <ImageView
                         android:id="@+id/dot_camera"
-                        android:layout_width="@dimen/dot_size_v"
+                        android:layout_width="@dimen/dot_size_v_width"
                         android:layout_height="@dimen/dot_size_v"
                         android:layout_margin="3dp"
                         android:layout_weight="1"
@@ -100,7 +100,7 @@
 
                     <ImageView
                         android:id="@+id/dot_mic"
-                        android:layout_width="@dimen/dot_size_v"
+                        android:layout_width="@dimen/dot_size_v_width"
                         android:layout_height="@dimen/dot_size_v"
                         android:layout_margin="3dp"
                         android:layout_weight="1"
@@ -112,7 +112,7 @@
 
                     <ImageView
                         android:id="@+id/dot_location"
-                        android:layout_width="@dimen/dot_size_v"
+                        android:layout_width="@dimen/dot_size_v_width"
                         android:layout_height="@dimen/dot_size_v"
                         android:layout_margin="3dp"
                         android:layout_weight="1"
@@ -145,7 +145,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:fontFamily="@font/product_sans_bold"
+                android:fontFamily="@font/google_sans_bold"
                 android:text="@string/contents_locked"
                 android:textSize="18sp" />
 

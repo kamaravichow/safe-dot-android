@@ -50,7 +50,7 @@ public abstract class LogsRoomDatabase extends RoomDatabase {
             synchronized (LogsRoomDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            LogsRoomDatabase.class, "logsfree")
+                            LogsRoomDatabase.class, "logs.db")
                             .addCallback(sRoomDatabaseCallback)
                             .allowMainThreadQueries()
                             .build();
