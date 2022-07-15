@@ -16,3 +16,4 @@
  */
 include ':app'
 rootProject.name = "Dot"
+include ':donut'

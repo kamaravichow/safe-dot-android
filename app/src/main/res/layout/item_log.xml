@@ -1,218 +1,116 @@
-<?xml version="1.0" encoding="utf-8"?><!--
-  ~ Copyright (C) 2020.  Aravind Chowdary (@kamaravichow)
-  ~
-  ~ This program is free software: you can redistribute it and/or modify
-  ~ it under the terms of the GNU General Public License as published by
-  ~ the Free Software Foundation, either version 3 of the License, or
-  ~ (at your option) any later version.
-  ~
-  ~ This program is distributed in the hope that it will be useful,
-  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
-  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  ~ GNU General Public License for more details.
-  ~
-  ~ You should have received a copy of the GNU General Public License
-  ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
-  -->
-
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/logItem"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@android:color/white">
-
-    <LinearLayout
-        android:id="@+id/lineHolder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:paddingStart="5dp"
-        android:paddingEnd="5dp">
-
-        <LinearLayout
-            android:id="@+id/lineCamera"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <View
-                android:id="@+id/lineCameraStart"
-                android:layout_width="1dp"
-                android:layout_height="20dp"
-                android:layout_marginBottom="5dp"
-                android:background="@color/grey_500"
-                android:visibility="invisible" />
-
-            <ImageView
-                android:id="@+id/logCameraDot"
-                android:layout_width="@dimen/dot_size_l"
-                android:layout_height="@dimen/dot_size_l"
-                android:background="@drawable/ic_dot"
-                android:backgroundTint="@color/green_500"
-                android:padding="3dp"
-                android:src="@drawable/ic_round_camera"
-                app:tint="@android:color/white" />
-
-            <View
-                android:id="@+id/lineCameraStop"
-                android:layout_width="1dp"
-                android:layout_height="20dp"
-                android:layout_marginTop="5dp"
-                android:background="@color/grey_500"
-                android:visibility="invisible" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/lineMic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <View
-                android:id="@+id/lineMicStart"
-                android:layout_width="1dp"
-                android:layout_height="20dp"
-                android:layout_marginBottom="5dp"
-                android:background="@color/grey_500"
-                android:visibility="invisible" />
-
-            <ImageView
-                android:id="@+id/logMicDot"
-                android:layout_width="@dimen/dot_size_l"
-                android:layout_height="@dimen/dot_size_l"
-                android:background="@drawable/ic_dot"
-                android:backgroundTint="@color/orange_500"
-                android:padding="2dp"
-                android:src="@drawable/ic_round_mic"
-                app:tint="@android:color/white" />
-
-            <View
-                android:id="@+id/lineMicStop"
-                android:layout_width="1dp"
-                android:layout_height="20dp"
-                android:layout_marginTop="5dp"
-                android:background="@color/grey_500"
-                android:visibility="invisible" />
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:id="@+id/lineLoc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <View
-                android:id="@+id/lineLocStart"
-                android:layout_width="1dp"
-                android:layout_height="20dp"
-                android:layout_marginBottom="5dp"
-                android:background="@color/grey_500"
-                android:visibility="invisible" />
-
-            <ImageView
-                android:id="@+id/logLocDot"
-                android:layout_width="@dimen/dot_size_l"
-                android:layout_height="@dimen/dot_size_l"
-                android:background="@drawable/ic_dot"
-                android:backgroundTint="@color/purple_500"
-                android:padding="2dp"
-                android:src="@drawable/ic_round_location"
-                app:tint="@android:color/white" />
-
-            <View
-                android:id="@+id/lineLocStop"
-                android:layout_width="1dp"
-                android:layout_height="20dp"
-                android:layout_marginTop="5dp"
-                android:background="@color/grey_500"
-                android:visibility="invisible" />
-
-        </LinearLayout>
-
-
-    </LinearLayout>
-
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/logAppIcon"
-        android:layout_width="46dp"
-        android:layout_height="46dp"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="5dp"
-        android:layout_toEndOf="@+id/lineHolder"
-        android:scaleType="centerCrop"
-        android:src="@drawable/transparent"
-        app:civ_border_color="@color/grey_300"
-        app:civ_border_width="1dp" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_toEndOf="@+id/logAppIcon"
-        android:orientation="vertical"
-        android:padding="8dp">
-
-        <TextView
-            android:id="@+id/logAppName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:fontFamily="@font/product_sans_bold"
-            android:maxLength="24"
-            android:textColor="@android:color/black"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            tools:text="Safe Dot" />
-
-        <TextView
-            android:id="@+id/logAppPackage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:fontFamily="@font/product_sans_regular"
-            android:maxLength="32"
-            android:textAllCaps="false"
-            android:textSize="12sp"
-            tools:text="com.aravi.dot" />
-
-    </LinearLayout>
-
-
-    <TextView
-        android:id="@+id/logTimestamp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="6dp"
-        android:layout_marginTop="6dp"
-        android:layout_marginEnd="6dp"
-        android:layout_marginBottom="6dp"
-        android:fontFamily="@font/product_sans_bold"
-        android:textAllCaps="true"
-        android:textSize="12sp"
-        android:textStyle="bold"
-        tools:text="12:00 AM" />
-
+    android:layout_height="wrap_content">
 
     <View
+        android:id="@+id/view_horizontal"
         android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_below="@+id/lineHolder"
-        android:layout_marginStart="50dp"
-        android:layout_marginEnd="10dp"
-        android:background="@color/grey_300" />
+        android:layout_height="0.2dp"
+        android:alpha="0.3"
+        android:background="?attr/colorSecondaryText" />
+
+    <TextView
+        android:id="@+id/text_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/view_horizontal"
+        android:fontFamily="@font/google_sans_bold"
+        android:padding="@dimen/default_padding"
+        android:text="Permission info"
+        android:textColor="?attr/colorPrimary"
+        android:textSize="12sp" />
+
+    <RelativeLayout
+        android:id="@+id/rl_app_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_date"
+        android:background="?attr/selectableItemBackground">
+
+        <TextView
+            android:id="@+id/text_time"
+            android:layout_width="72dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:fontFamily="@font/google_sans_medium"
+            android:text="Time"
+            android:textAllCaps="true"
+            android:textColor="?attr/colorSecondaryText"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/image_app"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="16dp"
+            android:layout_toEndOf="@id/text_time"
+            android:background="@mipmap/ic_launcher"
+            android:backgroundTint="?attr/colorBackground"
+            android:contentDescription="@string/image_descriptions"
+            android:elevation="2dp"
+            android:padding="6dp"
+            app:tint="?attr/colorPrimaryText" />
+
+        <TextView
+            android:id="@+id/text_app_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_toStartOf="@id/image_help"
+            android:layout_toEndOf="@id/image_app"
+            android:ellipsize="end"
+            android:fontFamily="@font/google_sans_medium"
+            android:maxLines="1"
+            android:text="App"
+            android:textColor="?attr/colorPrimaryText"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/text_session"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_app_name"
+            android:layout_alignStart="@id/text_app_name"
+            android:layout_marginEnd="16dp"
+            android:layout_toStartOf="@id/image_help"
+            android:ellipsize="end"
+            android:fontFamily="@font/google_sans_medium"
+            android:maxLines="1"
+            android:paddingTop="2dp"
+            android:text="Permission info"
+            android:textAllCaps="true"
+            android:textColor="?attr/colorIcon"
+            android:textSize="12sp" />
+
+        <View
+            android:id="@+id/view_vertical"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_below="@id/text_session"
+            android:layout_toEndOf="@id/text_time"
+            android:background="@drawable/log_separator" />
+
+        <ImageView
+            android:id="@+id/image_help"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/image_descriptions"
+            android:padding="2dp"
+            android:src="@drawable/ic_round_help_outline_24"
+            android:visibility="gone"
+            app:tint="?attr/colorSecondaryText" />
+
+    </RelativeLayout>
 
 </RelativeLayout>

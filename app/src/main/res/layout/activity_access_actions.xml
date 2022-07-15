@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".activities.actions.AccessActionsActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        style="@style/AppbarAppearance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:elevation="0dp">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@drawable/ic_round_keyboard_backspace_24"
+            app:title="Access Panel"
+            app:titleTextAppearance="@style/ToolbarTitleAppearance" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/appbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                app:cardBackgroundColor="@color/white"
+                app:strokeColor="@color/grey_200">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.aravi.dot.ui.views.SwitchSettingsView
+                        android:id="@+id/camera_switch"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true"
+                        app:icon="@drawable/ic_round_camera"
+                        app:icon_tint="@color/deep_purple_400"
+                        app:message="Toggle this to enable or disable camera monitoring"
+                        app:title="Camera" />
+
+                    <com.aravi.dot.ui.views.SwitchSettingsView
+                        android:id="@+id/microphone_switch"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true"
+                        app:icon="@drawable/ic_round_mic"
+                        app:icon_tint="@color/orange_400"
+                        app:message="Toggle this to enable or disable microphone monitoring"
+                        app:title="Microphone" />
+
+
+                    <com.aravi.dot.ui.views.SwitchSettingsView
+                        android:id="@+id/location_switch"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true"
+                        app:icon="@drawable/ic_round_location"
+                        app:icon_tint="@color/blue_500"
+                        app:message="Toggle this to enable or disable location monitoring"
+                        app:title="Location" />
+
+
+                </LinearLayout>
+
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/google_sans_bold"
+                android:padding="5dp"
+                android:text="Access Log Settings"
+                android:textAlignment="center"
+                android:textSize="18sp" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                app:cardBackgroundColor="@color/white"
+                app:strokeColor="@color/grey_200">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.aravi.dot.ui.views.SettingsView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true"
+                        app:icon="@drawable/ic_round_dashboard_24"
+                        app:iconVisibility="false"
+                        app:icon_tint="@color/green_300"
+                        app:message="App will stop logging information from the selected apps here"
+                        app:title="Excluded Apps" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:orientation="horizontal"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:weightSum="3">
+
+                        <com.google.android.material.button.MaterialButton
+                            style="@style/Widget.Material3.Button.TonalButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="5dp"
+                            android:layout_weight="1"
+                            android:text="Excluded Apps" />
+
+                        <com.google.android.material.button.MaterialButton
+                            style="@style/Widget.Material3.Button.TonalButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="5dp"
+                            android:layout_weight="1"
+                            android:text="Options" />
+
+
+                    </LinearLayout>
+
+                    <com.aravi.dot.ui.views.SwitchSettingsView
+                        android:id="@+id/time_switch"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true"
+                        app:icon="@drawable/ic_round_access_time_24"
+                        app:icon_tint="@color/indigo_400"
+                        app:message="Shows relative time on access logs"
+                        app:title="Times ago " />
+
+                    <com.aravi.dot.ui.views.SettingsView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true"
+                        app:icon="@drawable/ic_round_clear_24"
+                        app:iconVisibility="true"
+                        app:icon_tint="@color/red_300"
+                        app:message="This will clear all the logs and databases of the application"
+                        app:title="Clear Access Logs" />
+
+                </LinearLayout>
+
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</RelativeLayout>

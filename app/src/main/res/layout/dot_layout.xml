@@ -21,6 +21,7 @@
     android:layout_height="wrap_content"
     android:layout_gravity="end"
     android:background="@android:color/transparent"
+    android:fitsSystemWindows="false"
     android:paddingStart="5dp"
     android:paddingEnd="5dp">
 

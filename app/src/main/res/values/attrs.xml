@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="AppTheme">
+        <attr name="colorPrimary" format="color" />
+        <attr name="colorSecondary" format="color" />
+        <attr name="colorPrimaryText" format="color" />
+        <attr name="colorSecondaryText" format="color" />
+        <attr name="colorIcon" format="color" />
+        <attr name="colorBackground" format="color" />
+        <attr name="colorCardBackground" format="color" />
+        <attr name="colorCamera" format="color" />
+        <attr name="colorMicrophone" format="color" />
+        <attr name="colorLocation" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="SettingsView">
+        <attr name="title" format="string" />
+        <attr name="message" format="string" />
+        <attr name="icon" format="reference" />
+        <attr name="icon_tint" format="color" />
+        <attr name="iconVisibility" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="ShimmerLayout">
+        <attr name="shimmer_color" format="color|reference" />
+        <attr name="shimmer_animation_duration" format="integer|reference" />
+        <attr name="shimmer_auto_start" format="boolean|reference" />
+        <attr name="shimmer_angle" format="integer|reference" />
+        <attr name="shimmer_mask_width" format="float|reference" />
+        <attr name="shimmer_gradient_center_color_width" format="float|reference" />
+        <attr name="shimmer_reverse_animation" format="boolean|reference" />
+    </declare-styleable>
+</resources>

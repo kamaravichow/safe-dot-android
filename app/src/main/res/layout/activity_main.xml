@@ -20,7 +20,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
     android:fitsSystemWindows="false"
     tools:context=".activities.main.MainActivity">
 
@@ -40,112 +39,82 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="10dp">
+            android:orientation="vertical">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:padding="10dp">
 
-                <LinearLayout
+                <com.android.charts.donut.FitChart
+                    android:id="@+id/pie_chart"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_centerInParent="true"
+                    android:layout_margin="10dp"
+                    app:backStrokeColor="@color/grey_100"
+                    app:chartAnimation="overdraw"
+                    app:strokeSize="10dp"
+                    app:valueStrokeColor="@color/colorPrimary" />
+
+                <TextView
+                    style="@style/TextAppearance.Material3.TitleMedium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:gravity="center_vertical">
+                    android:layout_centerInParent="true"
+                    android:text="Last 24 hours" />
 
-                    <ImageView
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
-                        android:padding="5dp"
-                        android:src="@drawable/transparent" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:fontFamily="@font/product_sans_bold"
-                        android:text="@string/enable_safe_dots"
-                        android:textColor="@android:color/black"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-
-
-                <com.google.android.material.switchmaterial.SwitchMaterial
-                    android:id="@+id/mainSwitch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_alignParentBottom="true"
-                    android:background="@color/grey_100"
-                    android:visibility="visible" />
 
             </RelativeLayout>
 
-
-            <TextView
-                style="@style/TextAppearance.MaterialComponents.Caption"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:fontFamily="@font/product_sans_regular"
-                android:text="@string/customise"
-                android:textSize="@dimen/sub_head_size"
-                android:textStyle="bold" />
-
-
-            <RelativeLayout
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/open_settings"
+                style="@style/Widget.Material3.CardView.Outlined"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:orientation="horizontal">
+                android:layout_margin="10dp"
+                app:cardCornerRadius="10dp"
+                app:strokeColor="@color/grey_200">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toStartOf="@+id/locationSwitch"
-                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
                     android:padding="10dp">
 
                     <ImageView
+                        android:id="@+id/accessibility_status_icon"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
+                        android:layout_margin="5dp"
+                        android:contentDescription="@string/icon"
                         android:padding="5dp"
-                        android:src="@drawable/ic_round_location"
-                        app:tint="@color/purple_500" />
+                        android:src="@drawable/ic_outline_cancel_24"
+                        app:tint="@color/red_300" />
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:id="@+id/accessibility_status_title"
+                            style="@style/TextAppearance.Material3.TitleMedium"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
-                            android:fontFamily="@font/product_sans_bold"
-                            android:text="@string/enable_location"
-                            android:textColor="@android:color/black"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
+                            android:fontFamily="@font/google_sans_bold"
+                            android:text="Accessibility Service is disabled" />
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:id="@+id/accessibility_status_message"
+                            style="@style/TextAppearance.Material3.BodySmall"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="5dp"
-                            android:fontFamily="@font/product_sans_regular"
-                            android:text="@string/enable_location_description"
+                            android:fontFamily="@font/google_sans_regular"
+                            android:text="The dot will not work currently, tap to enable"
                             android:textSize="@dimen/minor_text_size" />
 
                     </LinearLayout>
@@ -154,379 +123,299 @@
                 </LinearLayout>
 
 
-                <com.google.android.material.switchmaterial.SwitchMaterial
-                    android:id="@+id/locationSwitch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp" />
-
-
-            </RelativeLayout>
-
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:orientation="horizontal"
-                android:padding="5dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toStartOf="@+id/vibrationSwitch"
-                    android:gravity="center_vertical"
-                    android:padding="5dp">
-
-                    <ImageView
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
-                        android:padding="5dp"
-                        android:src="@drawable/ic_mobile_vibrate"
-                        app:tint="@color/orange_300" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:fontFamily="@font/product_sans_bold"
-                            android:text="@string/enable_vibration"
-                            android:textColor="@android:color/black"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="5dp"
-                            android:fontFamily="@font/product_sans_regular"
-                            android:text="@string/vibrate_description"
-                            android:textSize="@dimen/minor_text_size" />
-
-                    </LinearLayout>
-
-
-                </LinearLayout>
-
-
-                <com.google.android.material.switchmaterial.SwitchMaterial
-                    android:id="@+id/vibrationSwitch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp" />
-
-
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/grey_100"
-                android:visibility="visible" />
+            </com.google.android.material.card.MaterialCardView>
 
 
             <TextView
-                style="@style/TextAppearance.MaterialComponents.Caption"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:fontFamily="@font/product_sans_regular"
-                android:text="@string/advanced"
-                android:textSize="@dimen/sub_head_size"
-                android:textStyle="bold" />
-
-            <RelativeLayout
-                android:id="@+id/customisationOption"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:background="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true"
-                android:orientation="horizontal"
-                android:padding="5dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toStartOf="@+id/customs_arrow"
-                    android:gravity="center_vertical"
-                    android:padding="10dp">
-
-                    <ImageView
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
-                        android:padding="5dp"
-                        android:src="@drawable/ic_sliders_v_alt"
-                        app:tint="@color/purple_300" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:fontFamily="@font/product_sans_bold"
-                            android:text="@string/customisation_center"
-                            android:textColor="@android:color/black"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="5dp"
-                            android:fontFamily="@font/product_sans_regular"
-                            android:text="@string/customisation_center_description"
-                            android:textSize="@dimen/minor_text_size" />
-
-                    </LinearLayout>
+                android:fontFamily="@font/google_sans_bold"
+                android:padding="5dp"
+                android:text="Access Control Panel"
+                android:textAlignment="center"
+                android:textSize="18sp" />
 
 
-                </LinearLayout>
-
-
-                <ImageView
-                    android:id="@+id/customs_arrow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:src="@drawable/ic_round_keyboard_arrow_right_24"
-                    app:tint="@color/blue_500" />
-
-
-            </RelativeLayout>
-
-
-            <RelativeLayout
-                android:id="@+id/logsOption"
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:background="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true"
-                android:orientation="horizontal"
-                android:padding="5dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toStartOf="@+id/logs_arrow"
-                    android:gravity="center_vertical"
-                    android:padding="5dp">
-
-                    <ImageView
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
-                        android:padding="5dp"
-                        android:src="@drawable/ic_list_ui_alt"
-                        app:tint="@color/blue_500" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:fontFamily="@font/product_sans_bold"
-                            android:text="@string/access_logs"
-                            android:textColor="@android:color/black"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginEnd="10dp"
-                            android:fontFamily="@font/product_sans_regular"
-                            android:text="@string/access_log_description"
-                            android:textSize="@dimen/minor_text_size" />
-
-                    </LinearLayout>
-
-
-                </LinearLayout>
-
-
-                <ImageView
-                    android:id="@+id/logs_arrow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:src="@drawable/ic_round_keyboard_arrow_right_24"
-                    app:tint="@color/blue_500" />
-
-
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
                 android:layout_margin="10dp"
-                android:background="@color/grey_100" />
+                app:strokeColor="@color/grey_200">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.aravi.dot.ui.views.SettingsView
+                        android:id="@+id/camera_switch"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true"
+                        app:icon="@drawable/ic_round_camera"
+                        app:icon_tint="@color/deep_purple_400"
+                        app:message="Toggle this to enable or disable camera monitoring"
+                        app:title="Camera" />
+
+                    <com.aravi.dot.ui.views.SettingsView
+                        android:id="@+id/microphone_switch"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true"
+                        app:icon="@drawable/ic_round_mic"
+                        app:icon_tint="@color/orange_400"
+                        app:message="Toggle this to enable or disable microphone monitoring"
+                        app:title="Microphone" />
+
+
+                    <com.aravi.dot.ui.views.SettingsView
+                        android:id="@+id/location_switch"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true"
+                        app:icon="@drawable/ic_round_location"
+                        app:icon_tint="@color/blue_500"
+                        app:message="Toggle this to enable or disable location monitoring"
+                        app:title="Location" />
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/grey_100" />
+
+                    <RelativeLayout
+                        android:id="@+id/more_access_controls"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:padding="8dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="10dp"
+                            android:fontFamily="@font/google_sans_medium"
+                            android:text="More access actions"
+                            android:textColor="@color/deep_purple_500"
+                            android:textSize="16sp" />
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="1.5dp"
+                            android:layout_marginEnd="8dp"
+                            android:padding="10dp"
+                            android:src="@drawable/ic_round_arrow_forward_ios_24"
+                            android:visibility="visible"
+                            app:tint="@color/grey_500"
+                            tools:tint="@color/grey_500" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+
+            </com.google.android.material.card.MaterialCardView>
+
 
             <TextView
-                style="@style/TextAppearance.MaterialComponents.Caption"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/product_sans_regular"
-                android:text="@string/others"
-                android:textSize="@dimen/sub_head_size"
-                android:textStyle="bold" />
-
-
-            <RelativeLayout
-                android:id="@+id/shareOption"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:background="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true"
-                android:orientation="horizontal"
-                android:padding="5dp">
+                android:fontFamily="@font/google_sans_bold"
+                android:padding="5dp"
+                android:text="Customization Panel"
+                android:textAlignment="center"
+                android:textSize="18sp" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                app:strokeColor="@color/grey_200">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:gravity="center_vertical"
-                    android:padding="5dp">
+                    android:orientation="vertical">
 
-                    <ImageView
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
-                        android:padding="5dp"
-                        android:src="@drawable/ic_share"
-                        app:tint="@color/red_500" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
+                    <com.aravi.dot.ui.views.SettingsView
+                        android:id="@+id/customise_dots"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:clickable="true"
+                        android:focusable="true"
+                        app:icon="@drawable/ic_list_ui_alt"
+                        app:icon_tint="@color/indigo_300"
+                        app:message="Make dots look exactly like how you want them to look. You can change color, shape and many more."
+                        app:title="Customisation Center" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:fontFamily="@font/product_sans_bold"
-                            android:text="@string/tell_friends_family"
-                            android:textColor="@android:color/black"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginEnd="10dp"
-                            android:fontFamily="@font/product_sans_regular"
-                            android:text="@string/tell_friends_family_description"
-                            android:textSize="@dimen/minor_text_size" />
-
-                    </LinearLayout>
+                    <com.aravi.dot.ui.views.SettingsView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true"
+                        app:icon="@drawable/ic_round_notifications_active_24"
+                        app:icon_tint="@color/deep_purple_600"
+                        app:message="Find more advanced preferences you might want to change to make app more powerful"
+                        app:title="Customize Notification" />
 
 
                 </LinearLayout>
 
 
-                <ImageView
-                    android:id="@+id/share"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:src="@drawable/ic_round_keyboard_arrow_right_24"
-                    app:tint="@color/red_500" />
+            </com.google.android.material.card.MaterialCardView>
 
 
-            </RelativeLayout>
-
-            <View
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/google_sans_bold"
+                android:padding="5dp"
+                android:text="Settings Panel"
+                android:textAlignment="center"
+                android:textSize="18sp" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:background="@color/grey_100" />
+                app:strokeColor="@color/grey_200">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.aravi.dot.ui.views.SettingsView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true"
+                        app:icon="@drawable/ic_round_feedback_24"
+                        app:icon_tint="@color/indigo_400"
+                        app:iconVisibility="false"
+                        app:message="Find more advanced preferences you might want to change to make app more powerful"
+                        app:title="Feedback" />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:orientation="horizontal"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:weightSum="3">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/bug_report"
+                            style="@style/Widget.Material3.Button.TonalButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="5dp"
+                            android:layout_weight="1"
+                            android:text="Bug Report" />
+
+                        <com.google.android.material.button.MaterialButton
+                            style="@style/Widget.Material3.Button.TonalButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="5dp"
+                            android:layout_weight="1"
+                            android:text="Feature Request" />
+
+
+                    </LinearLayout>
+
+                    <com.aravi.dot.ui.views.SettingsView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true"
+                        app:icon="@drawable/ic_share"
+                        app:icon_tint="@color/amber_600"
+                        app:message="Tell your family and friends about this application"
+                        app:title="Share with others" />
+
+                </LinearLayout>
+
+
+            </com.google.android.material.card.MaterialCardView>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
+                android:layout_marginBottom="10dp"
+                android:orientation="vertical"
+                android:padding="10dp">
 
-                <ImageButton
-                    android:id="@+id/github_button"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:background="@android:color/transparent"
-                    android:src="@drawable/ic_github" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
-                <ImageButton
-                    android:id="@+id/twitter_button"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:background="@android:color/transparent"
-                    android:padding="10dp"
-                    android:src="@drawable/ic_twitter" />
+                    <ImageButton
+                        android:id="@+id/github_button"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@android:color/transparent"
+                        android:contentDescription="@string/icon"
+                        android:src="@drawable/ic_github" />
+
+                    <ImageButton
+                        android:id="@+id/twitter_button"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@android:color/transparent"
+                        android:contentDescription="@string/icon"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_twitter" />
+
+                    <ImageButton
+                        android:id="@+id/telegram_button"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@android:color/transparent"
+                        android:contentDescription="@string/icon"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_telegram" />
+
+                </LinearLayout>
+
+                <TextView
+                    style="@style/TextAppearance.Material3.HeadlineMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/google_sans_bold"
+                    android:text="@string/creator_attribution"
+                    android:textSize="@dimen/footer_text_size" />
+
+                <TextView
+                    android:id="@+id/versionText"
+                    style="@style/TextAppearance.Material3.BodySmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/google_sans_medium"
+                    android:padding="5dp"
+                    android:textSize="@dimen/footer_text_size" />
+
 
             </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:fontFamily="@font/product_sans_bold"
-                android:text="@string/creator_attribution"
-                android:textSize="@dimen/footer_text_size" />
-
-            <TextView
-                android:id="@+id/versionText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="50dp"
-                android:fontFamily="@font/product_sans_regular"
-                android:text="@string/default_version_text"
-                android:textSize="@dimen/footer_text_size" />
 
         </LinearLayout>
 

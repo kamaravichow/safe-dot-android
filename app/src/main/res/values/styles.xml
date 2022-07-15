@@ -17,16 +17,83 @@
 
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
-        <item name="android:forceDarkAllowed" tools:targetApi="q"> false</item>
+    <style name="AppTheme" parent="AppTheme.Light">
+        <item name="colorPrimary">@color/deep_purple_500</item>
+        <item name="colorSecondary">@color/lightSecondary</item>
+        <item name="colorPrimaryDark">@color/deep_purple_600</item>
+        <item name="colorAccent">@color/lightPrimary</item>
+        <item name="android:navigationBarColor">@color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor">@color/white</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
+        <item name="android:windowDisablePreview">true</item>
+        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
     </style>
 
-    <style name="ServiceLayoutTheme" >
+    <style name="AppTheme.Light" parent="Theme.Material3.Light.NoActionBar">
+        <item name="colorPrimaryText">@color/lightPrimaryText</item>
+        <item name="colorSecondaryText">@color/lightSecondaryText</item>
+        <item name="colorIcon">@color/lightIcon</item>
+        <item name="colorBackground">@color/lightBackground</item>
+        <item name="colorCardBackground">@color/lightCardBackground</item>
+        <item name="colorCamera">@color/lightCamera</item>
+        <item name="colorMicrophone">@color/lightMicrophone</item>
+        <item name="colorLocation">@color/lightLocation</item>
+    </style>
+
+
+    <style name="AppTheme.Feedback" parent="Theme.Material3.DayNight">
+        <item name="colorPrimary">@color/lightPrimary</item>
+        <item name="colorSecondary">@color/lightSecondary</item>
+        <item name="colorPrimaryDark">@color/lightBackground</item>
+        <item name="colorAccent">@color/lightPrimary</item>
+        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
+    </style>
+
+    <style name="AppTheme.Transparent" parent="AppTheme">
+        <item name="android:windowShowWallpaper">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+    <style name="AppbarAppearance" parent="Widget.MaterialComponents.AppBarLayout.PrimarySurface">
+        <item name="android:background">@android:color/white</item>
+    </style>
+
+    <style name="HeaderTitleStyle">
+        <item name="fontFamily">@font/product_sans_bold</item>
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="HeaderSubTitleStyle">
+        <item name="fontFamily">@font/product_sans_bold</item>
+        <item name="android:textColor">@color/grey_500</item>
+        <item name="android:textSize">@dimen/sub_head_size</item>
+    </style>
+
+    <style name="MainActivityStyle">
+        <item name="android:background">@android:color/white</item>
+    </style>
+
+    <style name="FeatureTitleStyle">
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="FeatureSubTitleStyle">
+        <item name="android:textColor">@color/grey_500</item>
+    </style>
+
+
+    <style name="DividerStyle">
+        <item name="android:background">@color/grey_400</item>
+    </style>
+
+
+    <style name="ReviewNotifier">
+        <item name="android:background">@color/blue_100</item>
+    </style>
+
+
+    <style name="ServiceLayoutTheme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>

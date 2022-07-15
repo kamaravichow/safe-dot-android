@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="15dp">
+
+    <ImageView
+        android:id="@+id/image_icon"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginVertical="10dp"
+        android:contentDescription="@string/image_descriptions"
+        android:src="@drawable/ic_round_location" />
+
+    <TextView
+        android:id="@+id/text_title"
+        style="@style/TextAppearance.Material3.HeadlineSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/google_sans_bold"
+        android:text="Permission Name"
+        android:textColor="?attr/colorPrimaryText" />
+
+    <TextView
+        android:id="@+id/text_info"
+        style="@style/TextAppearance.Material3.BodyMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/google_sans_medium"
+        android:text="Information"
+        android:textColor="?attr/colorSecondaryText" />
+
+    <ProgressBar
+        android:id="@+id/progress_horizontal"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:indeterminateOnly="true"
+        android:progressTint="@color/lightPrimary"
+        android:visibility="gone" />
+
+</LinearLayout>
