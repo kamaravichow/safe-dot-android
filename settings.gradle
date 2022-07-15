@@ -16,4 +16,6 @@
  */
 include ':app'
 rootProject.name = "Dot"
-include ':donut'
+include ':charts'
+include ':commons'
+include ':commons-ui'
