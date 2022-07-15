@@ -1,0 +1,60 @@
+<!--
+  ~ Copyright (C) 2020.  Aravind Chowdary (@kamaravichow)
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<resources>
+    <string name="app_name" translatable="false">SafeDot</string>
+    <string name="tagline">Protects your Privacy</string>
+    <string name="icon" translatable="false">icon</string>
+    <string name="creator_attribution">Made with ❤️ by Aravind Chowdary</string>
+
+    <string name="service_description">When this service is enabled it lets Dot safe app to display notifications and indicators every time a third-party app or a service uses camera or microphone on any screen.</string>
+    <string name="service_summary">Turn this on to enable safe-dots</string>
+    <string name="notification_text">If you wish to hide this notification, click here</string>
+    <string name="notification_ticker_text">SafeDots is running to protect you</string>
+
+    <string name="log_today">Today</string>
+    <string name="log_yesterday">Yesterday</string>
+
+    <string name="left">L</string>
+    <string name="center">C</string>
+    <string name="right">R</string>
+    <string name="chart_title">Last 24 hours</string>
+    <string name="image_descriptions">Images</string>
+
+
+    <string name="permission_camera">Camera</string>
+    <string name="permission_location">Location</string>
+    <string name="permission_microphone">Microphone</string>
+    <string name="permission_microphone_short">Mic</string>
+    <string name="permission_more">See other permissions</string>
+    <string name="permission_more_info">Body sensors, Calendar and more in settings</string>
+    <string name="permission_info">Used by #ALIAS# app(s) today</string>
+    <string name="permission_no_apps">Not used today</string>
+
+
+    <string name="log_title">Permission history</string>
+    <string name="log_info">Timeline of when apps used your #ALIAS# permission</string>
+    <string name="log_info_app">Timeline of when #ALIAS# used your permissions</string>
+    <string name="log_empty">No app usage</string>
+    <string name="log_button_manage">Manage permission</string>
+    <string name="log_usage">usage</string>
+    <string name="log_permission_start">Started</string>
+    <string name="log_permission_stop">Stopped</string>
+    <string name="log_permission_invalid">Unknown</string>
+
+
+</resources>

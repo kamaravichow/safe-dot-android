@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (C) 2020.  Aravind Chowdary (@kamaravichow)
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<resources>
+    <color name="colorPrimary">#6159E6</color>
+    <color name="colorPrimaryDark">@android:color/white</color>
+    <color name="colorAccent">#1E80E9</color>
+    <color name="colorSecondary">@android:color/white</color>
+
+    <color name="banner_background">#B0FDF8FC</color>
+
+    <color name="yourinactivecolor">#a1a5af</color>
+    <color name="onpressed">#AEB7BB</color>
+
+    <color name="controller_background">#36141313</color>
+    <color name="controller_icon_tint">#70FDFBFB</color>
+
+    <color name="onesignal_bgimage_notif_title_color">#FFFF0000</color>
+    <color name="onesignal_bgimage_notif_body_color">#FF00FF00</color>
+
+
+    <!--Common colors-->
+    <color name="overlay_background">#61B773</color>
+    <color name="overlay_icon">#0D280C</color>
+
+    <!--Light Theme-->
+    <color name="lightPrimary">#6159E6</color>
+    <color name="lightSecondary">#1E80E9</color>
+    <color name="lightPrimaryText">#202020</color>
+    <color name="lightSecondaryText">#9E9E9E</color>
+    <color name="lightBackground">#FFFFFF</color>
+    <color name="lightCardBackground">#fafafa</color>
+    <color name="lightIcon">#737373</color>
+
+    <color name="lightCamera">#40C4FF</color>
+    <color name="lightMicrophone">#FFCC80</color>
+    <color name="lightLocation">#A5D6A7</color>
+
+    <!--Dark Theme-->
+    <color name="darkPrimary">#1E80E9</color>
+    <color name="darkSecondary">#6159E6</color>
+    <color name="darkPrimaryText">#E8EAED</color>
+    <color name="darkSecondaryText">#9AA0A6</color>
+    <color name="darkBackground">#000000</color>
+    <color name="darkCardBackground">#3b3b3b</color>
+    <color name="darkIcon">#9AA0A6</color>
+
+    <color name="darkCamera">#0288D1</color>
+    <color name="darkMicrophone">#F57C00</color>
+    <color name="darkLocation">#388E3C</color>
+</resources>

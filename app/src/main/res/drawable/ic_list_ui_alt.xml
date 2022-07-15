@@ -1,0 +1,26 @@
+<!--
+  ~ Copyright (C) 2021.  Aravind Chowdary (@kamaravichow)
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+  <path
+      android:pathData="M7.5,8h14c0.6,0 1,-0.4 1,-1s-0.4,-1 -1,-1h-14c-0.6,0 -1,0.4 -1,1S6.9,8 7.5,8zM21.5,11h-10c-0.6,0 -1,0.4 -1,1s0.4,1 1,1h10c0.6,0 1,-0.4 1,-1S22.1,11 21.5,11zM21.5,16h-6c-0.6,0 -1,0.4 -1,1s0.4,1 1,1h6c0.6,0 1,-0.4 1,-1S22.1,16 21.5,16zM3.5,6c-0.6,0 -1,0.4 -1,1s0.4,1 1,1s1,-0.4 1,-1S4.1,6 3.5,6zM7.5,11c-0.6,0 -1,0.4 -1,1s0.4,1 1,1s1,-0.4 1,-1S8.1,11 7.5,11zM11.5,16c-0.6,0 -1,0.4 -1,1s0.4,1 1,1s1,-0.4 1,-1S12.1,16 11.5,16z"
+      android:fillColor="#6563ff"/>
+</vector>

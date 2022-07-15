@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="FitChart">
+        <attr name="strokeSize" format="dimension|reference" />
+        <attr name="valueStrokeColor" format="color|reference" />
+        <attr name="backStrokeColor" format="color|reference" />
+        <attr name="chartAnimation">
+            <enum name="linear" value="0" />
+            <enum name="overdraw" value="1" />
+        </attr>
+    </declare-styleable>
+</resources>

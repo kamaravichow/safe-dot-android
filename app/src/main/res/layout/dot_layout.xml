@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (C) 2020.  Aravind Chowdary (@kamaravichow)
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="end"
+    android:background="@android:color/transparent"
+    android:fitsSystemWindows="false"
+    android:paddingStart="5dp"
+    android:paddingEnd="5dp">
+
+    <ImageView
+        android:id="@+id/dot_camera"
+        android:layout_width="@dimen/dot_size"
+        android:layout_height="@dimen/dot_size"
+        android:layout_margin="5dp"
+        android:layout_weight="1"
+        android:background="@drawable/ic_dot"
+        android:backgroundTint="@color/green_500"
+        android:padding="5dp"
+        android:src="@drawable/ic_round_camera"
+        app:tint="@android:color/white" />
+
+    <ImageView
+        android:id="@+id/dot_mic"
+        android:layout_width="@dimen/dot_size"
+        android:layout_height="@dimen/dot_size"
+        android:layout_margin="5dp"
+        android:layout_weight="1"
+        android:background="@drawable/ic_dot"
+        android:backgroundTint="@color/orange_500"
+        android:padding="4dp"
+        android:src="@drawable/ic_round_mic"
+        app:tint="@android:color/white" />
+
+    <ImageView
+        android:id="@+id/dot_location"
+        android:layout_width="@dimen/dot_size"
+        android:layout_height="@dimen/dot_size"
+        android:layout_margin="5dp"
+        android:layout_weight="1"
+        android:background="@drawable/ic_dot"
+        android:backgroundTint="@color/purple_500"
+        android:padding="4dp"
+        android:src="@drawable/ic_round_location"
+        app:tint="@android:color/white" />
+
+</LinearLayout>

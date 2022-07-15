@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (C) 2021.  Aravind Chowdary (@kamaravichow)
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/MainActivityStyle"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.customise.CustomisationActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        style="@style/AppbarAppearance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:elevation="0dp">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@drawable/ic_round_keyboard_backspace_24"
+            app:title="  "
+            app:titleTextAppearance="@style/ToolbarTitleAppearance" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/appbar"
+        android:fadingEdge="vertical"
+        android:orientation="vertical"
+        android:overScrollMode="never">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/footer"
+            android:layout_below="@+id/appbar"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="15dp">
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginBottom="10dp"
+                    android:contentDescription="@string/image_descriptions"
+                    android:src="@drawable/ic_round_settings_24" />
+
+                <TextView
+                    style="@style/TextAppearance.Material3.HeadlineSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/google_sans_bold"
+                    android:text="Customisation Center"
+                    android:textColor="?attr/colorPrimaryText" />
+
+                <TextView
+                    style="@style/TextAppearance.Material3.BodyMedium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/google_sans_medium"
+                    android:text="Easily tweak and set the properties of the indicators and notification here"
+                    android:textColor="?attr/colorSecondaryText" />
+
+
+            </LinearLayout>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/open_settings"
+                style="@style/Widget.Material3.CardView.Outlined"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                app:cardCornerRadius="10dp"
+                app:strokeColor="@color/grey_200">
+
+                <RelativeLayout
+                    android:id="@+id/phone_holder"
+                    android:layout_width="320dp"
+                    android:layout_height="200dp"
+                    android:layout_gravity="center_horizontal">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true"
+                        android:contentDescription="@string/icon"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_pixel" />
+
+
+                    <LinearLayout
+                        android:id="@+id/dot_holder"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="70dp"
+                        android:layout_marginTop="55dp"
+                        android:layout_marginEnd="45dp"
+                        android:background="@android:color/transparent"
+                        android:paddingStart="4dp"
+                        android:paddingEnd="2dp">
+
+                        <ImageView
+                            android:id="@+id/dot_camera"
+                            android:layout_width="@dimen/dot_size_v_width"
+                            android:layout_height="@dimen/dot_size_v"
+                            android:layout_margin="3dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/ic_dot"
+                            android:backgroundTint="@color/green_500"
+                            android:contentDescription="@string/icon"
+                            android:padding="3dp"
+                            android:src="@drawable/ic_round_camera"
+                            app:tint="@android:color/white" />
+
+                        <ImageView
+                            android:id="@+id/dot_mic"
+                            android:layout_width="@dimen/dot_size_v_width"
+                            android:layout_height="@dimen/dot_size_v"
+                            android:layout_margin="3dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/ic_dot"
+                            android:backgroundTint="@color/orange_500"
+                            android:contentDescription="@string/icon"
+                            android:padding="2dp"
+                            android:src="@drawable/ic_round_mic"
+                            app:tint="@android:color/white" />
+
+                        <ImageView
+                            android:id="@+id/dot_location"
+                            android:layout_width="@dimen/dot_size_v_width"
+                            android:layout_height="@dimen/dot_size_v"
+                            android:layout_margin="3dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/ic_dot"
+                            android:backgroundTint="@color/purple_500"
+                            android:contentDescription="@string/icon"
+                            android:padding="2dp"
+                            android:src="@drawable/ic_round_location"
+                            app:tint="@android:color/white" />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <com.aravi.dot.ui.views.SwitchSettingsView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                app:icon="@drawable/ic_icons"
+                app:icon_tint="@color/green_300"
+                app:message="Toggle icon visibility on the access logs. This can quickly indicate the permission being used by an app"
+                app:title="Dot Icons" />
+
+
+            <com.aravi.dot.ui.views.SettingsView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                app:icon="@drawable/ic_round_format_align_center_24"
+                app:iconVisibility="false"
+                app:icon_tint="@color/colorPrimary"
+                app:message="Toggle icon visibility on the access logs. This can quickly indicate the permission being used by an app"
+                app:title="Alignment" />
+
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/dot_alignment_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:padding="10dp"
+                app:checkedButton="@+id/align_right"
+                app:selectionRequired="true"
+                app:singleSelection="true">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/align_left"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/left"
+                    app:icon="@drawable/ic_align_left"
+                    app:iconGravity="end" />
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/align_center"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/center"
+                    app:icon="@drawable/ic_align_center_alt" />
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/align_right"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/right"
+                    app:icon="@drawable/ic_align_right"
+                    app:iconGravity="start" />
+
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+
+
+            <com.aravi.dot.ui.views.SettingsView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                app:icon="@drawable/ic_round_format_align_center_24"
+                app:iconVisibility="false"
+                app:icon_tint="@color/orange_400"
+                app:message="Toggle icon visibility on the access logs. This can quickly indicate the permission being used by an app"
+                app:title="Colors" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/camera_color"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="90dp"
+                    android:fontFamily="@font/google_sans_bold"
+                    android:text="@string/permission_camera"
+                    android:textAlignment="textStart"
+                    android:textAllCaps="false"
+                    android:textColor="@color/black"
+                    app:icon="@drawable/ic_dot"
+                    app:iconGravity="start"
+                    app:iconPadding="10dp"
+                    app:iconSize="20dp"
+                    app:iconTint="@color/green_400" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/mic_color"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="60dp"
+                    android:fontFamily="@font/google_sans_bold"
+                    android:text="@string/permission_microphone"
+                    android:textAlignment="textStart"
+                    android:textAllCaps="false"
+                    android:textColor="@color/black"
+                    app:icon="@drawable/ic_dot"
+                    app:iconGravity="start"
+                    app:iconPadding="10dp"
+                    app:iconSize="20dp"
+                    app:iconTint="@color/orange_400" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/loc_color"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:fontFamily="@font/google_sans_bold"
+                    android:text="@string/permission_location"
+                    android:textAlignment="textStart"
+                    android:textAllCaps="false"
+                    android:textColor="@color/black"
+                    app:icon="@drawable/ic_dot"
+                    app:iconGravity="start"
+                    app:iconPadding="10dp"
+                    app:iconSize="20dp"
+                    app:iconTint="@color/purple_500" />
+
+            </LinearLayout>
+
+
+            <com.aravi.dot.ui.views.SettingsView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                app:icon="@drawable/ic_outline_cancel_24"
+                app:icon_tint="@color/red_300"
+                app:message="Set the customisations back to default"
+                app:title="Reset to defaults" />
+
+
+        </LinearLayout>
+
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</RelativeLayout>
