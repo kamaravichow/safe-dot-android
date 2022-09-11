@@ -79,6 +79,10 @@ or just fork the repository.
 |---|---|---|
 
 
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=kamaravichow/safe-dot-android&type=Date)](https://star-history.com/#kamaravichow/safe-dot-android&Date)
+
 
 ## Licence
 
