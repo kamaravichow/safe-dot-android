@@ -20,10 +20,10 @@
     <br />
     <br />
     <a href="https://play.google.com/store/apps/details?id=com.aravi.dot">
-      <img src="https://img.shields.io/badge/Play%20Store-5K-blueviolet?style=for-the-badge"/>
+      <img src="https://PlayBadges.pavi2410.me/badge/downloads?id=com.aravi.dot&style=for-the-badge"/>
     </a>
     <a href="https://galaxy.store/dotsafe">
-      <img src="https://img.shields.io/badge/Galaxy%20Store-1.2K-ff69b4?style=for-the-badge"/>
+      <img src="https://img.shields.io/badge/Galaxy%20Store-12.4k-ff69b4?style=for-the-badge"/>
     </a>
     
   </p>
