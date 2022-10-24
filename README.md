@@ -41,7 +41,7 @@ Feel free to ask if you didn't understand in [discussions](https://github.com/ka
 ## Download Now
 App is currently available for Production & Open Beta Testing on Google Play Store & Samsung's Galaxy Store. Use the below links to get redirected to the app page.
 
-|[<img src="https://github.com/kamaravichow/safe-dot-android/raw/master/docs/google-play-badge.png" width="200">](https://play.google.com/store/apps/details?id=com.aravi.dot)| [<img src="https://github.com/kamaravichow/safe-dot-android/raw/master/docs/f-droid-badge.png" width="200">](https://f-droid.org/packages/com.aravi.dot)| [<img src="https://github.com/kamaravichow/safe-dot-android/raw/master/docs/galaxy-store-badge.png" width="200">](https://galaxystore.samsung.com/detail/com.aravi.dot)| [<img src="https://oculavis.de/img/apk_badge.png" width="200">](https://github.com/kamaravichow/safe-dot-android/releases/download/v3.1.0/app-v3.1.0.apk) |
+|[<img src="https://github.com/kamaravichow/safe-dot-android/raw/master/docs/google-play-badge.png" width="200">](https://play.google.com/store/apps/details?id=com.aravi.dot)| [<img src="https://github.com/kamaravichow/safe-dot-android/raw/master/docs/f-droid-badge.png" width="200">](https://f-droid.org/packages/com.aravi.dot)| [<img src="https://github.com/kamaravichow/safe-dot-android/raw/master/docs/galaxy-store-badge.png" width="200">](https://galaxystore.samsung.com/detail/com.aravi.dot)| [<img src="https://oculavis.de/img/apk_badge.png" width="200">](https://github.com/kamaravichow/safe-dot-android/releases/) |
 |---|---|---|---|
 
 
