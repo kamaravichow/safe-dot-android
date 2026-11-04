@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -18,8 +19,8 @@
         style="@style/TextAppearance.Material3.HeadlineSmall"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/google_sans_bold"
-        android:text="Permission Name"
+        android:fontFamily="sans-serif-medium"
+        tools:text="@string/log_title"
         android:textColor="?attr/colorPrimaryText" />
 
     <TextView
@@ -27,8 +28,8 @@
         style="@style/TextAppearance.Material3.BodyMedium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/google_sans_medium"
-        android:text="Information"
+        android:fontFamily="sans-serif"
+        tools:text="@string/log_info"
         android:textColor="?attr/colorSecondaryText" />
 
     <ProgressBar

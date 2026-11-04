@@ -45,7 +45,8 @@ App is currently available for Production & Open Beta Testing on Google Play Sto
 
 
 ## Stack :
-- Minimum SDK 21
+- Version 4.0.0 (versionCode 40000)
+- Minimum SDK 24, target SDK 37 (Android 17)
 - MVVM Architecture (View - ViewModel - Model)
 - View Binding
 - Room Database
@@ -53,8 +54,9 @@ App is currently available for Production & Open Beta Testing on Google Play Sto
 
 ## Libraries Used
 
-- **Circle Image View** [View Source](https://github.com/hdodenhof/CircleImageView)
-- ~~Gson Google [View Source](https://github.com/google/gson)~~
+- AndroidX AppCompat, Material, Lifecycle, Room, and SplashScreen
+- Koin
+- Kotlin coroutines
 
 ## Issue Tracking
 
@@ -63,7 +65,7 @@ Use the issues tab to report issues and request features
 
 ## Contributing
 
-This project was built on Android Studio 4.0.
+This project builds with JDK 17, Gradle 9.6, and Android Gradle Plugin 9.5.
 
 ```
 git clone https://github.com/kamaravichow/safe-dot-android.git

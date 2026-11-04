@@ -4,6 +4,7 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.provider.MediaStore
 import android.util.Log
 import org.json.JSONArray
@@ -14,7 +15,12 @@ const val EXTRA_FRAGMENT_ARG_KEY = ":settings:fragment_args_key";
 const val EXTRA_SHOW_FRAGMENT_ARGUMENTS = ":settings:show_fragment_args";
 
 fun Intent.getShortcutAsData(): String? {
-    val returnedIntent = getParcelableExtra<Intent>(Intent.EXTRA_SHORTCUT_INTENT)
+    val returnedIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        getParcelableExtra(Intent.EXTRA_SHORTCUT_INTENT, Intent::class.java)
+    } else {
+        @Suppress("DEPRECATION")
+        getParcelableExtra(Intent.EXTRA_SHORTCUT_INTENT)
+    }
     return returnedIntent?.serialize()
 }
 

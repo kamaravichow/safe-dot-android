@@ -31,7 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fadingEdge="vertical"
-        android:fitsSystemWindows="true"
+        android:fitsSystemWindows="false"
         android:overScrollMode="never"
         android:scrollbars="none"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
@@ -39,6 +39,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:maxWidth="840dp"
             android:orientation="vertical">
 
             <RelativeLayout
@@ -62,7 +64,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:text="Last 24 hours" />
+                    android:text="@string/chart_title" />
 
 
             </RelativeLayout>
@@ -103,8 +105,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
-                            android:fontFamily="@font/google_sans_bold"
-                            android:text="Accessibility Service is disabled" />
+                            android:fontFamily="sans-serif-medium"
+                            android:text="@string/accessibility_disabled_title" />
 
                         <TextView
                             android:id="@+id/accessibility_status_message"
@@ -113,8 +115,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="5dp"
-                            android:fontFamily="@font/google_sans_regular"
-                            android:text="The dot will not work currently, tap to enable"
+                            android:fontFamily="sans-serif"
+                            android:text="@string/accessibility_disabled_message"
                             android:textSize="@dimen/minor_text_size" />
 
                     </LinearLayout>
@@ -129,9 +131,9 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/google_sans_bold"
+                android:fontFamily="sans-serif-medium"
                 android:padding="5dp"
-                android:text="Access Control Panel"
+                android:text="@string/access_control_panel"
                 android:textAlignment="center"
                 android:textSize="18sp" />
 
@@ -155,8 +157,8 @@
                         android:focusable="true"
                         app:icon="@drawable/ic_round_camera"
                         app:icon_tint="@color/deep_purple_400"
-                        app:message="Toggle this to enable or disable camera monitoring"
-                        app:title="Camera" />
+                        app:message="@string/camera_monitoring_message"
+                        app:title="@string/permission_camera" />
 
                     <com.aravi.dot.ui.views.SettingsView
                         android:id="@+id/microphone_switch"
@@ -166,8 +168,8 @@
                         android:focusable="true"
                         app:icon="@drawable/ic_round_mic"
                         app:icon_tint="@color/orange_400"
-                        app:message="Toggle this to enable or disable microphone monitoring"
-                        app:title="Microphone" />
+                        app:message="@string/microphone_monitoring_message"
+                        app:title="@string/permission_microphone" />
 
 
                     <com.aravi.dot.ui.views.SettingsView
@@ -178,8 +180,8 @@
                         android:focusable="true"
                         app:icon="@drawable/ic_round_location"
                         app:icon_tint="@color/blue_500"
-                        app:message="Toggle this to enable or disable location monitoring"
-                        app:title="Location" />
+                        app:message="@string/location_monitoring_message"
+                        app:title="@string/permission_location" />
 
 
                     <View
@@ -201,8 +203,8 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_marginStart="10dp"
-                            android:fontFamily="@font/google_sans_medium"
-                            android:text="More access actions"
+                            android:fontFamily="sans-serif"
+                            android:text="@string/more_access_actions"
                             android:textColor="@color/deep_purple_500"
                             android:textSize="16sp" />
 
@@ -231,9 +233,9 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/google_sans_bold"
+                android:fontFamily="sans-serif-medium"
                 android:padding="5dp"
-                android:text="Customization Panel"
+                android:text="@string/customise"
                 android:textAlignment="center"
                 android:textSize="18sp" />
 
@@ -256,19 +258,20 @@
                         android:focusable="true"
                         app:icon="@drawable/ic_list_ui_alt"
                         app:icon_tint="@color/indigo_300"
-                        app:message="Make dots look exactly like how you want them to look. You can change color, shape and many more."
-                        app:title="Customisation Center" />
+                        app:message="@string/customisation_center_description"
+                        app:title="@string/customisation_center" />
 
 
                     <com.aravi.dot.ui.views.SettingsView
+                        android:id="@+id/notification_settings"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:clickable="true"
                         android:focusable="true"
                         app:icon="@drawable/ic_round_notifications_active_24"
                         app:icon_tint="@color/deep_purple_600"
-                        app:message="Find more advanced preferences you might want to change to make app more powerful"
-                        app:title="Customize Notification" />
+                        app:message="@string/customize_notification_message"
+                        app:title="@string/customize_notification" />
 
 
                 </LinearLayout>
@@ -280,9 +283,9 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/google_sans_bold"
+                android:fontFamily="sans-serif-medium"
                 android:padding="5dp"
-                android:text="Settings Panel"
+                android:text="@string/preferences"
                 android:textAlignment="center"
                 android:textSize="18sp" />
 
@@ -298,6 +301,7 @@
                     android:orientation="vertical">
 
                     <com.aravi.dot.ui.views.SettingsView
+                        android:id="@+id/feedback_option"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:clickable="true"
@@ -305,8 +309,8 @@
                         app:icon="@drawable/ic_round_feedback_24"
                         app:icon_tint="@color/indigo_400"
                         app:iconVisibility="false"
-                        app:message="Find more advanced preferences you might want to change to make app more powerful"
-                        app:title="Feedback" />
+                        app:message="@string/feedback_message"
+                        app:title="@string/feedback" />
 
 
                     <LinearLayout
@@ -325,28 +329,30 @@
                             android:layout_height="wrap_content"
                             android:layout_marginHorizontal="5dp"
                             android:layout_weight="1"
-                            android:text="Bug Report" />
+                            android:text="@string/bug_report" />
 
                         <com.google.android.material.button.MaterialButton
+                            android:id="@+id/feature_request"
                             style="@style/Widget.Material3.Button.TonalButton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginHorizontal="5dp"
                             android:layout_weight="1"
-                            android:text="Feature Request" />
+                            android:text="@string/feature_request" />
 
 
                     </LinearLayout>
 
                     <com.aravi.dot.ui.views.SettingsView
+                        android:id="@+id/share_option"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:clickable="true"
                         android:focusable="true"
                         app:icon="@drawable/ic_share"
                         app:icon_tint="@color/amber_600"
-                        app:message="Tell your family and friends about this application"
-                        app:title="Share with others" />
+                        app:message="@string/tell_friends_family_description"
+                        app:title="@string/share_with_others" />
 
                 </LinearLayout>
 
@@ -400,7 +406,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:fontFamily="@font/google_sans_bold"
+                    android:fontFamily="sans-serif-medium"
                     android:text="@string/creator_attribution"
                     android:textSize="@dimen/footer_text_size" />
 
@@ -410,7 +416,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:fontFamily="@font/google_sans_medium"
+                    android:fontFamily="sans-serif"
                     android:padding="5dp"
                     android:textSize="@dimen/footer_text_size" />
 

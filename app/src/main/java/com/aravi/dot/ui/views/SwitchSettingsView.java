@@ -20,8 +20,10 @@ import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 
+import android.widget.CompoundButton;
+
 import com.aravi.dot.R;
-import com.bitvale.switcher.SwitcherX;
+import com.google.android.material.materialswitch.MaterialSwitch;
 
 
 public class SwitchSettingsView extends RelativeLayout {
@@ -30,7 +32,8 @@ public class SwitchSettingsView extends RelativeLayout {
     private int styleAttr;
     private TextView textTitle, textInfo;
     private ImageView imageIcon;
-    private SwitcherX switchMaterial;
+    private MaterialSwitch switchMaterial;
+    private CompoundButton.OnCheckedChangeListener checkedChangeListener;
 
     public SwitchSettingsView(Context context) {
         super(context);
@@ -88,7 +91,22 @@ public class SwitchSettingsView extends RelativeLayout {
     }
 
     public void checked(Boolean checked) {
-        this.switchMaterial.setChecked(checked, true);
+        setCheckedSilently(checked);
+    }
+
+    public void setCheckedSilently(boolean checked) {
+        switchMaterial.setOnCheckedChangeListener(null);
+        switchMaterial.setChecked(checked);
+        switchMaterial.setOnCheckedChangeListener(checkedChangeListener);
+    }
+
+    public boolean isChecked() {
+        return switchMaterial.isChecked();
+    }
+
+    public void setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener listener) {
+        checkedChangeListener = listener;
+        switchMaterial.setOnCheckedChangeListener(listener);
     }
 
 }

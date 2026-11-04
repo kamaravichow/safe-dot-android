@@ -16,17 +16,23 @@
  */
 package com.aravi.dot.activities.log
 
-import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.aravi.dot.Constants
 import com.aravi.dot.R
 import com.aravi.dot.activities.log.adapter.LogsAdapter
+import com.aravi.dot.database.AppDatabase
 import com.aravi.dot.databinding.ActivityLogsBinding
+import com.aravi.dot.manager.PreferenceManager
 import com.aravi.dot.util.PermissionUtils
 import com.aravi.dot.util.Utils
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import me.aravi.commons.base.BaseActivity
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -39,18 +45,10 @@ class LogsActivity : BaseActivity() {
 
     private val utils: Utils by inject()
     private val permissionUtils: PermissionUtils by inject()
-
+    private val preferences: PreferenceManager by inject()
+    private val database: AppDatabase by inject()
 
     var permission: String = Constants.PERMISSION_CAMERA
-
-    private lateinit var bundle: Bundle
-
-
-    override fun onStart() {
-        // Hides the clear button and shows progress bar on start
-        binding.clearLogsButton.hide()
-        super.onStart()
-    }
 
 
     override val contentView: View
@@ -64,11 +62,8 @@ class LogsActivity : BaseActivity() {
         binding.appbar.setPadding(0, statusBarHeight(resources) + 10, 0, 0)
 
         setSupportActionBar(binding.toolbar)
-        bundle = ActivityOptions
-            .makeCustomAnimation(this, R.anim.slide_out_left, R.anim.slide_in_right)
-            .toBundle();
         setBack()
-
+        binding.clearLogsButton.setOnClickListener { confirmClearLogs() }
         init()
 
     }
@@ -85,7 +80,7 @@ class LogsActivity : BaseActivity() {
 
         supportActionBar!!.title = ""
         binding.logsRecyclerView.layoutManager = LinearLayoutManager(this)
-        adapter = LogsAdapter(this, permission, utils, permissionUtils)
+        adapter = LogsAdapter(this, permission, utils, permissionUtils, preferences)
         binding.logsRecyclerView.adapter = adapter
 
         binding.logsRecyclerView.isRefreshing = true
@@ -95,9 +90,10 @@ class LogsActivity : BaseActivity() {
 
             if (it.isEmpty()) {
                 binding.emptyListImage.visibility = View.VISIBLE
-
+                binding.clearLogsButton.hide()
             } else {
                 binding.emptyListImage.visibility = View.GONE
+                binding.clearLogsButton.show()
                 binding.logsRecyclerView.addFooterView(R.layout.item_log_footer)
             }
             binding.logsRecyclerView.removeAllFooterView()
@@ -113,12 +109,22 @@ class LogsActivity : BaseActivity() {
 
 
     override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return super.onSupportNavigateUp()
+        onBackPressedDispatcher.onBackPressed()
+        return true
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
+    private fun confirmClearLogs() {
+        MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.clear_dialog_title)
+            .setMessage(R.string.clear_dialog_description)
+            .setPositiveButton(R.string.clear_dialog_yes) { _, _ ->
+                lifecycleScope.launch(Dispatchers.IO) {
+                    database.logsDao().clearLogs(permission)
+                }
+                Snackbar.make(binding.root, R.string.logs_cleared, Snackbar.LENGTH_SHORT).show()
+            }
+            .setNegativeButton(R.string.clear_dialog_no, null)
+            .show()
     }
 
 //    override fun finish() {

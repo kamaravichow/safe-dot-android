@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:fontFamily="@font/google_sans_medium"
-        android:text="---- THE END ----" />
+        android:fontFamily="sans-serif"
+        android:text="@string/log_end" />
 
 </LinearLayout>

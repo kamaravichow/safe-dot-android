@@ -39,9 +39,9 @@
         android:layout_height="wrap_content"
         android:layout_toStartOf="@id/switch_state"
         android:layout_toEndOf="@id/image_icon"
-        android:fontFamily="@font/google_sans_bold"
+        android:fontFamily="sans-serif-medium"
         android:paddingBottom="3dp"
-        android:text="Setting Title"
+        tools:text="@string/preferences"
         android:textSize="16sp" />
 
     <TextView
@@ -52,8 +52,8 @@
         android:layout_below="@id/text_title"
         android:layout_toStartOf="@id/switch_state"
         android:layout_toEndOf="@id/image_icon"
-        android:fontFamily="@font/google_sans_medium"
-        android:text="Some kind of description"
+        android:fontFamily="sans-serif"
+        tools:text="@string/preferences"
         android:textColor="@color/grey_500"
         android:textSize="12sp" />
 

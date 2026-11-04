@@ -60,14 +60,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:fontFamily="@font/google_sans_bold"
+                android:fontFamily="sans-serif-medium"
                 android:text="@string/app_name"
                 android:textSize="@dimen/title_heading_size" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/google_sans_medium"
+                android:fontFamily="sans-serif"
                 android:text="@string/tagline" />
 
         </LinearLayout>
