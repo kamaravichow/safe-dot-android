@@ -17,8 +17,9 @@ abstract class BaseActivity : AppCompatActivity() {
         onBeforeCreate()
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(contentView)
-        ViewCompat.setOnApplyWindowInsetsListener(contentView) { view, insets ->
+        val root = contentView
+        setContentView(root)
+        ViewCompat.setOnApplyWindowInsetsListener(root) { view, insets ->
             val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             view.setPadding(view.paddingLeft, view.paddingTop, view.paddingRight, bars.bottom)
             insets
