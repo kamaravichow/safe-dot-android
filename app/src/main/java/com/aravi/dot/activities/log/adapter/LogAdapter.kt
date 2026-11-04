@@ -13,6 +13,7 @@ import com.aravi.dot.activities.log.adapter.holders.LogViewHolder
 import com.aravi.dot.bean.Log
 import com.aravi.dot.databinding.ItemLogBinding
 import com.aravi.dot.databinding.ItemLogHeaderBinding
+import com.aravi.dot.manager.PreferenceManager
 import com.aravi.dot.util.PermissionUtils
 import com.aravi.dot.util.Utils
 
@@ -22,6 +23,7 @@ class LogsAdapter(
     val permission: String,
     val utils: Utils,
     val permissionUtils: PermissionUtils,
+    val preferences: PreferenceManager,
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val logsList: MutableList<Log> = ArrayList()
@@ -69,7 +71,11 @@ class LogsAdapter(
                 logsView.textDate.visibility = View.GONE
                 logsView.viewHorizontal.visibility = View.GONE
             }
-            logsView.textTime.text = utils.getTimeFromTimestamp(item.timestamp)
+            logsView.textTime.text = if (preferences.isRelativeTimeEnabled) {
+                utils.formatRelativeTime(item.timestamp)
+            } else {
+                utils.getTimeFromTimestamp(item.timestamp)
+            }
             logsView.textAppName.text = utils.getNameFromPackageName(item.packageName)
             logsView.imageApp.background = utils.getIconFromPackageName(item.packageName)
             logsView.imageApp.backgroundTintList = null

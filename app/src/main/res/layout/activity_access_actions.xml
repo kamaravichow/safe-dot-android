@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:navigationIcon="@drawable/ic_round_keyboard_backspace_24"
-            app:title="Access Panel"
+            app:title="@string/access_panel"
             app:titleTextAppearance="@style/ToolbarTitleAppearance" />
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -55,8 +55,8 @@
                         android:focusable="true"
                         app:icon="@drawable/ic_round_camera"
                         app:icon_tint="@color/deep_purple_400"
-                        app:message="Toggle this to enable or disable camera monitoring"
-                        app:title="Camera" />
+                        app:message="@string/camera_monitoring_message"
+                        app:title="@string/permission_camera" />
 
                     <com.aravi.dot.ui.views.SwitchSettingsView
                         android:id="@+id/microphone_switch"
@@ -66,8 +66,8 @@
                         android:focusable="true"
                         app:icon="@drawable/ic_round_mic"
                         app:icon_tint="@color/orange_400"
-                        app:message="Toggle this to enable or disable microphone monitoring"
-                        app:title="Microphone" />
+                        app:message="@string/microphone_monitoring_message"
+                        app:title="@string/permission_microphone" />
 
 
                     <com.aravi.dot.ui.views.SwitchSettingsView
@@ -78,8 +78,8 @@
                         android:focusable="true"
                         app:icon="@drawable/ic_round_location"
                         app:icon_tint="@color/blue_500"
-                        app:message="Toggle this to enable or disable location monitoring"
-                        app:title="Location" />
+                        app:message="@string/location_monitoring_message"
+                        app:title="@string/permission_location" />
 
 
                 </LinearLayout>
@@ -90,9 +90,9 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/google_sans_bold"
+                android:fontFamily="sans-serif-medium"
                 android:padding="5dp"
-                android:text="Access Log Settings"
+                android:text="@string/access_log_settings"
                 android:textAlignment="center"
                 android:textSize="18sp" />
 
@@ -109,6 +109,7 @@
                     android:orientation="vertical">
 
                     <com.aravi.dot.ui.views.SettingsView
+                        android:id="@+id/excluded_apps"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:clickable="true"
@@ -116,8 +117,8 @@
                         app:icon="@drawable/ic_round_dashboard_24"
                         app:iconVisibility="false"
                         app:icon_tint="@color/green_300"
-                        app:message="App will stop logging information from the selected apps here"
-                        app:title="Excluded Apps" />
+                        app:message="@string/excluded_apps_message"
+                        app:title="@string/whitelist_title" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -129,20 +130,13 @@
                         android:weightSum="3">
 
                         <com.google.android.material.button.MaterialButton
+                            android:id="@+id/excluded_apps_button"
                             style="@style/Widget.Material3.Button.TonalButton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginHorizontal="5dp"
                             android:layout_weight="1"
-                            android:text="Excluded Apps" />
-
-                        <com.google.android.material.button.MaterialButton
-                            style="@style/Widget.Material3.Button.TonalButton"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="5dp"
-                            android:layout_weight="1"
-                            android:text="Options" />
+                            android:text="@string/whitelist_title" />
 
 
                     </LinearLayout>
@@ -155,11 +149,11 @@
                         android:focusable="true"
                         app:icon="@drawable/ic_round_access_time_24"
                         app:icon_tint="@color/indigo_400"
-                        app:message="Shows relative time on access logs"
-                        app:title="Times ago " />
+                        app:message="@string/relative_time_message"
+                        app:title="@string/relative_time" />
 
                     <com.aravi.dot.ui.views.SettingsView
-                        android:id="@+id/clear_access_logs"
+                        android:id="@+id/clear_logs"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:clickable="true"
@@ -167,8 +161,8 @@
                         app:icon="@drawable/ic_round_clear_24"
                         app:iconVisibility="true"
                         app:icon_tint="@color/red_300"
-                        app:message="This will clear all the logs and databases of the application"
-                        app:title="Clear Access Logs" />
+                        app:message="@string/clear_access_logs_message"
+                        app:title="@string/clear_access_logs" />
 
                 </LinearLayout>
 

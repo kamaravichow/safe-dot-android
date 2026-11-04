@@ -20,6 +20,7 @@ import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.os.Build
+import android.os.StrictMode
 import com.aravi.dot.di.appModule
 import me.aravi.commons.base.BaseApplication
 import org.koin.android.ext.koin.androidContext
@@ -29,6 +30,9 @@ class App : BaseApplication() {
 
     override fun onCreate() {
         super.onCreate()
+        if (BuildConfig.DEBUG) {
+            enableStrictMode()
+        }
         localNotificationSetup(this)
 
         startKoin {
@@ -42,11 +46,10 @@ class App : BaseApplication() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 Constants.SERVICE_NOTIFICATION_CHANNEL,
-                "Service Notification",
+                application.getString(R.string.notification_channel_service),
                 NotificationManager.IMPORTANCE_LOW
             )
-            channel.description =
-                "This keeps the app alive. We recommend not to disable this notification."
+            channel.description = application.getString(R.string.notification_service_description)
             channel.enableLights(false)
             channel.setShowBadge(true)
             channel.enableVibration(false)
@@ -58,10 +61,10 @@ class App : BaseApplication() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 Constants.DEFAULT_NOTIFICATION_CHANNEL,
-                "Default Notification",
+                application.getString(R.string.notification_channel_alerts),
                 NotificationManager.IMPORTANCE_DEFAULT
             )
-            channel.description = "This shows when the camera, microphone, or location is in use"
+            channel.description = application.getString(R.string.notification_default_description)
             channel.enableLights(true)
             channel.setShowBadge(true)
             channel.enableVibration(false)
@@ -74,5 +77,19 @@ class App : BaseApplication() {
 
     override fun onLowMemory() {
         super.onLowMemory()
+    }
+
+    private fun enableStrictMode() {
+        val builder = StrictMode.VmPolicy.Builder()
+            .detectActivityLeaks()
+            .detectLeakedClosableObjects()
+            .penaltyLog()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            builder.detectNonSdkApiUsage()
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.CINNAMON_BUN) {
+            builder.detectImplicitUriPermissionGrant()
+        }
+        StrictMode.setVmPolicy(builder.build())
     }
 }

@@ -18,6 +18,8 @@ import android.media.AudioManager
 import android.media.AudioManager.AudioRecordingCallback
 import android.media.AudioRecordingConfiguration
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
@@ -96,7 +98,7 @@ class DotService : AccessibilityService() {
     private var notificationCompatBuilder: NotificationCompat.Builder? = null
     private var currentRunningAppPackage = BuildConfig.APPLICATION_ID
 
-    override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         return super.onStartCommand(intent, flags, startId)
     }
 
@@ -113,17 +115,17 @@ class DotService : AccessibilityService() {
                 PendingIntent.FLAG_IMMUTABLE
             )
             val notification = Notification.Builder(this, Constants.SERVICE_NOTIFICATION_CHANNEL)
-                .setContentTitle("SafeDot is running in the background")
-                .setContentText("Click here to hide notification")
+                .setContentTitle(getString(R.string.notification_ContentText))
+                .setContentText(getString(R.string.notification_text))
                 .setSmallIcon(R.drawable.transparent)
                 .setContentIntent(pendingIntent)
-                .setTicker("Protect service")
+                .setTicker(getString(R.string.notification_ticker))
                 .build()
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
                 startForeground(
-                    3, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_CAMERA
-                            or ServiceInfo.FOREGROUND_SERVICE_TYPE_MICROPHONE
-                            or ServiceInfo.FOREGROUND_SERVICE_TYPE_LOCATION
+                    3,
+                    notification,
+                    ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE
                 )
             } else {
                 startForeground(3, notification)
@@ -170,7 +172,15 @@ class DotService : AccessibilityService() {
         layoutParams.type = WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY
         layoutParams.format = PixelFormat.TRANSLUCENT
         layoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
-            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE or
+            WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            layoutParams.layoutInDisplayCutoutMode =
+                WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            layoutParams.layoutInDisplayCutoutMode =
+                WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
+        }
         layoutParams.width = WindowManager.LayoutParams.WRAP_CONTENT
         layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT
         layoutParams.gravity = layoutGravity
@@ -209,16 +219,14 @@ class DotService : AccessibilityService() {
         audioManager.registerAudioRecordingCallback(getMicCallback(), null)
 
         locationManager = getSystemService(LOCATION_SERVICE) as LocationManager
-        if (sharedPreferenceManager.isLocationEnabled) {
-            if (checkLocationPermission()) {
-                try {
-                    registerLocationCallback()
-                } catch (e: SecurityException) {
-                    sharedPreferenceManager.isLocationEnabled = false
-                }
-            } else {
+        if (sharedPreferenceManager.isLocationEnabled && checkLocationPermission()) {
+            try {
+                registerLocationCallback()
+            } catch (e: SecurityException) {
                 sharedPreferenceManager.isLocationEnabled = false
             }
+        } else if (sharedPreferenceManager.isLocationEnabled) {
+            sharedPreferenceManager.isLocationEnabled = false
         }
     }
 
@@ -317,7 +325,8 @@ class DotService : AccessibilityService() {
 
 
     private fun recordLog(permission: String) {
-        if (currentRunningAppPackage == BuildConfig.APPLICATION_ID) return // avoid self logs
+        if (currentRunningAppPackage == BuildConfig.APPLICATION_ID) return
+        if (sharedPreferenceManager.excludedPackages.contains(currentRunningAppPackage)) return
         var state = Constants.STATE_INVALID
         when (permission) {
             PERMISSION_CAMERA -> state =
@@ -328,12 +337,13 @@ class DotService : AccessibilityService() {
                 if (didLocUseStart && isLocUnavailable) Constants.STATE_ON else Constants.STATE_OFF
         }
         CoroutineScope(Dispatchers.IO).launch {
+            val now = System.currentTimeMillis()
             val log = Log(
-                System.currentTimeMillis(),
+                now,
                 currentRunningAppPackage,
                 permission,
                 state,
-                utils.getLogDayKey(System.currentTimeMillis())
+                utils.getLogDayKey(now)
             )
             appDatabase.logsDao().insertLog(log)
         }
@@ -359,34 +369,49 @@ class DotService : AccessibilityService() {
 
 
     private val notificationTitle: String
-        get() = "Your ${activeComponents().joinToString(", ")} are being monitored"
+        get() {
+            var title = getString(R.string.dotservice_monitored_your)
+            if (isCameraUnavailable) {
+                title += getString(R.string.dotservice_monitored_camera)
+            }
+            if (isMicUnavailable) {
+                title += getString(R.string.dotservice_monitored_mic)
+            }
+            if (isLocUnavailable) {
+                title += getString(R.string.dotservice_monitored_location)
+            }
+            return title + getString(R.string.dotservice_monitored)
+        }
 
 
     private fun getNotificationDescription(appUsingComponent: String): String {
-        val appName = if (appUsingComponent.isEmpty() || appUsingComponent == "(unknown)") {
-            "some app"
-        } else {
-            appUsingComponent
+        var appUsingComponent = appUsingComponent
+        if (appUsingComponent.isEmpty() || appUsingComponent == getString(R.string.dotservice_unknown)) {
+            appUsingComponent = getString(R.string.dotservice_someapp)
         }
-        return "$appName is using ${activeComponents().joinToString(", ")}"
-    }
-
-    private fun activeComponents(): List<String> {
-        val components = mutableListOf<String>()
-        if (isCameraUnavailable) components.add("CAMERA")
-        if (isMicUnavailable) components.add("MIC")
-        if (isLocUnavailable) components.add("LOCATION")
-        return components
+        var description = appUsingComponent + getString(R.string.dotservice_isusingyour)
+        if (isCameraUnavailable) {
+            description += getString(R.string.dotservice_monitored_camera)
+        }
+        if (isMicUnavailable) {
+            description += getString(R.string.dotservice_monitored_mic)
+        }
+        if (isLocUnavailable) description += getString(R.string.dotservice_monitored_location)
+        return description
     }
 
     private fun showOnUseNotification() {
-        if (isOnUseNotificationEnabled) {
-            initOnUseNotification(utils.getNameFromPackageName(currentRunningAppPackage))
-            notificationManager.notify(
-                NOTIFICATION_ID,
-                notificationCompatBuilder!!.build()
-            )
+        if (!isOnUseNotificationEnabled) return
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+            checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED
+        ) {
+            return
         }
+        initOnUseNotification(utils.getNameFromPackageName(currentRunningAppPackage))
+        notificationManager.notify(
+            NOTIFICATION_ID,
+            notificationCompatBuilder!!.build()
+        )
     }
 
     private fun dismissOnUseNotification() {
@@ -427,8 +452,7 @@ class DotService : AccessibilityService() {
     private fun triggerVibration() {
         if (!sharedPreferenceManager.isVibrationEnabled) return
         val vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            val vibratorManager = getSystemService(VIBRATOR_MANAGER_SERVICE) as VibratorManager
-            vibratorManager.defaultVibrator
+            getSystemService(VibratorManager::class.java).defaultVibrator
         } else {
             @Suppress("DEPRECATION")
             getSystemService(VIBRATOR_SERVICE) as Vibrator
@@ -436,10 +460,10 @@ class DotService : AccessibilityService() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             vibrator.vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_HEAVY_CLICK))
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            vibrator.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE))
+            vibrator.vibrate(VibrationEffect.createOneShot(150, VibrationEffect.DEFAULT_AMPLITUDE))
         } else {
             @Suppress("DEPRECATION")
-            vibrator.vibrate(500)
+            vibrator.vibrate(150)
         }
     }
 
@@ -621,7 +645,10 @@ class DotService : AccessibilityService() {
             locationManager.registerGnssStatusCallback(mainExecutor, locationCallback)
         } else {
             @Suppress("DEPRECATION")
-            locationManager.registerGnssStatusCallback(locationCallback)
+            locationManager.registerGnssStatusCallback(
+                locationCallback,
+                Handler(Looper.getMainLooper())
+            )
         }
         locationCallbackRegistered = true
     }
@@ -663,7 +690,7 @@ class DotService : AccessibilityService() {
                 // The overlay was already removed, or its window token is no longer valid.
             }
         }
-        stopForeground(true)
+        stopForeground(STOP_FOREGROUND_REMOVE)
         super.onDestroy()
     }
 

@@ -39,7 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_toStartOf="@id/switch_state"
         android:layout_toEndOf="@id/image_icon"
-        android:fontFamily="@font/google_sans_bold"
+        android:fontFamily="sans-serif-medium"
         android:paddingBottom="3dp"
         android:textSize="16sp"
         tools:text="@tools:sample/lorem" />
@@ -51,13 +51,13 @@
         android:layout_below="@id/text_title"
         android:layout_toStartOf="@id/switch_state"
         android:layout_toEndOf="@id/image_icon"
-        android:fontFamily="@font/google_sans_medium"
+        android:fontFamily="sans-serif"
         android:maxLines="5"
         android:textColor="@color/grey_500"
         android:textSize="12sp"
         tools:text="@tools:sample/lorem/random" />
 
-    <com.bitvale.switcher.SwitcherX
+    <com.google.android.material.materialswitch.MaterialSwitch
         android:id="@+id/switch_state"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -65,9 +65,7 @@
         android:layout_centerVertical="true"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="8dp"
-        android:checked="true"
-        android:clickable="false"
-        android:focusable="false"
+        android:checked="false"
         android:gravity="center"
         android:visibility="visible" />
 

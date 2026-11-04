@@ -46,4 +46,7 @@ interface LogsDao {
 
     @Query("SELECT COUNT(*) FROM (SELECT DISTINCT packageName FROM access_logs WHERE permission=:permission and date=:date)")
     fun getLogsCount(permission: String, date: String): Int
+
+    @Query("SELECT COUNT(DISTINCT packageName) FROM access_logs WHERE permission=:permission AND timestamp>=:since")
+    fun countDistinctPackagesSince(permission: String, since: Long): Int
 }

@@ -84,7 +84,7 @@
         android:layout_margin="16dp"
         android:backgroundTint="@color/colorPrimary"
         android:shadowColor="@android:color/transparent"
-        android:text="Clear Logs"
+        android:text="@string/clear_logs"
         android:textColor="@android:color/white"
         android:textSize="12sp"
         app:backgroundTint="@color/colorAccent"

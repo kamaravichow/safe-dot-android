@@ -3,24 +3,46 @@ package com.aravi.dot.activities.actions
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
+import com.aravi.dot.R
+import com.aravi.dot.activities.ignore.WhitelistActivity
 import com.aravi.dot.database.AppDatabase
 import com.aravi.dot.databinding.ActivityAccessActionsBinding
-import com.aravi.dot.extensions.doesHavePermissions
-import com.aravi.dot.extensions.permissions
 import com.aravi.dot.manager.PreferenceManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import me.aravi.commons.base.BaseActivity
 import org.koin.android.ext.android.inject
 
 class AccessActionsActivity : BaseActivity() {
-
     private lateinit var binding: ActivityAccessActionsBinding
-    private val preferenceManager: PreferenceManager by inject()
-    private val appDatabase: AppDatabase by inject()
+    private val preferences: PreferenceManager by inject()
+    private val database: AppDatabase by inject()
+
+    private val locationPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { result ->
+        val granted = result[Manifest.permission.ACCESS_FINE_LOCATION] == true
+        if (granted) {
+            preferences.isLocationEnabled = true
+            binding.locationSwitch.setCheckedSilently(true)
+            requestBackgroundLocationIfNeeded()
+        } else {
+            preferences.isLocationEnabled = false
+            binding.locationSwitch.setCheckedSilently(false)
+        }
+    }
+
+    private val backgroundLocationLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { }
 
     override val contentView: View
         get() {
@@ -31,84 +53,92 @@ class AccessActionsActivity : BaseActivity() {
     override fun onViewReady(savedInstanceState: Bundle?, intent: Intent?) {
         setSupportActionBar(binding.toolbar)
         setBack()
-        bindMonitoringSwitches()
+        binding.appbar.setPadding(0, statusBarHeight(resources), 0, 0)
+        binding.cameraSwitch.setCheckedSilently(preferences.isCameraEnabled)
+        binding.microphoneSwitch.setCheckedSilently(preferences.isMicEnabled)
+        binding.locationSwitch.setCheckedSilently(preferences.isLocationEnabled && hasLocationPermission())
+        binding.timeSwitch.setCheckedSilently(preferences.isRelativeTimeEnabled)
 
-        binding.clearAccessLogs.setOnClickListener {
-            MaterialAlertDialogBuilder(this)
-                .setTitle("Clear Access Logs")
-                .setMessage("Are you sure you want to clear all access logs? This cannot be undone.")
-                .setPositiveButton("Clear") { _, _ ->
-                    appDatabase.logsDao().clearLogs()
-                    Snackbar.make(binding.root, "Logs cleared", Snackbar.LENGTH_SHORT).show()
-                }
-                .setNegativeButton("Cancel", null)
-                .show()
+        binding.cameraSwitch.setOnCheckedChangeListener { _, checked ->
+            preferences.isCameraEnabled = checked
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        bindMonitoringSwitches()
-    }
-
-    private fun bindMonitoringSwitches() {
-        binding.cameraSwitch.checked(preferenceManager.isCameraEnabled)
-        binding.cameraSwitch.setOnClickListener {
-            preferenceManager.isCameraEnabled = !preferenceManager.isCameraEnabled
-            binding.cameraSwitch.checked(preferenceManager.isCameraEnabled)
+        binding.microphoneSwitch.setOnCheckedChangeListener { _, checked ->
+            preferences.isMicEnabled = checked
         }
-
-        binding.microphoneSwitch.checked(preferenceManager.isMicEnabled)
-        binding.microphoneSwitch.setOnClickListener {
-            preferenceManager.isMicEnabled = !preferenceManager.isMicEnabled
-            binding.microphoneSwitch.checked(preferenceManager.isMicEnabled)
-        }
-
-        binding.locationSwitch.checked(preferenceManager.isLocationEnabled)
-        binding.locationSwitch.setOnClickListener {
-            if (!preferenceManager.isLocationEnabled) {
-                if (doesHavePermissions(Manifest.permission.ACCESS_FINE_LOCATION)) {
-                    preferenceManager.isLocationEnabled = true
-                    binding.locationSwitch.checked(true)
-                } else {
-                    permissions(
-                        Manifest.permission.ACCESS_FINE_LOCATION,
-                        Manifest.permission.ACCESS_COARSE_LOCATION
-                    )
-                    binding.locationSwitch.checked(false)
-                }
+        binding.locationSwitch.setOnCheckedChangeListener { _, checked ->
+            if (checked && !hasLocationPermission()) {
+                binding.locationSwitch.setCheckedSilently(false)
+                explainLocationPermission()
             } else {
-                preferenceManager.isLocationEnabled = false
-                binding.locationSwitch.checked(false)
+                preferences.isLocationEnabled = checked
             }
         }
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        if (requestCode == 12030) {
-            val fineLocationIndex = permissions.indexOf(Manifest.permission.ACCESS_FINE_LOCATION)
-            if (fineLocationIndex != -1 &&
-                fineLocationIndex < grantResults.size &&
-                grantResults[fineLocationIndex] == PackageManager.PERMISSION_GRANTED
-            ) {
-                preferenceManager.isLocationEnabled = true
-                binding.locationSwitch.checked(true)
-            } else {
-                Toast.makeText(this, "Precise location permission is required", Toast.LENGTH_SHORT)
-                    .show()
-                preferenceManager.isLocationEnabled = false
-                binding.locationSwitch.checked(false)
-            }
+        binding.timeSwitch.setOnCheckedChangeListener { _, checked ->
+            preferences.isRelativeTimeEnabled = checked
         }
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        binding.excludedApps.setOnClickListener { openActivity(WhitelistActivity::class.java) }
+        binding.excludedAppsButton.setOnClickListener { openActivity(WhitelistActivity::class.java) }
+        binding.clearLogs.setOnClickListener { confirmClearLogs() }
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return super.onSupportNavigateUp()
+        onBackPressedDispatcher.onBackPressed()
+        return true
+    }
+
+    private fun explainLocationPermission() {
+        MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.requires_locationperm)
+            .setMessage(R.string.requires_locationperm_message)
+            .setPositiveButton(R.string.button_continue) { _, _ ->
+                locationPermissionLauncher.launch(
+                    arrayOf(
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                    )
+                )
+            }
+            .setNegativeButton(R.string.button_later, null)
+            .show()
+    }
+
+    private fun requestBackgroundLocationIfNeeded() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) return
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_BACKGROUND_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            return
+        }
+        MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.requires_locationperm)
+            .setMessage(R.string.requires_background_location_message)
+            .setPositiveButton(R.string.button_continue) { _, _ ->
+                backgroundLocationLauncher.launch(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+            }
+            .setNegativeButton(R.string.button_later, null)
+            .show()
+    }
+
+    private fun hasLocationPermission(): Boolean {
+        return ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun confirmClearLogs() {
+        MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.clear_dialog_title)
+            .setMessage(R.string.clear_dialog_description)
+            .setPositiveButton(R.string.clear_dialog_yes) { _, _ ->
+                lifecycleScope.launch(Dispatchers.IO) {
+                    database.logsDao().clearLogs()
+                }
+                Snackbar.make(binding.root, R.string.logs_cleared, Snackbar.LENGTH_SHORT).show()
+            }
+            .setNegativeButton(R.string.clear_dialog_no, null)
+            .show()
     }
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -16,10 +17,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/view_horizontal"
-        android:fontFamily="@font/google_sans_bold"
+        android:fontFamily="sans-serif-medium"
         android:padding="@dimen/default_padding"
-        android:text="Permission info"
         android:textColor="?attr/colorPrimary"
+        tools:text="@string/log_title"
         android:textSize="12sp" />
 
     <RelativeLayout
@@ -36,8 +37,8 @@
             android:layout_width="72dp"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:fontFamily="@font/google_sans_medium"
-            android:text="Time"
+            android:fontFamily="sans-serif"
+            tools:text="@string/log_permission_start"
             android:textAllCaps="true"
             android:textColor="?attr/colorSecondaryText"
             android:textSize="14sp" />
@@ -67,9 +68,9 @@
             android:layout_toStartOf="@id/image_help"
             android:layout_toEndOf="@id/image_app"
             android:ellipsize="end"
-            android:fontFamily="@font/google_sans_medium"
+            android:fontFamily="sans-serif"
             android:maxLines="1"
-            android:text="App"
+            tools:text="@string/dotservice_someapp"
             android:textColor="?attr/colorPrimaryText"
             android:textSize="16sp" />
 
@@ -82,10 +83,10 @@
             android:layout_marginEnd="16dp"
             android:layout_toStartOf="@id/image_help"
             android:ellipsize="end"
-            android:fontFamily="@font/google_sans_medium"
+            android:fontFamily="sans-serif"
             android:maxLines="1"
             android:paddingTop="2dp"
-            android:text="Permission info"
+            tools:text="@string/log_info"
             android:textAllCaps="true"
             android:textColor="?attr/colorIcon"
             android:textSize="12sp" />
