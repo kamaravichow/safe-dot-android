@@ -29,8 +29,7 @@ class AccessActionsActivity : BaseActivity() {
     private val locationPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) { result ->
-        val granted = result[Manifest.permission.ACCESS_FINE_LOCATION] == true ||
-            result[Manifest.permission.ACCESS_COARSE_LOCATION] == true
+        val granted = result[Manifest.permission.ACCESS_FINE_LOCATION] == true
         if (granted) {
             preferences.isLocationEnabled = true
             binding.locationSwitch.setCheckedSilently(true)
@@ -125,7 +124,7 @@ class AccessActionsActivity : BaseActivity() {
     private fun hasLocationPermission(): Boolean {
         return ContextCompat.checkSelfPermission(
             this,
-            Manifest.permission.ACCESS_COARSE_LOCATION
+            Manifest.permission.ACCESS_FINE_LOCATION
         ) == PackageManager.PERMISSION_GRANTED
     }
 

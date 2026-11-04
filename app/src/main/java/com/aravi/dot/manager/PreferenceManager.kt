@@ -135,8 +135,16 @@ class PreferenceManager(val context: Context) {
             prefEditor.putBoolean(PREF_CONSTANTS.DOT_INTEGRITY, i).apply()
         }
 
+    fun registerListener(listener: SharedPreferences.OnSharedPreferenceChangeListener) {
+        sharedPreferences.registerOnSharedPreferenceChangeListener(listener)
+    }
 
-    private object PREF_CONSTANTS {
+    fun unregisterListener(listener: SharedPreferences.OnSharedPreferenceChangeListener) {
+        sharedPreferences.unregisterOnSharedPreferenceChangeListener(listener)
+    }
+
+
+    internal object PREF_CONSTANTS {
         const val SERVICE_KEY = "me.aravi.dot.SERVICE"
         const val VIBRATION_KEY = "me.aravi.dot.CUSTOM.VIBRATION"
         const val PLACEMENT_KEY = "Xme.aravi.dot.ALIGNMENT"

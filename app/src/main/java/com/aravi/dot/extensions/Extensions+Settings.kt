@@ -28,7 +28,7 @@ suspend inline fun <reified T : Any> Class<out Settings.NameValueTable>.getSetti
                 trySend(getString(contentResolver, settingsField) as T?).isSuccess
             }
             contentResolver.registerContentObserver(uri, false, SettingsContentObserver(
-                Handler(Looper.myLooper()!!),
+                Handler(Looper.getMainLooper()),
                 uri
             ) { _, _ ->
                 update.invoke()
@@ -42,7 +42,7 @@ suspend inline fun <reified T : Any> Class<out Settings.NameValueTable>.getSetti
                 trySend(getFloat(contentResolver, settingsField) as T?).isSuccess
             }
             contentResolver.registerContentObserver(uri, false, SettingsContentObserver(
-                Handler(Looper.myLooper()!!),
+                Handler(Looper.getMainLooper()),
                 uri
             ) { _, _ ->
                 update.invoke()
@@ -56,7 +56,7 @@ suspend inline fun <reified T : Any> Class<out Settings.NameValueTable>.getSetti
                 trySend(getLong(contentResolver, settingsField) as T?).isSuccess
             }
             contentResolver.registerContentObserver(uri, false, SettingsContentObserver(
-                Handler(Looper.myLooper()!!),
+                Handler(Looper.getMainLooper()),
                 uri
             ) { _, _ ->
                 update.invoke()
@@ -70,7 +70,7 @@ suspend inline fun <reified T : Any> Class<out Settings.NameValueTable>.getSetti
                 trySend(getInt(contentResolver, settingsField) as T?).isSuccess
             }
             contentResolver.registerContentObserver(uri, false, SettingsContentObserver(
-                Handler(Looper.myLooper()!!),
+                Handler(Looper.getMainLooper()),
                 uri
             ) { _, _ ->
                 update.invoke()
@@ -84,7 +84,7 @@ suspend inline fun <reified T : Any> Class<out Settings.NameValueTable>.getSetti
                 trySend((getInt(contentResolver, settingsField) == 1) as T).isSuccess
             }
             contentResolver.registerContentObserver(uri, false, SettingsContentObserver(
-                Handler(Looper.myLooper()!!),
+                Handler(Looper.getMainLooper()),
                 uri
             ) { _, _ ->
                 update.invoke()

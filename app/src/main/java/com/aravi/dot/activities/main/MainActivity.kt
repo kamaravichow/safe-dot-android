@@ -3,7 +3,6 @@ package com.aravi.dot.activities.main
 import android.Manifest
 import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.net.Uri
@@ -26,6 +25,7 @@ import com.aravi.dot.databinding.ActivityMainBinding
 import com.aravi.dot.extensions.doesHavePermissions
 import com.aravi.dot.manager.DevLogger
 import com.aravi.dot.manager.PreferenceManager
+import com.aravi.dot.ui.views.SettingsView
 import com.aravi.dot.util.PermissionUtils
 import com.aravi.dot.util.Utils
 import com.google.android.material.snackbar.Snackbar
@@ -67,13 +67,13 @@ class MainActivity : BaseActivity() {
             openActivity(AccessActionsActivity::class.java)
         }
         binding.cameraSwitch.setOnClickListener {
-            utils.openHistoryActivity(this, Constants.PERMISSION_CAMERA)
+            openSensor(preferences.isCameraEnabled, Constants.PERMISSION_CAMERA)
         }
         binding.microphoneSwitch.setOnClickListener {
-            utils.openHistoryActivity(this, Constants.PERMISSION_MICROPHONE)
+            openSensor(preferences.isMicEnabled, Constants.PERMISSION_MICROPHONE)
         }
         binding.locationSwitch.setOnClickListener {
-            utils.openHistoryActivity(this, Constants.PERMISSION_LOCATION)
+            openSensor(preferences.isLocationEnabled, Constants.PERMISSION_LOCATION)
         }
         binding.customiseDots.setOnClickListener {
             openActivity(CustomisationActivity::class.java)
@@ -113,6 +113,14 @@ class MainActivity : BaseActivity() {
         super.onResume()
         if (::binding.isInitialized) {
             initData()
+        }
+    }
+
+    private fun openSensor(monitoringEnabled: Boolean, permission: String) {
+        if (monitoringEnabled) {
+            utils.openHistoryActivity(this, permission)
+        } else {
+            openActivity(AccessActionsActivity::class.java)
         }
     }
 
@@ -168,20 +176,34 @@ class MainActivity : BaseActivity() {
         val microphoneLogs = database.logsDao().countDistinctPackagesSince(Constants.PERMISSION_MICROPHONE, since)
         val totalLogs = locationLogs + cameraLogs + microphoneLogs
         val counts = listOf(locationLogs, cameraLogs, microphoneLogs)
-        val colors = listOf(R.color.red_300, R.color.green_300, R.color.blue_300)
+        val colors = listOf(
+            preferences.locationDotColor,
+            preferences.cameraDotColor,
+            preferences.micDotColor
+        )
 
-        binding.cameraSwitch.setMessage(permissionUtils.getPermissionUsageInfo(cameraLogs))
-        binding.microphoneSwitch.setMessage(permissionUtils.getPermissionUsageInfo(microphoneLogs))
-        binding.locationSwitch.setMessage(permissionUtils.getPermissionUsageInfo(locationLogs))
+        showSensorRow(
+            binding.cameraSwitch,
+            preferences.isCameraEnabled,
+            permissionUtils.getPermissionUsageInfo(cameraLogs)
+        )
+        showSensorRow(
+            binding.microphoneSwitch,
+            preferences.isMicEnabled,
+            permissionUtils.getPermissionUsageInfo(microphoneLogs)
+        )
+        showSensorRow(
+            binding.locationSwitch,
+            preferences.isLocationEnabled,
+            permissionUtils.getPermissionUsageInfo(locationLogs)
+        )
 
         binding.pieChart.maxValue = if (totalLogs == 0) 1f else totalLogs.toFloat()
         binding.pieChart.minValue = 0f
         val entries = ArrayList<FitChartValue>()
         counts.forEachIndexed { index, count ->
             if (count != 0) {
-                entries.add(
-                    FitChartValue(count.toFloat(), ContextCompat.getColor(this, colors[index]))
-                )
+                entries.add(FitChartValue(count.toFloat(), colors[index]))
             }
         }
         if (entries.isEmpty()) {
@@ -189,6 +211,16 @@ class MainActivity : BaseActivity() {
         }
         binding.pieChart.setAnimationMode(AnimationMode.OVERDRAW)
         binding.pieChart.setValues(entries)
+    }
+
+    private fun showSensorRow(view: SettingsView, monitoringEnabled: Boolean, usage: String) {
+        if (monitoringEnabled) {
+            view.alpha = 1f
+            view.setMessage(usage)
+        } else {
+            view.alpha = 0.5f
+            view.setMessage(getString(R.string.monitoring_disabled_message))
+        }
     }
 
     private fun shareApp() {

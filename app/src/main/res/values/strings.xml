@@ -42,14 +42,15 @@
     <string name="permission_microphone_short">Mic</string>
     <string name="permission_more">See other permissions</string>
     <string name="permission_more_info">Body sensors, Calendar and more in settings</string>
-    <string name="permission_info">Used by #ALIAS# app(s) today</string>
-    <string name="permission_no_apps">Not used today</string>
+    <string name="permission_info">Accessed while #ALIAS# app(s) were in foreground today</string>
+    <string name="permission_no_apps">Not accessed today</string>
+    <string name="monitoring_disabled_message">Monitoring is off. Tap to change it in Access actions.</string>
 
 
     <string name="log_title">Permission history</string>
-    <string name="log_info">Timeline of when apps used your #ALIAS# permission</string>
-    <string name="log_info_app">Timeline of when #ALIAS# used your permissions</string>
-    <string name="log_empty">No app usage</string>
+    <string name="log_info">Timeline of when your #ALIAS# permission was accessed</string>
+    <string name="log_info_app">Timeline of when #ALIAS# was in foreground during access</string>
+    <string name="log_empty">No access</string>
     <string name="log_button_manage">Manage permission</string>
     <string name="log_usage">usage</string>
     <string name="log_permission_start">Started</string>
@@ -77,7 +78,7 @@
     <string name="dotservice_someapp">some app</string>
     <string name="dotservice_isusingyour"> is using your </string>
     <string name="requires_locationperm">Requires Location Permission</string>
-    <string name="requires_locationperm_message">Location monitoring needs location permission so SafeDot can tell when GPS is in use. SafeDot does not upload this information.</string>
+    <string name="requires_locationperm_message">Location monitoring needs precise location permission so SafeDot can tell when GPS is in use. SafeDot does not upload this information.</string>
     <string name="requires_background_location_message">Allow location access all the time so the indicator can stay accurate while you use other apps. SafeDot only watches whether GPS is active. It does not store your coordinates.</string>
     <string name="share_text">Protect your camera and microphone privacy with SafeDot. Download from Google Play: https://play.google.com/store/apps/details?id=com.aravi.dot</string>
     <string name="share_with_others">Share with others</string>

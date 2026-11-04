@@ -29,6 +29,10 @@
   *;
 }
 
+-keep class kotlin.jvm.internal.** { *; }
+-keep class kotlin.Metadata { *; }
+
+-dontwarn com.google.errorprone.annotations.**
 -keep class com.aravi.dot.bean.** { *; }
 -keep class * extends androidx.room.RoomDatabase { *; }
 -keepattributes RuntimeVisibleAnnotations,AnnotationDefault

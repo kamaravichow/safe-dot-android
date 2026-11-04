@@ -50,7 +50,6 @@ class LogsActivity : BaseActivity() {
 
     var permission: String = Constants.PERMISSION_CAMERA
 
-
     override val contentView: View
         get() {
             binding = ActivityLogsBinding.inflate(layoutInflater)
@@ -85,9 +84,9 @@ class LogsActivity : BaseActivity() {
 
         binding.logsRecyclerView.isRefreshing = true
         viewModel.loadList(permission).observe(this) {
-            adapter.stopLoading();
-            adapter.setLogsList(it);
-
+            adapter.stopLoading()
+            adapter.setLogsList(it)
+            binding.logsRecyclerView.removeAllFooterView()
             if (it.isEmpty()) {
                 binding.emptyListImage.visibility = View.VISIBLE
                 binding.clearLogsButton.hide()
@@ -95,8 +94,8 @@ class LogsActivity : BaseActivity() {
                 binding.emptyListImage.visibility = View.GONE
                 binding.clearLogsButton.show()
                 binding.logsRecyclerView.addFooterView(R.layout.item_log_footer)
+                binding.clearLogsButton.show()
             }
-            binding.logsRecyclerView.removeAllFooterView()
             binding.logsRecyclerView.isRefreshing = false
         }
 
