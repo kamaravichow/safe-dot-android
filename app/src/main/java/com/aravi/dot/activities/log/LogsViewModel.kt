@@ -30,4 +30,8 @@ class LogsViewModel(val database: AppDatabase) : ViewModel() {
         return database.logsDao().getLogsForPermission(permission)
     }
 
+    fun clearLogs(permission: String) {
+        database.logsDao().clearLogs(permission)
+    }
+
 }

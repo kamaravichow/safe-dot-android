@@ -81,14 +81,14 @@ class Utils(val context: Context) : KoinComponent {
     }
 
     fun openAppSettings(context: Context, packageName: String) {
-        val bundle = ActivityOptions.makeCustomAnimation(
-            context,
-            R.anim.slide_in_right,
-            R.anim.slide_out_left
-        ).toBundle()
-        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-        intent.data = Uri.parse("package:$packageName")
-        context.startActivity(intent)
+        try {
+            val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+            intent.data = Uri.fromParts("package", packageName, null)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            context.startActivity(intent)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     fun openPrivacySettings(context: Context) {
@@ -119,30 +119,35 @@ class Utils(val context: Context) : KoinComponent {
     }
 
     fun openLink(url: String?) {
-        val bundle = ActivityOptions.makeCustomAnimation(
-            context,
-            R.anim.slide_in_left,
-            R.anim.slide_out_right
-        ).toBundle()
         val i = Intent(Intent.ACTION_VIEW)
         i.data = Uri.parse(url)
-        context.startActivity(i, bundle)
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        try {
+            context.startActivity(i)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
-    fun sendEmail() {
+    fun sendEmail(email: String = "") {
         val intent = Intent(Intent.ACTION_SENDTO)
-        intent.data = Uri.parse("content://")
-        intent.putExtra(Intent.EXTRA_EMAIL, arrayOf<String>(""))
+        intent.data = Uri.parse("mailto:$email")
+        intent.putExtra(Intent.EXTRA_EMAIL, arrayOf(email))
         intent.putExtra(
             Intent.EXTRA_SUBJECT,
             context.getString(R.string.app_name) + ":" + BuildConfig.VERSION_NAME
         )
         intent.putExtra(Intent.EXTRA_TEXT, "")
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         try {
             context.startActivity(intent)
         } catch (e: Exception) {
             println(e.toString())
         }
+    }
+
+    fun getLogDayKey(timestamp: Long): String {
+        return DateFormat.format("dd-MM-yyyy", Date(timestamp)).toString()
     }
 
 
@@ -250,6 +255,7 @@ class Utils(val context: Context) : KoinComponent {
                 PackageManager.MATCH_DEFAULT_ONLY
             )
             if (list.size > 0) {
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 context.startActivity(intent)
             }
         } catch (e: Exception) {

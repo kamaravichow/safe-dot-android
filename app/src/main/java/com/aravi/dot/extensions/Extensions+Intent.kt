@@ -13,6 +13,7 @@ import org.json.JSONObject
 const val EXTRA_FRAGMENT_ARG_KEY = ":settings:fragment_args_key";
 const val EXTRA_SHOW_FRAGMENT_ARGUMENTS = ":settings:show_fragment_args";
 
+@Suppress("DEPRECATION")
 fun Intent.getShortcutAsData(): String? {
     val returnedIntent = getParcelableExtra<Intent>(Intent.EXTRA_SHORTCUT_INTENT)
     return returnedIntent?.serialize()
@@ -30,18 +31,18 @@ fun Intent.serialize(): String? {
     val jsonCategories = JSONArray()
     categories?.forEach {
         jsonCategories.put(it)
-        json.put("categories", categories)
+    }
+    if (jsonCategories.length() > 0) {
+        json.put("categories", jsonCategories)
     }
     component?.let {
-        json.put("component", it?.flattenToString())
+        json.put("component", it.flattenToString())
     }
-    flags?.let {
-        json.put("flags", it)
-    }
-    val extras = JSONObject().apply {
-        extras?.keySet()?.forEach {
-            val extra = extras?.get(it)
-            if (extra is String || extra is Int || extra is Float || extra is Long || extra is Double || extra is Boolean) {
+    json.put("flags", flags)
+    val extrasJson = JSONObject().apply {
+        this@serialize.extras?.keySet()?.forEach {
+            val extra = this@serialize.extras?.get(it)
+            if (extra is String) {
                 put(it, JSONObject().apply {
                     put("type", "string")
                     put("value", extra)
@@ -78,7 +79,7 @@ fun Intent.serialize(): String? {
             }
         }
     }
-    json.put("extras", extras)
+    json.put("extras", extrasJson)
     return json.toString()
 }
 

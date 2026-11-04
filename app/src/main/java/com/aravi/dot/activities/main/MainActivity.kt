@@ -37,7 +37,10 @@ import com.aravi.dot.database.AppDatabase
 import com.aravi.dot.databinding.ActivityMainBinding
 import com.aravi.dot.extensions.doesHavePermissions
 import com.aravi.dot.extensions.permission
+import com.aravi.dot.extensions.isAccessibilityServiceEnabled
 import com.aravi.dot.manager.DevLogger
+import com.aravi.dot.manager.PreferenceManager
+import com.aravi.dot.service.DotService
 import com.aravi.dot.util.PermissionUtils
 import com.aravi.dot.util.Utils
 import com.google.android.material.snackbar.Snackbar
@@ -45,7 +48,6 @@ import com.webianks.easy_feedback.EasyFeedback
 import logcat.logcat
 import me.aravi.commons.base.BaseActivity
 import org.koin.android.ext.android.inject
-import java.util.*
 
 
 class MainActivity : BaseActivity() {
@@ -56,10 +58,11 @@ class MainActivity : BaseActivity() {
 
     private val permissionUtils: PermissionUtils by inject()
     private val database: AppDatabase by inject()
+    private val prefManager: PreferenceManager by inject()
 
     private val viewModel by viewModels<MainActivityViewModel>()
 
-    var date = "01-Jan-2021"
+    var date = ""
 
 
     private val barSet = listOf(
@@ -84,8 +87,6 @@ class MainActivity : BaseActivity() {
             .makeCustomAnimation(this, R.anim.slide_in_right, R.anim.slide_out_left)
             .toBundle();
 
-        date = utils.getDateFromTimestamp(Calendar.getInstance().timeInMillis);
-
         binding.appbarLayout.root.setPadding(0, statusBarHeight(resources), 0, 0)
         binding.openSettings.setOnClickListener {
             viewModel.onAccessibilityClicked(this@MainActivity)
@@ -99,15 +100,27 @@ class MainActivity : BaseActivity() {
 
 
         binding.cameraSwitch.setOnClickListener {
-            utils.openHistoryActivity(this, Constants.PERMISSION_CAMERA)
+            if (prefManager.isCameraEnabled) {
+                utils.openHistoryActivity(this, Constants.PERMISSION_CAMERA)
+            } else {
+                openActivity(AccessActionsActivity::class.java)
+            }
         }
 
         binding.microphoneSwitch.setOnClickListener {
-            utils.openHistoryActivity(this, Constants.PERMISSION_MICROPHONE)
+            if (prefManager.isMicEnabled) {
+                utils.openHistoryActivity(this, Constants.PERMISSION_MICROPHONE)
+            } else {
+                openActivity(AccessActionsActivity::class.java)
+            }
         }
 
         binding.locationSwitch.setOnClickListener {
-            utils.openHistoryActivity(this, Constants.PERMISSION_LOCATION)
+            if (prefManager.isLocationEnabled) {
+                utils.openHistoryActivity(this, Constants.PERMISSION_LOCATION)
+            } else {
+                openActivity(AccessActionsActivity::class.java)
+            }
         }
 
         binding.customiseDots.setOnClickListener {
@@ -135,10 +148,15 @@ class MainActivity : BaseActivity() {
             }
         }
 
-        initData()
-
-
         binding.versionText.text = "Version : ${BuildConfig.VERSION_NAME}"
+    }
+
+    override fun onResume() {
+        super.onResume()
+        date = utils.getLogDayKey(System.currentTimeMillis())
+        onServiceStateChanged(isAccessibilityServiceEnabled(this, DotService::class.java))
+        updateTimelineButtons()
+        initData()
     }
 
 
@@ -149,7 +167,7 @@ class MainActivity : BaseActivity() {
                 ContextCompat.getDrawable(this, R.drawable.ic_round_check_circle_outline_24)
             )
             binding.accessibilityStatusIcon.imageTintList = ColorStateList.valueOf(
-                resources.getColor(R.color.green_300)
+                ContextCompat.getColor(this, R.color.green_300)
             )
             binding.accessibilityStatusTitle.text = "Accessibility Service is enabled"
             binding.accessibilityStatusMessage.text = "This must be enabled for the app to work"
@@ -160,7 +178,7 @@ class MainActivity : BaseActivity() {
                 ContextCompat.getDrawable(this, R.drawable.ic_outline_cancel_24)
             )
             binding.accessibilityStatusIcon.imageTintList = ColorStateList.valueOf(
-                resources.getColor(R.color.red_300)
+                ContextCompat.getColor(this, R.color.red_300)
             )
             binding.accessibilityStatusTitle.text = "Accessibility Service is disabled"
             binding.accessibilityStatusMessage.text =
@@ -171,15 +189,41 @@ class MainActivity : BaseActivity() {
         devLogger.log("ACCESSIBILITY : Permission state $enabled")
     }
 
+    private fun updateTimelineButtons() {
+        if (prefManager.isCameraEnabled) {
+            binding.cameraSwitch.alpha = 1f
+            binding.cameraSwitch.setMessage("View timeline of when your camera was accessed")
+        } else {
+            binding.cameraSwitch.alpha = 0.5f
+            binding.cameraSwitch.setMessage("Monitoring disabled. Tap to change in Access Actions")
+        }
+
+        if (prefManager.isMicEnabled) {
+            binding.microphoneSwitch.alpha = 1f
+            binding.microphoneSwitch.setMessage("View timeline of when your microphone was accessed")
+        } else {
+            binding.microphoneSwitch.alpha = 0.5f
+            binding.microphoneSwitch.setMessage("Monitoring disabled. Tap to change in Access Actions")
+        }
+
+        if (prefManager.isLocationEnabled) {
+            binding.locationSwitch.alpha = 1f
+            binding.locationSwitch.setMessage("View timeline of when your location was accessed")
+        } else {
+            binding.locationSwitch.alpha = 0.5f
+            binding.locationSwitch.setMessage("Monitoring disabled. Tap to change in Access Actions")
+        }
+    }
+
 
     private fun initData() {
         val logs: MutableList<Int> = ArrayList()
         val entries: MutableList<FitChartValue> = ArrayList()
-        val colors: MutableList<Int> = ArrayList()
-
-        colors.add(R.color.red_300)
-        colors.add(R.color.green_300)
-        colors.add(R.color.blue_300)
+        val colors = listOf(
+            prefManager.locationDotColor,
+            prefManager.cameraDotColor,
+            prefManager.micDotColor
+        )
 
         val location_logs = getLogCount(Constants.PERMISSION_LOCATION)
         val camera_logs = getLogCount(Constants.PERMISSION_CAMERA)
@@ -204,7 +248,7 @@ class MainActivity : BaseActivity() {
             logcat { "i in for loop : $i" }
             if (logs[i] != 0) {
                 logcat { "DATA EXISTS" }
-                entries.add(FitChartValue(logs[i].toFloat(), resources.getColor(colors[i], null)))
+                entries.add(FitChartValue(logs[i].toFloat(), colors[i]))
             }
         }
 
@@ -212,7 +256,7 @@ class MainActivity : BaseActivity() {
 
         if (entries.size == 0) {
             logcat { "SETTING NO DATA MODE" }
-            entries.add(FitChartValue(1f, 0xF2F2F2))
+            entries.add(FitChartValue(1f, 0xFFF2F2F2.toInt()))
         }
 
         binding.pieChart.setAnimationMode(AnimationMode.OVERDRAW)
@@ -233,7 +277,7 @@ class MainActivity : BaseActivity() {
         grantResults: IntArray
     ) {
         if (requestCode == 12030) {
-            if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+            if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
                 snackbar(
                     binding.root,
                     "Permission is required for sending feedback as it contains useful logs & device info",

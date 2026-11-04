@@ -117,7 +117,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:layout_marginStart="70dp"
                         android:layout_marginTop="55dp"
                         android:layout_marginEnd="45dp"
                         android:background="@android:color/transparent"
@@ -172,6 +171,7 @@
 
 
             <com.aravi.dot.ui.views.SwitchSettingsView
+                android:id="@+id/icons_switch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clickable="true"
@@ -185,12 +185,12 @@
             <com.aravi.dot.ui.views.SettingsView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:clickable="true"
-                android:focusable="true"
+                android:clickable="false"
+                android:focusable="false"
                 app:icon="@drawable/ic_round_format_align_center_24"
                 app:iconVisibility="false"
                 app:icon_tint="@color/colorPrimary"
-                app:message="Toggle icon visibility on the access logs. This can quickly indicate the permission being used by an app"
+                app:message="Change the position of the indicator on your screen"
                 app:title="Alignment" />
 
             <com.google.android.material.button.MaterialButtonToggleGroup
@@ -237,12 +237,12 @@
             <com.aravi.dot.ui.views.SettingsView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:clickable="true"
-                android:focusable="true"
+                android:clickable="false"
+                android:focusable="false"
                 app:icon="@drawable/ic_round_format_align_center_24"
                 app:iconVisibility="false"
                 app:icon_tint="@color/orange_400"
-                app:message="Toggle icon visibility on the access logs. This can quickly indicate the permission being used by an app"
+                app:message="Pick a custom color for each permission indicator"
                 app:title="Colors" />
 
 
@@ -308,6 +308,7 @@
 
 
             <com.aravi.dot.ui.views.SettingsView
+                android:id="@+id/reset_defaults"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clickable="true"

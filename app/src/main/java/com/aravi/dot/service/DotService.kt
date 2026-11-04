@@ -6,21 +6,21 @@ import android.app.Notification
 import android.app.PendingIntent
 import android.content.ComponentName
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.content.pm.ServiceInfo
 import android.graphics.PixelFormat
-import android.graphics.PorterDuff
 import android.hardware.camera2.CameraManager
 import android.hardware.camera2.CameraManager.AvailabilityCallback
 import android.location.GnssStatus
 import android.location.LocationManager
-import android.media.AudioAttributes
 import android.media.AudioManager
 import android.media.AudioManager.AudioRecordingCallback
 import android.media.AudioRecordingConfiguration
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
+import android.os.VibratorManager
 import android.provider.Settings
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -33,6 +33,9 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.BlendModeColorFilterCompat
+import androidx.core.graphics.BlendModeCompat
+import com.aravi.dot.manager.PreferenceManager.PREF_CONSTANTS
 import com.aravi.dot.BuildConfig
 import com.aravi.dot.Constants
 import com.aravi.dot.Constants.NOTIFICATION_ID
@@ -51,7 +54,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
-import java.util.*
 
 class DotService : AccessibilityService() {
     companion object {
@@ -72,6 +74,8 @@ class DotService : AccessibilityService() {
     private var didCameraUseStart = false
     private var didMicUseStart = false
     private var didLocUseStart = false
+    private val activeCameras = mutableSetOf<String>()
+    private var locationCallbackRegistered = false
 
     private lateinit var hoverLayout: FrameLayout
     private lateinit var dotCamera: ImageView
@@ -91,8 +95,6 @@ class DotService : AccessibilityService() {
     private lateinit var notificationManager: NotificationManagerCompat
     private var notificationCompatBuilder: NotificationCompat.Builder? = null
     private var currentRunningAppPackage = BuildConfig.APPLICATION_ID
-
-    private var calendar = Calendar.getInstance()
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         return super.onStartCommand(intent, flags, startId)
@@ -129,12 +131,33 @@ class DotService : AccessibilityService() {
         }
     }
 
+    private val preferenceChangeListener =
+        SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+            when (key) {
+                PREF_CONSTANTS.LOCATION_KEY -> syncLocationMonitoring()
+                PREF_CONSTANTS.CAMERA_KEY -> syncCameraIndicator()
+                PREF_CONSTANTS.MIC_KEY -> syncMicIndicator()
+                PREF_CONSTANTS.CAMERA_DOT_COLOR,
+                PREF_CONSTANTS.MIC_DOT_COLOR,
+                PREF_CONSTANTS.LOC_DOT_COLOR,
+                PREF_CONSTANTS.ICON_KEY,
+                PREF_CONSTANTS.PLACEMENT_KEY -> {
+                    if (this::dotCamera.isInitialized) {
+                        setDotCustomColors()
+                        updateIconsVisibility()
+                        updateLayoutGravity()
+                    }
+                }
+            }
+        }
+
     override fun onServiceConnected() {
         sendBroadcast(Intent(KEY_ACCESSIBILITY_START).setPackage(BuildConfig.APPLICATION_ID))
         sharedPreferenceManager = PreferenceManager(this)
         notificationManager = NotificationManagerCompat.from(applicationContext)
         initDotViews()
         initHardwareCallbacks()
+        sharedPreferenceManager.registerListener(preferenceChangeListener)
     }
 
     private fun initDotViews() {
@@ -146,7 +169,8 @@ class DotService : AccessibilityService() {
 
         layoutParams.type = WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY
         layoutParams.format = PixelFormat.TRANSLUCENT
-        layoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+        layoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
         layoutParams.width = WindowManager.LayoutParams.WRAP_CONTENT
         layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT
         layoutParams.gravity = layoutGravity
@@ -158,11 +182,22 @@ class DotService : AccessibilityService() {
         dotLoc = hoverLayout.findViewById(R.id.dot_location)
         setDotCustomColors()
 
-        dotCamera.postDelayed({
+        val hideDots = Runnable {
             dotCamera.visibility = View.GONE
             dotMic.visibility = View.GONE
             dotLoc.visibility = View.GONE
-        }, if (isDebug) 1000 else 10) // to check if dots are initialised
+            dotCamera.scaleX = 0f
+            dotCamera.scaleY = 0f
+            dotMic.scaleX = 0f
+            dotMic.scaleY = 0f
+            dotLoc.scaleX = 0f
+            dotLoc.scaleY = 0f
+        }
+        if (isDebug) {
+            dotCamera.postDelayed(hideDots, 1000) // to check if dots are initialised
+        } else {
+            hideDots.run()
+        }
     }
 
 
@@ -174,11 +209,16 @@ class DotService : AccessibilityService() {
         audioManager.registerAudioRecordingCallback(getMicCallback(), null)
 
         locationManager = getSystemService(LOCATION_SERVICE) as LocationManager
-        if (checkLocationPermission()) {
-            sharedPreferenceManager.isLocationEnabled = true
-            locationManager.registerGnssStatusCallback(locationCallback)
-        } else {
-            sharedPreferenceManager.isLocationEnabled = false
+        if (sharedPreferenceManager.isLocationEnabled) {
+            if (checkLocationPermission()) {
+                try {
+                    registerLocationCallback()
+                } catch (e: SecurityException) {
+                    sharedPreferenceManager.isLocationEnabled = false
+                }
+            } else {
+                sharedPreferenceManager.isLocationEnabled = false
+            }
         }
     }
 
@@ -192,7 +232,12 @@ class DotService : AccessibilityService() {
         cameraCallback = object : AvailabilityCallback() {
             override fun onCameraAvailable(cameraId: String) {
                 super.onCameraAvailable(cameraId)
-                if (sharedPreferenceManager.isCameraEnabled) {
+                val wasRemoved = activeCameras.remove(cameraId)
+                if (wasRemoved &&
+                    activeCameras.isEmpty() &&
+                    sharedPreferenceManager.isCameraEnabled &&
+                    isCameraUnavailable
+                ) {
                     isCameraUnavailable = false
                     didCameraUseStart = true
                     dismissOnUseNotification()
@@ -203,7 +248,9 @@ class DotService : AccessibilityService() {
 
             override fun onCameraUnavailable(cameraId: String) {
                 super.onCameraUnavailable(cameraId)
-                if (sharedPreferenceManager.isCameraEnabled) {
+                val wasEmpty = activeCameras.isEmpty()
+                activeCameras.add(cameraId)
+                if (wasEmpty && sharedPreferenceManager.isCameraEnabled) {
                     isCameraUnavailable = true
                     didCameraUseStart = true
                     showOnUseNotification()
@@ -220,22 +267,22 @@ class DotService : AccessibilityService() {
     private fun getMicCallback(): AudioRecordingCallback {
         micCallback = object : AudioRecordingCallback() {
             override fun onRecordingConfigChanged(configs: List<AudioRecordingConfiguration>) {
-                if (sharedPreferenceManager.isMicEnabled) {
-                    if (configs.isNotEmpty()) {
+                if (!sharedPreferenceManager.isMicEnabled) return
+                if (configs.isNotEmpty()) {
+                    if (!isMicUnavailable) {
+                        didMicUseStart = true
+                        isMicUnavailable = true
                         showMicDot()
                         triggerVibration()
-                        isMicUnavailable = true
                         showOnUseNotification()
                         recordLog(PERMISSION_MICROPHONE)
-
-                    } else {
-                        hideMicDot()
-                        isMicUnavailable = false
-                        dismissOnUseNotification()
-                        recordLog(PERMISSION_MICROPHONE)
-
                     }
+                } else if (isMicUnavailable) {
                     didMicUseStart = true
+                    isMicUnavailable = false
+                    hideMicDot()
+                    dismissOnUseNotification()
+                    recordLog(PERMISSION_MICROPHONE)
                 }
             }
         }
@@ -245,7 +292,7 @@ class DotService : AccessibilityService() {
     // Location service Callbacks
     private val locationCallback: GnssStatus.Callback = object : GnssStatus.Callback() {
         override fun onStarted() {
-            if (sharedPreferenceManager.isLocationEnabled) {
+            if (sharedPreferenceManager.isLocationEnabled && !isLocUnavailable) {
                 didLocUseStart = true
                 isLocUnavailable = true
                 showLocDot()
@@ -257,13 +304,12 @@ class DotService : AccessibilityService() {
         }
 
         override fun onStopped() {
-            if (sharedPreferenceManager.isLocationEnabled) {
+            if (sharedPreferenceManager.isLocationEnabled && isLocUnavailable) {
                 hideLocDot()
                 isLocUnavailable = false
                 didLocUseStart = true
                 dismissOnUseNotification()
                 recordLog(PERMISSION_LOCATION)
-
             }
             super.onStopped()
         }
@@ -287,7 +333,7 @@ class DotService : AccessibilityService() {
                 currentRunningAppPackage,
                 permission,
                 state,
-                utils.getDateFromTimestamp(calendar.timeInMillis)
+                utils.getLogDayKey(System.currentTimeMillis())
             )
             appDatabase.logsDao().insertLog(log)
         }
@@ -296,7 +342,7 @@ class DotService : AccessibilityService() {
     private fun checkLocationPermission(): Boolean {
         return ActivityCompat.checkSelfPermission(
             this,
-            Manifest.permission.ACCESS_COARSE_LOCATION
+            Manifest.permission.ACCESS_FINE_LOCATION
         ) == PackageManager.PERMISSION_GRANTED
     }
 
@@ -313,35 +359,24 @@ class DotService : AccessibilityService() {
 
 
     private val notificationTitle: String
-        get() {
-            var title = "Your "
-            if (isCameraUnavailable) {
-                title += "CAMERA, "
-            }
-            if (isMicUnavailable) {
-                title += "MIC, "
-            }
-            if (isLocUnavailable) {
-                title += "LOCATION"
-            }
-            return "$title are being monitored"
-        }
+        get() = "Your ${activeComponents().joinToString(", ")} are being monitored"
 
 
     private fun getNotificationDescription(appUsingComponent: String): String {
-        var appUsingComponent = appUsingComponent
-        if (appUsingComponent.isEmpty() || appUsingComponent == "(unknown)") {
-            appUsingComponent = "some app"
+        val appName = if (appUsingComponent.isEmpty() || appUsingComponent == "(unknown)") {
+            "some app"
+        } else {
+            appUsingComponent
         }
-        var description = "$appUsingComponent is using your "
-        if (isCameraUnavailable) {
-            description += "CAMERA, "
-        }
-        if (isMicUnavailable) {
-            description += "MIC, "
-        }
-        if (isLocUnavailable) description += "LOCATION"
-        return description
+        return "$appName is using ${activeComponents().joinToString(", ")}"
+    }
+
+    private fun activeComponents(): List<String> {
+        val components = mutableListOf<String>()
+        if (isCameraUnavailable) components.add("CAMERA")
+        if (isMicUnavailable) components.add("MIC")
+        if (isLocUnavailable) components.add("LOCATION")
+        return components
     }
 
     private fun showOnUseNotification() {
@@ -355,7 +390,7 @@ class DotService : AccessibilityService() {
     }
 
     private fun dismissOnUseNotification() {
-        if (isCameraUnavailable || isMicUnavailable) {
+        if (isCameraUnavailable || isMicUnavailable || isLocUnavailable) {
             showOnUseNotification()
         } else {
             notificationManager.cancel(NOTIFICATION_ID)
@@ -381,56 +416,50 @@ class DotService : AccessibilityService() {
     }
 
     private fun setViewTint(imageView: ImageView?, color: Int) {
-        val drawable = ContextCompat.getDrawable(applicationContext, R.drawable.ic_dot)
-        drawable!!.setColorFilter(color, PorterDuff.Mode.SRC_ATOP)
-        imageView!!.background = drawable
+        val drawable = ContextCompat.getDrawable(applicationContext, R.drawable.ic_dot)?.mutate()
+        drawable?.colorFilter = BlendModeColorFilterCompat.createBlendModeColorFilterCompat(
+            color,
+            BlendModeCompat.SRC_ATOP
+        )
+        imageView?.background = drawable
     }
 
     private fun triggerVibration() {
-        val audioAttributes = AudioAttributes.Builder()
-            .setFlags(PendingIntent.FLAG_IMMUTABLE)
-            .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-            .build()
-        if (sharedPreferenceManager.isVibrationEnabled) {
-            val v = getSystemService(VIBRATOR_SERVICE) as Vibrator
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                v.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE))
-            }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                v.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.EFFECT_HEAVY_CLICK))
-            } else {
-                v.vibrate(500)
-            }
+        if (!sharedPreferenceManager.isVibrationEnabled) return
+        val vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val vibratorManager = getSystemService(VIBRATOR_MANAGER_SERVICE) as VibratorManager
+            vibratorManager.defaultVibrator
+        } else {
+            @Suppress("DEPRECATION")
+            getSystemService(VIBRATOR_SERVICE) as Vibrator
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            vibrator.vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_HEAVY_CLICK))
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            vibrator.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE))
+        } else {
+            @Suppress("DEPRECATION")
+            vibrator.vibrate(500)
         }
     }
 
-    private val iconsEnabled: Unit
-        get() {
-            if (sharedPreferenceManager.isIconsEnabled) {
-                dotCamera.setImageDrawable(
-                    ContextCompat.getDrawable(
-                        applicationContext,
-                        R.drawable.ic_round_camera
-                    )
-                )
-                dotMic.setImageDrawable(
-                    ContextCompat.getDrawable(
-                        applicationContext,
-                        R.drawable.ic_round_mic
-                    )
-                )
-                dotLoc.setImageDrawable(
-                    ContextCompat.getDrawable(
-                        applicationContext,
-                        R.drawable.ic_round_location
-                    )
-                )
-            } else {
-                dotCamera.setImageDrawable(null)
-                dotMic.setImageDrawable(null)
-                dotLoc.setImageDrawable(null)
-            }
-        }// right on default// center//right
+    private fun updateIconsVisibility() {
+        if (sharedPreferenceManager.isIconsEnabled) {
+            dotCamera.setImageDrawable(
+                ContextCompat.getDrawable(applicationContext, R.drawable.ic_round_camera)
+            )
+            dotMic.setImageDrawable(
+                ContextCompat.getDrawable(applicationContext, R.drawable.ic_round_mic)
+            )
+            dotLoc.setImageDrawable(
+                ContextCompat.getDrawable(applicationContext, R.drawable.ic_round_location)
+            )
+        } else {
+            dotCamera.setImageDrawable(null)
+            dotMic.setImageDrawable(null)
+            dotLoc.setImageDrawable(null)
+        }
+    }
 
     // left
     private val layoutGravity: Int
@@ -448,7 +477,7 @@ class DotService : AccessibilityService() {
         if (sharedPreferenceManager.isCameraEnabled) {
             updateLayoutGravity()
             setDotCustomColors()
-            iconsEnabled
+            updateIconsVisibility()
             upScaleView(dotCamera)
             dotCamera.visibility = View.VISIBLE
         }
@@ -458,7 +487,7 @@ class DotService : AccessibilityService() {
         if (sharedPreferenceManager.isMicEnabled) {
             updateLayoutGravity()
             setDotCustomColors()
-            iconsEnabled
+            updateIconsVisibility()
             upScaleView(dotMic)
             dotMic.visibility = View.VISIBLE
         }
@@ -468,7 +497,7 @@ class DotService : AccessibilityService() {
         if (sharedPreferenceManager.isLocationEnabled) {
             updateLayoutGravity()
             setDotCustomColors()
-            iconsEnabled
+            updateIconsVisibility()
             upScaleView(dotLoc)
             dotLoc.visibility = View.VISIBLE
         }
@@ -477,26 +506,30 @@ class DotService : AccessibilityService() {
     /// hide dots functions ---------------------------
     private fun hideMicDot() {
         downScaleView(dotMic)
-        dotMic.visibility = View.GONE
     }
 
     private fun hideCamDot() {
         downScaleView(dotCamera)
-        dotCamera.visibility = View.GONE
     }
 
     private fun hideLocDot() {
         downScaleView(dotLoc)
-        dotLoc.visibility = View.GONE
     }
 
     // Dot animations
     fun upScaleView(view: View?) {
-        view!!.animate().scaleX(1f).scaleY(1f).duration = 500
+        if (view == null) return
+        view.animate().cancel()
+        view.visibility = View.VISIBLE
+        view.animate().scaleX(1f).scaleY(1f).setDuration(500).withEndAction(null).start()
     }
 
     fun downScaleView(view: View?) {
-        view!!.animate().scaleX(0f).scaleY(0f).duration = 500
+        if (view == null) return
+        view.animate().cancel()
+        view.animate().scaleX(0f).scaleY(0f).setDuration(500).withEndAction {
+            view.visibility = View.GONE
+        }.start()
     }
 
     // Initialise the dots
@@ -521,25 +554,115 @@ class DotService : AccessibilityService() {
         }
     }
 
+    private fun syncLocationMonitoring() {
+        if (!this::locationManager.isInitialized) return
+        if (sharedPreferenceManager.isLocationEnabled && checkLocationPermission()) {
+            try {
+                registerLocationCallback()
+            } catch (e: SecurityException) {
+                sharedPreferenceManager.isLocationEnabled = false
+            }
+        } else {
+            if (sharedPreferenceManager.isLocationEnabled) {
+                sharedPreferenceManager.isLocationEnabled = false
+            }
+            unregisterLocationCallback()
+            if (isLocUnavailable) {
+                isLocUnavailable = false
+                didLocUseStart = true
+                hideLocDot()
+                dismissOnUseNotification()
+                recordLog(PERMISSION_LOCATION)
+            }
+        }
+    }
+
+    private fun syncCameraIndicator() {
+        if (sharedPreferenceManager.isCameraEnabled && activeCameras.isNotEmpty()) {
+            if (!isCameraUnavailable) {
+                isCameraUnavailable = true
+                didCameraUseStart = true
+                showCamDot()
+                showOnUseNotification()
+                recordLog(PERMISSION_CAMERA)
+            }
+        } else if (!sharedPreferenceManager.isCameraEnabled && isCameraUnavailable) {
+            isCameraUnavailable = false
+            didCameraUseStart = true
+            hideCamDot()
+            dismissOnUseNotification()
+            recordLog(PERMISSION_CAMERA)
+        }
+    }
+
+    private fun syncMicIndicator() {
+        if (!this::audioManager.isInitialized) return
+        val recording = audioManager.activeRecordingConfigurations.isNotEmpty()
+        if (sharedPreferenceManager.isMicEnabled && recording) {
+            if (!isMicUnavailable) {
+                isMicUnavailable = true
+                didMicUseStart = true
+                showMicDot()
+                showOnUseNotification()
+                recordLog(PERMISSION_MICROPHONE)
+            }
+        } else if (!sharedPreferenceManager.isMicEnabled && isMicUnavailable) {
+            isMicUnavailable = false
+            didMicUseStart = true
+            hideMicDot()
+            dismissOnUseNotification()
+            recordLog(PERMISSION_MICROPHONE)
+        }
+    }
+
+    private fun registerLocationCallback() {
+        if (locationCallbackRegistered || !this::locationManager.isInitialized) return
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            locationManager.registerGnssStatusCallback(mainExecutor, locationCallback)
+        } else {
+            @Suppress("DEPRECATION")
+            locationManager.registerGnssStatusCallback(locationCallback)
+        }
+        locationCallbackRegistered = true
+    }
+
+    private fun unregisterLocationCallback() {
+        if (!locationCallbackRegistered || !this::locationManager.isInitialized) return
+        locationManager.unregisterGnssStatusCallback(locationCallback)
+        locationCallbackRegistered = false
+    }
+
     // Unregistering on destroy
     private fun unRegisterCameraCallBack() {
-        cameraManager.unregisterAvailabilityCallback(cameraCallback)
+        if (this::cameraManager.isInitialized && this::cameraCallback.isInitialized) {
+            cameraManager.unregisterAvailabilityCallback(cameraCallback)
+        }
     }
 
     private fun unRegisterMicCallback() {
-        audioManager.unregisterAudioRecordingCallback(micCallback)
-    }
-
-    private fun unRegisterLocCallback() {
-        locationManager.unregisterGnssStatusCallback(locationCallback)
+        if (this::audioManager.isInitialized && this::micCallback.isInitialized) {
+            audioManager.unregisterAudioRecordingCallback(micCallback)
+        }
     }
 
     override fun onDestroy() {
+        if (this::sharedPreferenceManager.isInitialized) {
+            sharedPreferenceManager.unregisterListener(preferenceChangeListener)
+        }
         unRegisterCameraCallBack()
         unRegisterMicCallback()
-        unRegisterLocCallback()
-        notificationManager.cancel(3)
-        // we cannot remove accessibility service
+        unregisterLocationCallback()
+        if (this::notificationManager.isInitialized) {
+            notificationManager.cancel(3)
+            notificationManager.cancel(NOTIFICATION_ID)
+        }
+        if (this::windowManager.isInitialized && this::hoverLayout.isInitialized) {
+            try {
+                windowManager.removeView(hoverLayout)
+            } catch (e: Exception) {
+                // The overlay was already removed, or its window token is no longer valid.
+            }
+        }
         stopForeground(true)
         super.onDestroy()
     }

@@ -29,7 +29,7 @@ interface LogsDao {
     @Query("SELECT * FROM access_logs WHERE packageName=:packageName ORDER BY timestamp DESC")
     fun getLogsForPackage(packageName: String): LiveData<List<Log>>
 
-    @Query("SELECT * FROM access_logs WHERE permission=:date ORDER BY timestamp DESC")
+    @Query("SELECT * FROM access_logs WHERE date=:date ORDER BY timestamp DESC")
     fun getLogsForDate(date: String): LiveData<List<Log>>
 
     @Query("DELETE FROM access_logs WHERE permission=:permission")

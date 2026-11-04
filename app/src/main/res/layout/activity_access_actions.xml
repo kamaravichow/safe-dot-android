@@ -159,6 +159,7 @@
                         app:title="Times ago " />
 
                     <com.aravi.dot.ui.views.SettingsView
+                        android:id="@+id/clear_access_logs"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:clickable="true"

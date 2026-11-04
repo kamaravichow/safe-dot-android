@@ -25,7 +25,6 @@ class LogsAdapter(
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val logsList: MutableList<Log> = ArrayList()
-    private val dates: HashMap<Int, String> = HashMap()
     private val helpPackages: MutableList<String> = ArrayList()
     private var load = false
 
@@ -43,12 +42,6 @@ class LogsAdapter(
 //                    layoutInflater
 //                )
             }
-            binding.root.setOnClickListener {
-//                Utils.openAppInfoActivity(
-//                    context,
-//                    logsList[viewHolder.getAdapterPosition() - 1].packageName
-//                )
-            }
             return viewHolder
         } else {
             val binding: ItemLogHeaderBinding =
@@ -59,14 +52,19 @@ class LogsAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is LogViewHolder) {
-            val logsView: LogViewHolder = holder as LogViewHolder
+            val logsView: LogViewHolder = holder
             val item: Log = logsList[position - 1]
             val date: String = utils.getDateFromTimestamp(item.timestamp)
-            if (!dates.containsValue(date) or dates.containsKey(position)) {
+            val showHeader = if (position - 1 == 0) {
+                true
+            } else {
+                val previousDate = utils.getDateFromTimestamp(logsList[position - 2].timestamp)
+                date != previousDate
+            }
+            if (showHeader) {
                 logsView.textDate.text = date
                 logsView.textDate.visibility = View.VISIBLE
                 logsView.viewHorizontal.visibility = View.VISIBLE
-                dates[position] = date
             } else {
                 logsView.textDate.visibility = View.GONE
                 logsView.viewHorizontal.visibility = View.GONE
@@ -90,6 +88,9 @@ class LogsAdapter(
             } else {
                 logsView.imageHelp.visibility = View.GONE
             }
+            logsView.rlAppInfo.setOnClickListener {
+                utils.openAppSettings(context, item.packageName)
+            }
         } else if (holder is LogHeaderViewHolder) {
             val headerView: LogHeaderViewHolder = holder as LogHeaderViewHolder
             headerView.icon.setImageResource(permissionUtils.getIcon(context, permission))
@@ -112,6 +113,7 @@ class LogsAdapter(
 
     @SuppressLint("NotifyDataSetChanged")
     fun setLogsList(logsList: List<Log>) {
+        this.logsList.clear()
         this.logsList.addAll(logsList)
         notifyDataSetChanged()
     }

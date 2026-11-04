@@ -61,7 +61,7 @@ class App : BaseApplication() {
                 "Default Notification",
                 NotificationManager.IMPORTANCE_DEFAULT
             )
-            channel.description = "This shows what app is using the camera or mic or location"
+            channel.description = "This shows when the camera, microphone, or location is in use"
             channel.enableLights(true)
             channel.setShowBadge(true)
             channel.enableVibration(false)

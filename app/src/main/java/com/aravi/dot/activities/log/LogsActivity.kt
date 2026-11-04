@@ -46,13 +46,6 @@ class LogsActivity : BaseActivity() {
     private lateinit var bundle: Bundle
 
 
-    override fun onStart() {
-        // Hides the clear button and shows progress bar on start
-        binding.clearLogsButton.hide()
-        super.onStart()
-    }
-
-
     override val contentView: View
         get() {
             binding = ActivityLogsBinding.inflate(layoutInflater)
@@ -88,19 +81,23 @@ class LogsActivity : BaseActivity() {
         adapter = LogsAdapter(this, permission, utils, permissionUtils)
         binding.logsRecyclerView.adapter = adapter
 
+        binding.clearLogsButton.setOnClickListener {
+            viewModel.clearLogs(permission)
+        }
+
         binding.logsRecyclerView.isRefreshing = true
         viewModel.loadList(permission).observe(this) {
-            adapter.stopLoading();
-            adapter.setLogsList(it);
-
+            adapter.stopLoading()
+            adapter.setLogsList(it)
+            binding.logsRecyclerView.removeAllFooterView()
             if (it.isEmpty()) {
                 binding.emptyListImage.visibility = View.VISIBLE
-
+                binding.clearLogsButton.hide()
             } else {
                 binding.emptyListImage.visibility = View.GONE
                 binding.logsRecyclerView.addFooterView(R.layout.item_log_footer)
+                binding.clearLogsButton.show()
             }
-            binding.logsRecyclerView.removeAllFooterView()
             binding.logsRecyclerView.isRefreshing = false
         }
 
