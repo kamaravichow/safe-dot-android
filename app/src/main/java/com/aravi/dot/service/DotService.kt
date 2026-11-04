@@ -44,7 +44,6 @@ import com.aravi.dot.Constants.NOTIFICATION_ID
 import com.aravi.dot.Constants.PERMISSION_CAMERA
 import com.aravi.dot.Constants.PERMISSION_LOCATION
 import com.aravi.dot.Constants.PERMISSION_MICROPHONE
-import com.aravi.dot.Constants.isDebug
 import com.aravi.dot.R
 import com.aravi.dot.activities.main.MainActivity
 import com.aravi.dot.bean.Log
@@ -203,11 +202,7 @@ class DotService : AccessibilityService() {
             dotLoc.scaleX = 0f
             dotLoc.scaleY = 0f
         }
-        if (isDebug) {
-            dotCamera.postDelayed(hideDots, 1000) // to check if dots are initialised
-        } else {
-            hideDots.run()
-        }
+        hideDots.run()
     }
 
 
@@ -229,11 +224,6 @@ class DotService : AccessibilityService() {
             sharedPreferenceManager.isLocationEnabled = false
         }
     }
-
-    private fun registerLocationCallbacks() {
-
-    }
-
 
     // Camera service callbacks
     private fun getCameraCallback(): AvailabilityCallback {
@@ -325,8 +315,9 @@ class DotService : AccessibilityService() {
 
 
     private fun recordLog(permission: String) {
-        if (currentRunningAppPackage == BuildConfig.APPLICATION_ID) return
-        if (sharedPreferenceManager.excludedPackages.contains(currentRunningAppPackage)) return
+        val packageName = currentRunningAppPackage
+        if (packageName == BuildConfig.APPLICATION_ID) return
+        if (sharedPreferenceManager.excludedPackages.contains(packageName)) return
         var state = Constants.STATE_INVALID
         when (permission) {
             PERMISSION_CAMERA -> state =
@@ -340,7 +331,7 @@ class DotService : AccessibilityService() {
             val now = System.currentTimeMillis()
             val log = Log(
                 now,
-                currentRunningAppPackage,
+                packageName,
                 permission,
                 state,
                 utils.getLogDayKey(now)
