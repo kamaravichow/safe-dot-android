@@ -16,7 +16,7 @@ android {
     def versionPatch = 0
 
     defaultConfig {
-        applicationId = "com.aravi.pro"
+        applicationId = "com.aravi.dotpro"
         minSdk = 24
         targetSdk = 37
         versionCode = versionMajor * 10000 + versionMinor * 100 + versionPatch
