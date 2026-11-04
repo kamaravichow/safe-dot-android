@@ -14,7 +14,6 @@ import android.hardware.camera2.CameraManager
 import android.hardware.camera2.CameraManager.AvailabilityCallback
 import android.location.GnssStatus
 import android.location.LocationManager
-import android.media.AudioAttributes
 import android.media.AudioManager
 import android.media.AudioManager.AudioRecordingCallback
 import android.media.AudioRecordingConfiguration
@@ -54,7 +53,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
-import java.util.*
 
 class DotService : AccessibilityService() {
     companion object {
@@ -114,7 +112,7 @@ class DotService : AccessibilityService() {
             val notification = Notification.Builder(this, Constants.SERVICE_NOTIFICATION_CHANNEL)
                 .setContentTitle(getString(R.string.notification_ContentText))
                 .setContentText(getString(R.string.notification_text))
-                .setSmallIcon(R.drawable.transparent)
+                .setSmallIcon(R.drawable.ic_stat_dot)
                 .setContentIntent(pendingIntent)
                 .setTicker(getString(R.string.notification_ticker))
                 .build()
@@ -199,11 +197,6 @@ class DotService : AccessibilityService() {
             sharedPreferenceManager.isLocationEnabled = false
         }
     }
-
-    private fun registerLocationCallbacks() {
-
-    }
-
 
     // Camera service callbacks
     private fun getCameraCallback(): AvailabilityCallback {
@@ -323,7 +316,7 @@ class DotService : AccessibilityService() {
     private fun initOnUseNotification(appUsingComponent: String) {
         notificationCompatBuilder =
             NotificationCompat.Builder(applicationContext, Constants.DEFAULT_NOTIFICATION_CHANNEL)
-                .setSmallIcon(R.drawable.transparent)
+                .setSmallIcon(R.drawable.ic_stat_dot)
                 .setContentTitle(notificationTitle)
                 .setContentText(getNotificationDescription(appUsingComponent))
                 .setContentIntent(pendingIntent)

@@ -3,7 +3,6 @@ package com.aravi.dot.activities.main
 import android.Manifest
 import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.net.Uri
@@ -167,8 +166,8 @@ class MainActivity : BaseActivity() {
         val cameraLogs = database.logsDao().countDistinctPackagesSince(Constants.PERMISSION_CAMERA, since)
         val microphoneLogs = database.logsDao().countDistinctPackagesSince(Constants.PERMISSION_MICROPHONE, since)
         val totalLogs = locationLogs + cameraLogs + microphoneLogs
-        val counts = listOf(locationLogs, cameraLogs, microphoneLogs)
-        val colors = listOf(R.color.red_300, R.color.green_300, R.color.blue_300)
+        val counts = listOf(cameraLogs, microphoneLogs, locationLogs)
+        val colors = listOf(R.color.green_500, R.color.orange_500, R.color.purple_500)
 
         binding.cameraSwitch.setMessage(permissionUtils.getPermissionUsageInfo(cameraLogs))
         binding.microphoneSwitch.setMessage(permissionUtils.getPermissionUsageInfo(microphoneLogs))
@@ -215,12 +214,11 @@ class MainActivity : BaseActivity() {
             append(Build.MODEL)
             append("\n\n")
         }
-        val intent = Intent(Intent.ACTION_SENDTO).apply {
-            data = Uri.parse("mailto:")
-            putExtra(Intent.EXTRA_EMAIL, arrayOf(Constants.FEEDBACK_EMAIL))
-            putExtra(Intent.EXTRA_SUBJECT, subject)
-            putExtra(Intent.EXTRA_TEXT, body)
-        }
+        val mailto = Uri.parse("mailto:${Constants.FEEDBACK_EMAIL}").buildUpon()
+            .appendQueryParameter("subject", subject)
+            .appendQueryParameter("body", body)
+            .build()
+        val intent = Intent(Intent.ACTION_SENDTO, mailto)
         try {
             startActivity(intent)
         } catch (_: ActivityNotFoundException) {

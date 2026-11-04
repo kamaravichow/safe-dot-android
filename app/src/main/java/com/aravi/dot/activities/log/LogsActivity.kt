@@ -94,9 +94,7 @@ class LogsActivity : BaseActivity() {
             } else {
                 binding.emptyListImage.visibility = View.GONE
                 binding.clearLogsButton.show()
-                binding.logsRecyclerView.addFooterView(R.layout.item_log_footer)
             }
-            binding.logsRecyclerView.removeAllFooterView()
             binding.logsRecyclerView.isRefreshing = false
         }
 

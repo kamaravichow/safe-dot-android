@@ -119,7 +119,7 @@
     <string name="close_app_note">Disable the accessibility permission for the app</string>
     <string name="contents_locked">Contents Locked</string>
     <string name="customisation_center">Customisation Center</string>
-    <string name="customisation_center_description">A place to customise the dot size, color, and alignment</string>
+    <string name="customisation_center_description">A place to customise indicator color, alignment, icons, and vibration</string>
     <string name="customise">Customise</string>
     <string name="default_version_text">Version - 1.0</string>
     <string name="dot_alignment_string">Dot Alignment</string>
@@ -165,4 +165,7 @@
     <string name="colors_title">Colors</string>
     <string name="colors_description">Pick the indicator color for camera, microphone, and location</string>
     <string name="log_end">End of the log</string>
+    <string name="log_system_title">System component</string>
+    <string name="log_system_message">Android reported a system component for this access. That happens when the system, rather than a normal app, is using the camera, microphone, or location.</string>
+    <string name="log_open_settings_failed">Could not open settings for this app</string>
 </resources>

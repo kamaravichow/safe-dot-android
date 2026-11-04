@@ -13,9 +13,11 @@ import com.aravi.dot.activities.log.adapter.holders.LogViewHolder
 import com.aravi.dot.bean.Log
 import com.aravi.dot.databinding.ItemLogBinding
 import com.aravi.dot.databinding.ItemLogHeaderBinding
+import com.aravi.dot.databinding.ItemLogFooterBinding
 import com.aravi.dot.manager.PreferenceManager
 import com.aravi.dot.util.PermissionUtils
 import com.aravi.dot.util.Utils
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 
 class LogsAdapter(
@@ -40,18 +42,29 @@ class LogsAdapter(
             val binding: ItemLogBinding = ItemLogBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             val viewHolder = LogViewHolder(binding)
             viewHolder.imageHelp.setOnClickListener {
-//                showHelpDialog(
-//                    context,
-//                    layoutInflater
-//                )
+                MaterialAlertDialogBuilder(context)
+                    .setTitle(R.string.log_system_title)
+                    .setMessage(R.string.log_system_message)
+                    .setPositiveButton(android.R.string.ok, null)
+                    .show()
             }
             binding.root.setOnClickListener {
-//                Utils.openAppInfoActivity(
-//                    context,
-//                    logsList[viewHolder.getAdapterPosition() - 1].packageName
-//                )
+                val index = viewHolder.bindingAdapterPosition - 1
+                if (index !in logsList.indices) return@setOnClickListener
+                try {
+                    utils.openAppSettings(context, logsList[index].packageName)
+                } catch (_: Exception) {
+                    android.widget.Toast.makeText(
+                        context,
+                        R.string.log_open_settings_failed,
+                        android.widget.Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
             return viewHolder
+        } else if (viewType == TYPE_FOOTER) {
+            val binding = ItemLogFooterBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            return object : RecyclerView.ViewHolder(binding.root) {}
         } else {
             val binding: ItemLogHeaderBinding =
                 ItemLogHeaderBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -130,18 +143,21 @@ class LogsAdapter(
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (position == 0) {
-            TYPE_HEADER
-        } else TYPE_ITEM
+        return when {
+            position == 0 -> TYPE_HEADER
+            position == logsList.size + 1 -> TYPE_FOOTER
+            else -> TYPE_ITEM
+        }
     }
 
     override fun getItemCount(): Int {
-        return logsList.size + 1
+        return logsList.size + 1 + if (logsList.isEmpty()) 0 else 1
     }
 
     companion object {
         private const val TYPE_HEADER = 0
         private const val TYPE_ITEM = 1
+        private const val TYPE_FOOTER = 2
     }
 
 
