@@ -1,0 +1,79 @@
+<resources>
+    <string name="app_name" translatable="false">SafeDot</string>
+
+    <string name="service_description">啟用此服務後，每次第三方應用程序或服務在任何屏幕上使用相機或麥克風時，Dot safe 應用程序都會顯示通知和指示符。</string>
+    <string name="service_summary">打開它以啟用安全點</string>
+
+    <string name="close_app_note">禁用應用程序的可訪問性權限</string>
+    <string name="preferences">優先</string>
+
+    <string name="vibrate_description">每當應用程序或服務使用麥克風或攝像頭時，您都會收到短暫的振動</string>
+    <string name="dot_alignment_string">點對齊</string>
+    <string name="dot_alignment_description">以您喜歡的方式對齊點</string>
+
+    <string name="default_version_text">版本 - 1.0</string>
+    <string name="clear_dialog_title">你確定嗎 ？</string>
+    <string name="clear_dialog_description">這將清除所有無法恢復的日誌。\n還想繼續嗎？</string>
+    <string name="clear_dialog_yes">是的，清除它</string>
+    <string name="clear_dialog_no">不，不是現在</string>
+
+    <string name="creator_attribution">由 Aravind Chowdary 為您製作</string>
+
+    <string name="access_logs_title">訪問日誌</string>
+    <string name="access_log_description">應用使用日誌的時間線。您可以找到哪個應用程序以什麼間隔使用了您的相機和麥克風。</string>
+
+    <string name="update_failed_note">更新失敗 ！正在重試...</string>
+
+    <string name="access_log_title">訪問日誌</string>
+    <string name="clear_logs">清除日誌</string>
+    <string name="title_ads">沒有內部廣告</string>
+    <string name="title_activity_customisation">定制活動</string>
+    <string name="notification_ContentText">SafeDot 正在保護您的隱私</string>
+    <string name="notification_ticker">Safedot 保護現已開啟</string>
+    <string name="notification_service_description">這使應用程序保持活力。我們建議不要禁用此通知。</string>
+    <string name="notification_default_description">這顯示了哪個應用程序正在使用相機或麥克風或位置</string>
+    <string name="requires_upgrade">需要升級</string>
+    <string name="requires_upgrade_message">定制中心和更多其他功能將僅在應用程序的 PRO 版本中可用。</string>
+    <string name="requires_upgrade_button">升級到專業版</string>
+    <string name="requires_upgrade_nevermind">沒關係</string>
+    <string name="dotservice_location">地點：</string>
+    <string name="dotservice_monitored_your">您的</string>
+    <string name="dotservice_monitored_camera">相機，</string>
+    <string name="dotservice_monitored_mic">麥克風，</string>
+    <string name="dotservice_monitored_location">地點</string>
+    <string name="dotservice_monitored">正在被監控</string>
+    <string name="dotservice_unknown">（未知）</string>
+    <string name="dotservice_someapp">一些應用程序</string>
+    <string name="dotservice_isusingyour">正在使用您的</string>
+    <string name="logs_cleared">已清除日誌</string>
+    <string name="requires_locationperm">需要位置權限</string>
+    <string name="requires_locationperm_message">此功能需要 LOCATION PERMISSION 才能按預期工作\n\n注意：此應用無權連接到互聯網，因此您的設備上的數據是安全的。</string>
+    <string name="share_text">使用 SafeDot 保護您的相機和麥克風隱私。從 Google Play 下載：https://play.google.com/store/apps/details?id=com.aravi.dotpro</string>
+    <string name="requires_accessibility">需要輔助功能權限</string>
+    <string name="requires_accessibility_message">您需要啟用 Safe Dot Pro 的可訪問性權限才能啟用安全點</string>
+    <string name="requires_accessibility_open">開放的可訪問性</string>
+    <string name="cancel">取消</string>
+    <string name="version">版本 -</string>
+    <string name="enable_autostart">啟用自動啟動</string>
+    <string name="setupnow">立即設置</string>
+    <string name="enable_autostart_message">設備將殺死有用的服務以釋放內存。您需要向應用提供自動啟動權限，以保持應用按預期運行。</string>
+    <string name="button_later">之後</string>
+    <string name="button_continue">繼續</string>
+    <string name="enable_safe_dots">啟用安全點</string>
+    <string name="enable_location">啟用位置</string>
+    <string name="enable_location_description">啟用此功能將啟用位置點，該位置點監控手機上使用 GPS 服務的應用程序。</string>
+    <string name="enable_vibration">啟用振動</string>
+    <string name="advanced">先進的</string>
+    <string name="customisation_center">定制中心</string>
+    <string name="customisation_center_description">自定義點大小、顏色和對齊方式的地方</string>
+    <string name="tell_friends_family">告訴朋友和家人</string>
+    <string name="others">其他</string>
+    <string name="access_logs">訪問日誌</string>
+    <string name="customise">定制</string>
+    <string name="tell_friends_family_description">通過與他們共享應用程序來幫助您的朋友和家人保持私密</string>
+    <string name="protects_your_privacy">保護您的隱私</string>
+    <string name="contents_locked">內容鎖定</string>
+    <string name="unlock_with_premium">使用高級版解鎖</string>
+
+
+</resources>

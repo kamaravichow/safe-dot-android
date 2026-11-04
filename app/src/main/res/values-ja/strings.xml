@@ -1,0 +1,94 @@
+<!--
+  ~ Copyright (C) 2020.  Aravind Chowdary (@kamaravichow)
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<resources>
+    <string name="app_name" translatable="false">SafeDot</string>
+
+    <string name="service_description">このサービスを有効にすると、サードパーティのアプリやサービスがこの端末でカメラやマイクを使用した際に、SafeDotが通知やインジケータを表示させることができます。</string>
+    <string name="service_summary">これをオンにすることでSafeDotを有効化できます</string>
+
+    <string name="close_app_note">アプリへのアクセシビリティの許可を無効にする</string>
+    <string name="preferences">設定</string>
+
+    <string name="vibrate_description">アプリケーションやサービスがマイクやカメラを使用すると、短いバイブレーションが発生します。</string>
+    <string name="dot_alignment_string">ドットの位置</string>
+    <string name="dot_alignment_description">ドットの表示位置をカスタマイズします</string>
+
+    <string name="default_version_text">バージョン - 1.0</string>
+    <string name="clear_dialog_title">宜しいですか？</string>
+    <string name="clear_dialog_description">この操作を行うとログは完全に削除されます。\n続行しますか？</string>
+    <string name="clear_dialog_yes">はい、消去します</string>
+    <string name="clear_dialog_no">いいえ、キャンセルします</string>
+
+    <string name="creator_attribution">Aravind Chowdaryによって開発されました</string>
+
+    <string name="access_logs_title">アクセスログ</string>
+    <string name="access_log_description">アプリのアクセスログをタイムラインで表示し、どのアプリがどのくらいの間隔でカメラやマイクを使用したかが確認できます。</string>
+
+    <string name="update_failed_note">アップデート失敗 ! 再試行しますします...</string>
+
+    <string name="access_log_title">アクセスログ</string>
+    <string name="clear_logs">ログを消去</string>
+    <string name="title_ads">広告がありません</string>
+    <string name="title_activity_customisation">カスタマイズアクティビティ</string>
+    <string name="notification_ContentText">SafeDotはプライバシーを保護しています</string>
+    <string name="notification_ticker">Safedotによる保護は有効です</string>
+    <string name="notification_service_description">これにより、アプリがシステムによってキルされるのを防止します。この通知を無効にしないことを推奨します。</string>
+    <string name="notification_default_description">カメラやマイク、位置情報を使用しているアプリを確認できます。</string>
+    <string name="requires_upgrade">アップグレードが必要な機能です</string>
+    <string name="requires_upgrade_message">カスタマイズセンターやその他の機能は、プロバージョンでのみご利用いただけます。</string>
+    <string name="requires_upgrade_button">プロバージョンにアップグレード</string>
+    <string name="requires_upgrade_nevermind">今はしない</string>
+    <string name="dotservice_location">位置: </string>
+    <string name="dotservice_monitored_your">あなたの</string>
+    <string name="dotservice_monitored_camera">カメラ</string>
+    <string name="dotservice_monitored_mic">、マイク</string>
+    <string name="dotservice_monitored_location">、位置情報</string>
+    <string name="dotservice_monitored">にアクセスされています</string>
+    <string name="dotservice_unknown">(未知)</string>
+    <string name="dotservice_someapp">いくつかのアプリ</string>
+    <string name="dotservice_isusingyour"> は次の機能を使用しています: </string>
+    <string name="logs_cleared">ログは消去されました</string>
+    <string name="requires_locationperm">位置情報の権限が必要です</string>
+    <string name="requires_locationperm_message">この機能を利用するには、位置情報の権限が必要です。\n\n注: このアプリはインターネットに接続しないためこの機能を有効にしても安全です。</string>
+    <string name="share_text">SafeDotでカメラやマイクのプライバシーを守りましょう。Google Playからダウンロード: https://play.google.com/store/apps/details?id=com.aravi.dotpro</string>
+    <string name="requires_accessibility_open">ユーザー補助設定を開く</string>
+    <string name="cancel">キャンセル</string>
+    <string name="version">バージョン - </string>
+    <string name="enable_autostart">自動実行を有効化 </string>
+    <string name="setupnow">今すぐセットアップ</string>
+    <string name="enable_autostart_message"> デバイスは、RAMを解放するために有用なサービスを自動的に停止することがあります。アプリが期待通りに動作するためには、アプリに自動起動の許可を与える必要があります。</string>
+    <string name="button_later">後で</string>
+    <string name="button_continue">続行</string>
+    <string name="enable_safe_dots">Safe Dotsを有効化</string>
+    <string name="enable_location">位置情報を有効化</string>
+    <string name="enable_location_description">これをオンにすると、携帯電話のGPSサービスを利用するアプリを通知するドットが有効になります。.</string>
+    <string name="enable_vibration">バイブレーション</string>
+    <string name="advanced">高度</string>
+    <string name="customisation_center">カスタマイズセンター</string>
+    <string name="customisation_center_description">ドットのサイズ、色、配置をカスタマイズできます</string>
+    <string name="tell_friends_family">家族や友人にこのアプリを伝える</string>
+    <string name="others">その他</string>
+    <string name="access_logs">アクセスログ</string>
+    <string name="customise">カスタマイズ</string>
+    <string name="tell_friends_family_description">友達や家族とアプリを共有して、共にプライバシーを確保しましょう！</string>
+    <string name="protects_your_privacy">プライバシーを保護します</string>
+    <string name="contents_locked">コンテンツはロックされています</string>
+    <string name="unlock_with_premium">プレミアム版でアンロック</string>
+
+
+</resources>

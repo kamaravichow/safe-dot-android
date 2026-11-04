@@ -16,10 +16,10 @@
  */
 package com.aravi.dot.util
 
+import android.app.Activity
 import android.app.ActivityOptions
 import android.content.ComponentName
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
@@ -119,14 +119,28 @@ class Utils(val context: Context) : KoinComponent {
     }
 
     fun openLink(url: String?) {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        if (context !is Activity) {
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            context.startActivity(intent)
+            return
+        }
         val bundle = ActivityOptions.makeCustomAnimation(
             context,
             R.anim.slide_in_left,
             R.anim.slide_out_right
         ).toBundle()
-        val i = Intent(Intent.ACTION_VIEW)
-        i.data = Uri.parse(url)
-        context.startActivity(i, bundle)
+        context.startActivity(intent, bundle)
+    }
+
+    fun formatRelativeTime(timestamp: Long): String {
+        val minutes = ((System.currentTimeMillis() - timestamp) / 60000L).coerceAtLeast(0)
+        return when {
+            minutes < 1 -> context.getString(R.string.time_just_now)
+            minutes < 60 -> context.getString(R.string.time_minutes_ago, minutes)
+            minutes < 60 * 24 -> context.getString(R.string.time_hours_ago, minutes / 60)
+            else -> getTimeFromTimestamp(timestamp)
+        }
     }
 
     fun sendEmail() {
@@ -209,18 +223,19 @@ class Utils(val context: Context) : KoinComponent {
         return ResourcesCompat.getDrawable(context.resources, R.mipmap.ic_launcher, context.theme)
     }
 
-    fun showAutoStartDialog(manufacturer: String) {
-        MaterialAlertDialogBuilder(context)
-            .setTitle("Enable AutoStart ")
-            .setMessage(manufacturer.toUpperCase() + " devices will kill the useful services to free up ram. You're required to provide the auto start permission to the app to keep app running as expected. ")
-            .setPositiveButton("Setup Now") { dialog: DialogInterface?, which: Int ->
-                openAutoStartAccordingToManufacturer()
+    fun showAutoStartDialog(activity: Activity, manufacturer: String) {
+        MaterialAlertDialogBuilder(activity)
+            .setTitle(R.string.enable_autostart)
+            .setMessage(manufacturer.uppercase(Locale.getDefault()) + activity.getString(R.string.enable_autostart_message))
+            .setPositiveButton(R.string.setupnow) { _, _ ->
+                openAutoStartAccordingToManufacturer(activity)
             }
+            .setNegativeButton(R.string.button_later, null)
             .setCancelable(true)
             .show()
     }
 
-    private fun openAutoStartAccordingToManufacturer() {
+    private fun openAutoStartAccordingToManufacturer(activity: Activity) {
         try {
             val intent = Intent()
             val manufacturer = Build.MANUFACTURER
@@ -245,12 +260,20 @@ class Utils(val context: Context) : KoinComponent {
                     "com.huawei.systemmanager.optimize.process.ProtectActivity"
                 )
             }
-            val list = context.packageManager.queryIntentActivities(
-                intent,
-                PackageManager.MATCH_DEFAULT_ONLY
-            )
-            if (list.size > 0) {
-                context.startActivity(intent)
+            val list = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                activity.packageManager.queryIntentActivities(
+                    intent,
+                    PackageManager.ResolveInfoFlags.of(PackageManager.MATCH_DEFAULT_ONLY.toLong())
+                )
+            } else {
+                @Suppress("DEPRECATION")
+                activity.packageManager.queryIntentActivities(
+                    intent,
+                    PackageManager.MATCH_DEFAULT_ONLY
+                )
+            }
+            if (list.isNotEmpty()) {
+                activity.startActivity(intent)
             }
         } catch (e: Exception) {
             Log.i("UTILS", "openAutoStartAccordingToManufacturer: " + e.message)
@@ -264,7 +287,11 @@ class Utils(val context: Context) : KoinComponent {
         } catch (e: PackageManager.NameNotFoundException) {
             null
         }
-        return (if (applicationInfo != null) packageManager.getApplicationLabel(applicationInfo) else "(unknown)") as String
+        return if (applicationInfo != null) {
+            packageManager.getApplicationLabel(applicationInfo).toString()
+        } else {
+            context.getString(R.string.dotservice_unknown)
+        }
     }
 
 

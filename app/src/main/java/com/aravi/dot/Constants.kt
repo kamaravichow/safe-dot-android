@@ -44,6 +44,10 @@ object Constants {
     const val DOTS_COLOR_BASIC = "dots.color.basic"
     const val DOTS_COLOR_CUSTOM = "dots.color.custom"
     const val DOTS_COLOR_DEFAULT = "#61B773"
+    const val URL_GITHUB = "https://github.com/kamaravichow"
+    const val URL_TWITTER = "https://twitter.com/kamaravichow"
+    const val URL_PROJECT = "https://github.com/kamaravichow/safe-dot-android/discussions"
+    const val FEEDBACK_EMAIL = "contact.24ac@gmail.com"
 
     val BASIC_COLORS = arrayOf(
         "#89B4F7", "#C3A6A2", "#D7DEE6", "#84C188", "#27BDD7",

@@ -12,7 +12,12 @@ import com.aravi.dot.database.dao.DevLogsDao
 import com.aravi.dot.database.dao.LogsDao
 import org.koin.core.component.KoinComponent
 
-@Database(entities = [Log::class, AppBean::class, DevLogs::class], version = 1, autoMigrations = [])
+@Database(
+    entities = [Log::class, AppBean::class, DevLogs::class],
+    version = 1,
+    autoMigrations = [],
+    exportSchema = false
+)
 abstract class AppDatabase : RoomDatabase(), KoinComponent {
 
     abstract fun logsDao(): LogsDao

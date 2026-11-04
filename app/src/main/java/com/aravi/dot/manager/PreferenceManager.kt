@@ -94,9 +94,23 @@ class PreferenceManager(val context: Context) {
     val dotPosition: Int
         get() = sharedPreferences.getInt(PREF_CONSTANTS.PLACEMENT_KEY, 1)
 
-    fun setDotPostion(set: Int) {
-        prefEditor.putInt(PREF_CONSTANTS.PLACEMENT_KEY, set).apply()
+    fun setDotPosition(position: Int) {
+        prefEditor.putInt(PREF_CONSTANTS.PLACEMENT_KEY, position).apply()
     }
+
+    var isRelativeTimeEnabled: Boolean
+        get() = sharedPreferences.getBoolean(PREF_CONSTANTS.RELATIVE_TIME, false)
+        set(value) {
+            prefEditor.putBoolean(PREF_CONSTANTS.RELATIVE_TIME, value).apply()
+        }
+
+    var excludedPackages: Set<String>
+        get() = sharedPreferences.getStringSet(PREF_CONSTANTS.EXCLUDED_PACKAGES, emptySet())
+            ?.toSet()
+            ?: emptySet()
+        set(value) {
+            prefEditor.putStringSet(PREF_CONSTANTS.EXCLUDED_PACKAGES, value.toSet()).apply()
+        }
 
     var isIconsEnabled: Boolean
         get() = sharedPreferences.getBoolean(PREF_CONSTANTS.ICON_KEY, true)
@@ -136,6 +150,8 @@ class PreferenceManager(val context: Context) {
         const val MIC_DOT_COLOR = "dot.mic.color"
         const val LOC_DOT_COLOR = "dot.loc.color"
         const val DOT_INTEGRITY = "sacchai.nijayithi." + BuildConfig.VERSION_CODE
+        const val RELATIVE_TIME = "me.aravi.dot.RELATIVE_TIME"
+        const val EXCLUDED_PACKAGES = "me.aravi.dot.EXCLUDED_PACKAGES"
     }
 
 }

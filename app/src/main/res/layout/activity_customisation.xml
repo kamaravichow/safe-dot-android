@@ -35,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:navigationIcon="@drawable/ic_round_keyboard_backspace_24"
-            app:title="  "
+            app:title="@string/customisation_center"
             app:titleTextAppearance="@style/ToolbarTitleAppearance" />
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -73,16 +73,16 @@
                     style="@style/TextAppearance.Material3.HeadlineSmall"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/google_sans_bold"
-                    android:text="Customisation Center"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="@string/customisation_center"
                     android:textColor="?attr/colorPrimaryText" />
 
                 <TextView
                     style="@style/TextAppearance.Material3.BodyMedium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/google_sans_medium"
-                    android:text="Easily tweak and set the properties of the indicators and notification here"
+                    android:fontFamily="sans-serif"
+                    android:text="@string/customisation_center_description"
                     android:textColor="?attr/colorSecondaryText" />
 
 
@@ -172,14 +172,15 @@
 
 
             <com.aravi.dot.ui.views.SwitchSettingsView
+                android:id="@+id/icons_switch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clickable="true"
                 android:focusable="true"
                 app:icon="@drawable/ic_icons"
                 app:icon_tint="@color/green_300"
-                app:message="Toggle icon visibility on the access logs. This can quickly indicate the permission being used by an app"
-                app:title="Dot Icons" />
+                app:message="@string/dot_icons_description"
+                app:title="@string/dot_icons" />
 
 
             <com.aravi.dot.ui.views.SettingsView
@@ -190,8 +191,8 @@
                 app:icon="@drawable/ic_round_format_align_center_24"
                 app:iconVisibility="false"
                 app:icon_tint="@color/colorPrimary"
-                app:message="Toggle icon visibility on the access logs. This can quickly indicate the permission being used by an app"
-                app:title="Alignment" />
+                app:message="@string/dot_alignment_description"
+                app:title="@string/dot_alignment_string" />
 
             <com.google.android.material.button.MaterialButtonToggleGroup
                 android:id="@+id/dot_alignment_group"
@@ -242,8 +243,8 @@
                 app:icon="@drawable/ic_round_format_align_center_24"
                 app:iconVisibility="false"
                 app:icon_tint="@color/orange_400"
-                app:message="Toggle icon visibility on the access logs. This can quickly indicate the permission being used by an app"
-                app:title="Colors" />
+                app:message="@string/colors_description"
+                app:title="@string/colors_title" />
 
 
             <LinearLayout
@@ -259,7 +260,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="90dp"
-                    android:fontFamily="@font/google_sans_bold"
+                    android:fontFamily="sans-serif-medium"
                     android:text="@string/permission_camera"
                     android:textAlignment="textStart"
                     android:textAllCaps="false"
@@ -276,7 +277,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="60dp"
-                    android:fontFamily="@font/google_sans_bold"
+                    android:fontFamily="sans-serif-medium"
                     android:text="@string/permission_microphone"
                     android:textAlignment="textStart"
                     android:textAllCaps="false"
@@ -293,7 +294,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="30dp"
-                    android:fontFamily="@font/google_sans_bold"
+                    android:fontFamily="sans-serif-medium"
                     android:text="@string/permission_location"
                     android:textAlignment="textStart"
                     android:textAllCaps="false"
@@ -307,15 +308,27 @@
             </LinearLayout>
 
 
+            <com.aravi.dot.ui.views.SwitchSettingsView
+                android:id="@+id/vibration_switch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                app:icon="@drawable/ic_round_vibration_24"
+                app:icon_tint="@color/deep_purple_400"
+                app:message="@string/vibrate_description"
+                app:title="@string/enable_vibration" />
+
             <com.aravi.dot.ui.views.SettingsView
+                android:id="@+id/reset_defaults"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clickable="true"
                 android:focusable="true"
                 app:icon="@drawable/ic_outline_cancel_24"
                 app:icon_tint="@color/red_300"
-                app:message="Set the customisations back to default"
-                app:title="Reset to defaults" />
+                app:message="@string/reset_defaults_message"
+                app:title="@string/reset_defaults" />
 
 
         </LinearLayout>

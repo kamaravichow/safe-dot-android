@@ -1,31 +1,19 @@
-/*
- * Copyright (C) 2020.  Aravind Chowdary (@kamaravichow)
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
- */
 package com.aravi.dot.activities.main
 
 import android.Manifest
-import android.annotation.SuppressLint
-import android.app.ActivityOptions
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
+import android.graphics.Color
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.android.charts.donut.AnimationMode
 import com.android.charts.donut.FitChartValue
 import com.aravi.dot.BuildConfig
@@ -36,83 +24,76 @@ import com.aravi.dot.activities.customise.CustomisationActivity
 import com.aravi.dot.database.AppDatabase
 import com.aravi.dot.databinding.ActivityMainBinding
 import com.aravi.dot.extensions.doesHavePermissions
-import com.aravi.dot.extensions.permission
 import com.aravi.dot.manager.DevLogger
+import com.aravi.dot.manager.PreferenceManager
 import com.aravi.dot.util.PermissionUtils
 import com.aravi.dot.util.Utils
 import com.google.android.material.snackbar.Snackbar
-import com.webianks.easy_feedback.EasyFeedback
-import logcat.logcat
 import me.aravi.commons.base.BaseActivity
 import org.koin.android.ext.android.inject
-import java.util.*
-
 
 class MainActivity : BaseActivity() {
     private lateinit var binding: ActivityMainBinding
 
     private val devLogger: DevLogger by inject()
     private val utils: Utils by inject()
-
+    private val preferences: PreferenceManager by inject()
     private val permissionUtils: PermissionUtils by inject()
     private val database: AppDatabase by inject()
-
     private val viewModel by viewModels<MainActivityViewModel>()
 
-    var date = "01-Jan-2021"
+    private val notificationPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { }
 
-
-    private val barSet = listOf(
-        "Camera" to 34f,
-        "Microphone" to 120f,
-        "Location" to 23f,
-    )
-    private lateinit var bundle: Bundle
-
+    override fun onBeforeCreate() {
+        installSplashScreen()
+    }
 
     override val contentView: View
         get() {
             binding = ActivityMainBinding.inflate(layoutInflater)
-            return (binding.root)
+            return binding.root
         }
 
-
-    @SuppressLint("SetTextI18n")
     override fun onViewReady(savedInstanceState: Bundle?, intent: Intent?) {
         edge2Edge()
-        bundle = ActivityOptions
-            .makeCustomAnimation(this, R.anim.slide_in_right, R.anim.slide_out_left)
-            .toBundle();
-
-        date = utils.getDateFromTimestamp(Calendar.getInstance().timeInMillis);
-
         binding.appbarLayout.root.setPadding(0, statusBarHeight(resources), 0, 0)
         binding.openSettings.setOnClickListener {
             viewModel.onAccessibilityClicked(this@MainActivity)
             devLogger.log("ACCESSIBILITY : Opening permission window")
         }
-
         binding.moreAccessControls.setOnClickListener {
             openActivity(AccessActionsActivity::class.java)
         }
-
-
-
         binding.cameraSwitch.setOnClickListener {
             utils.openHistoryActivity(this, Constants.PERMISSION_CAMERA)
         }
-
         binding.microphoneSwitch.setOnClickListener {
             utils.openHistoryActivity(this, Constants.PERMISSION_MICROPHONE)
         }
-
         binding.locationSwitch.setOnClickListener {
             utils.openHistoryActivity(this, Constants.PERMISSION_LOCATION)
         }
-
         binding.customiseDots.setOnClickListener {
             openActivity(CustomisationActivity::class.java)
         }
+        binding.notificationSettings.setOnClickListener {
+            openNotificationSettings()
+        }
+        binding.feedbackOption.setOnClickListener {
+            sendFeedback(getString(R.string.feedback_subject))
+        }
+        binding.bugReport.setOnClickListener {
+            sendFeedback(getString(R.string.feedback_subject))
+        }
+        binding.featureRequest.setOnClickListener {
+            sendFeedback(getString(R.string.feature_request_subject))
+        }
+        binding.shareOption.setOnClickListener { shareApp() }
+        binding.githubButton.setOnClickListener { openWeb(Constants.URL_GITHUB) }
+        binding.twitterButton.setOnClickListener { openWeb(Constants.URL_TWITTER) }
+        binding.telegramButton.setOnClickListener { openWeb(Constants.URL_PROJECT) }
 
         with(viewModel) {
             setupAccessibilityListener(this@MainActivity)
@@ -122,134 +103,157 @@ class MainActivity : BaseActivity() {
             }
         }
 
-
-        binding.bugReport.setOnClickListener {
-            if (doesHavePermissions(Manifest.permission.READ_PHONE_STATE)) {
-                EasyFeedback.Builder(this)
-                    .withEmail("contact.24ac@gmail.com")
-                    .withSystemInfo()
-                    .build()
-                    .start()
-            } else {
-                permission(Manifest.permission.READ_PHONE_STATE)
-            }
-        }
-
+        binding.versionText.text = getString(R.string.version) + BuildConfig.VERSION_NAME
+        requestNotificationsIfNeeded()
+        maybeShowAutostart()
         initData()
-
-
-        binding.versionText.text = "Version : ${BuildConfig.VERSION_NAME}"
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (::binding.isInitialized) {
+            initData()
+        }
+    }
 
-    @SuppressLint("SetTextI18n")
+    private fun requestNotificationsIfNeeded() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+            !doesHavePermissions(Manifest.permission.POST_NOTIFICATIONS)
+        ) {
+            notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+        }
+    }
+
+    private fun maybeShowAutostart() {
+        if (!preferences.isFirstLaunch) return
+        val manufacturer = Build.MANUFACTURER
+        if (manufacturer.equals("xiaomi", true) ||
+            manufacturer.equals("oppo", true) ||
+            manufacturer.equals("vivo", true) ||
+            manufacturer.equals("Honor", true)
+        ) {
+            utils.showAutoStartDialog(this, manufacturer)
+        }
+        preferences.setFirstLaunch()
+    }
+
     private fun onServiceStateChanged(enabled: Boolean) {
         if (enabled) {
             binding.accessibilityStatusIcon.setImageDrawable(
                 ContextCompat.getDrawable(this, R.drawable.ic_round_check_circle_outline_24)
             )
             binding.accessibilityStatusIcon.imageTintList = ColorStateList.valueOf(
-                resources.getColor(R.color.green_300)
+                ContextCompat.getColor(this, R.color.green_300)
             )
-            binding.accessibilityStatusTitle.text = "Accessibility Service is enabled"
-            binding.accessibilityStatusMessage.text = "This must be enabled for the app to work"
+            binding.accessibilityStatusTitle.setText(R.string.accessibility_enabled_title)
+            binding.accessibilityStatusMessage.setText(R.string.accessibility_enabled_message)
             devLogger.log("ACCESSIBILITY : Permission ACCEPTED")
-
         } else {
             binding.accessibilityStatusIcon.setImageDrawable(
                 ContextCompat.getDrawable(this, R.drawable.ic_outline_cancel_24)
             )
             binding.accessibilityStatusIcon.imageTintList = ColorStateList.valueOf(
-                resources.getColor(R.color.red_300)
+                ContextCompat.getColor(this, R.color.red_300)
             )
-            binding.accessibilityStatusTitle.text = "Accessibility Service is disabled"
-            binding.accessibilityStatusMessage.text =
-                "The dots will not currently work. Tap to enable"
+            binding.accessibilityStatusTitle.setText(R.string.accessibility_disabled_title)
+            binding.accessibilityStatusMessage.setText(R.string.accessibility_disabled_message)
             devLogger.log("ACCESSIBILITY : Permission DENIED")
         }
-
-        devLogger.log("ACCESSIBILITY : Permission state $enabled")
     }
 
-
     private fun initData() {
-        val logs: MutableList<Int> = ArrayList()
-        val entries: MutableList<FitChartValue> = ArrayList()
-        val colors: MutableList<Int> = ArrayList()
+        val since = System.currentTimeMillis() - DAY_MS
+        val locationLogs = database.logsDao().countDistinctPackagesSince(Constants.PERMISSION_LOCATION, since)
+        val cameraLogs = database.logsDao().countDistinctPackagesSince(Constants.PERMISSION_CAMERA, since)
+        val microphoneLogs = database.logsDao().countDistinctPackagesSince(Constants.PERMISSION_MICROPHONE, since)
+        val totalLogs = locationLogs + cameraLogs + microphoneLogs
+        val counts = listOf(locationLogs, cameraLogs, microphoneLogs)
+        val colors = listOf(R.color.red_300, R.color.green_300, R.color.blue_300)
 
-        colors.add(R.color.red_300)
-        colors.add(R.color.green_300)
-        colors.add(R.color.blue_300)
+        binding.cameraSwitch.setMessage(permissionUtils.getPermissionUsageInfo(cameraLogs))
+        binding.microphoneSwitch.setMessage(permissionUtils.getPermissionUsageInfo(microphoneLogs))
+        binding.locationSwitch.setMessage(permissionUtils.getPermissionUsageInfo(locationLogs))
 
-        val location_logs = getLogCount(Constants.PERMISSION_LOCATION)
-        val camera_logs = getLogCount(Constants.PERMISSION_CAMERA)
-        val microphone_logs = getLogCount(Constants.PERMISSION_MICROPHONE)
-
-        val total_logs = location_logs + camera_logs + microphone_logs
-
-        logcat { "TOTAL LOGS : $total_logs" }
-
-        binding.pieChart.maxValue = if (total_logs == 0) 1f else total_logs.toFloat()
+        binding.pieChart.maxValue = if (totalLogs == 0) 1f else totalLogs.toFloat()
         binding.pieChart.minValue = 0f
-
-        logs.add(location_logs)
-        logs.add(camera_logs)
-        logs.add(microphone_logs)
-
-        logcat { "LOGS LIST SIZE: ${logs.size}" }
-
-        logcat { "LOG INDICES: ${logs.indices}" }
-
-        for (i in logs.indices) {
-            logcat { "i in for loop : $i" }
-            if (logs[i] != 0) {
-                logcat { "DATA EXISTS" }
-                entries.add(FitChartValue(logs[i].toFloat(), resources.getColor(colors[i], null)))
+        val entries = ArrayList<FitChartValue>()
+        counts.forEachIndexed { index, count ->
+            if (count != 0) {
+                entries.add(
+                    FitChartValue(count.toFloat(), ContextCompat.getColor(this, colors[index]))
+                )
             }
         }
-
-        logcat { "Entries size: ${entries.size}" }
-
-        if (entries.size == 0) {
-            logcat { "SETTING NO DATA MODE" }
-            entries.add(FitChartValue(1f, 0xF2F2F2))
+        if (entries.isEmpty()) {
+            entries.add(FitChartValue(1f, Color.parseColor("#FFF2F2F2")))
         }
-
         binding.pieChart.setAnimationMode(AnimationMode.OVERDRAW)
-
-        logcat { "SETTING VALUES $entries" }
         binding.pieChart.setValues(entries)
     }
 
-    private fun getLogCount(perm: String): Int {
-        return database.logsDao().getLogsCount(perm, date)
-
-    }
-
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        if (requestCode == 12030) {
-            if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                snackbar(
-                    binding.root,
-                    "Permission is required for sending feedback as it contains useful logs & device info",
-                    Snackbar.LENGTH_LONG
-                )
-            } else {
-                binding.bugReport.callOnClick()
-            }
+    private fun shareApp() {
+        val shareIntent = Intent(Intent.ACTION_SEND).apply {
+            type = "text/plain"
+            putExtra(Intent.EXTRA_TEXT, getString(R.string.share_text))
         }
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        startActivity(Intent.createChooser(shareIntent, getString(R.string.share_with_others)))
     }
 
-
-    override fun onDestroy() {
-        super.onDestroy()
+    private fun sendFeedback(subject: String) {
+        val body = buildString {
+            append("App version: ")
+            append(BuildConfig.VERSION_NAME)
+            append(" (")
+            append(BuildConfig.VERSION_CODE)
+            append(")\nAndroid: ")
+            append(Build.VERSION.RELEASE)
+            append(" (API ")
+            append(Build.VERSION.SDK_INT)
+            append(")\nDevice: ")
+            append(Build.MANUFACTURER)
+            append(' ')
+            append(Build.MODEL)
+            append("\n\n")
+        }
+        val intent = Intent(Intent.ACTION_SENDTO).apply {
+            data = Uri.parse("mailto:")
+            putExtra(Intent.EXTRA_EMAIL, arrayOf(Constants.FEEDBACK_EMAIL))
+            putExtra(Intent.EXTRA_SUBJECT, subject)
+            putExtra(Intent.EXTRA_TEXT, body)
+        }
+        try {
+            startActivity(intent)
+        } catch (_: ActivityNotFoundException) {
+            snackbar(binding.root, getString(R.string.open_settings_failed), Snackbar.LENGTH_LONG)
+        }
     }
 
+    private fun openWeb(url: String) {
+        try {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+        } catch (_: ActivityNotFoundException) {
+            snackbar(binding.root, getString(R.string.open_settings_failed), Snackbar.LENGTH_LONG)
+        }
+    }
 
+    private fun openNotificationSettings() {
+        val intent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            Intent(android.provider.Settings.ACTION_APP_NOTIFICATION_SETTINGS)
+                .putExtra(android.provider.Settings.EXTRA_APP_PACKAGE, packageName)
+        } else {
+            Intent(
+                android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                Uri.parse("package:$packageName")
+            )
+        }
+        try {
+            startActivity(intent)
+        } catch (_: ActivityNotFoundException) {
+            snackbar(binding.root, getString(R.string.open_settings_failed), Snackbar.LENGTH_LONG)
+        }
+    }
+
+    companion object {
+        private const val DAY_MS = 24L * 60L * 60L * 1000L
+    }
 }

@@ -28,3 +28,8 @@
 -keepclassmembers class com.aravi.dot.model.* {
   *;
 }
+
+-keep class com.aravi.dot.bean.** { *; }
+-keep class * extends androidx.room.RoomDatabase { *; }
+-keepattributes RuntimeVisibleAnnotations,AnnotationDefault
+-dontwarn org.koin.**
