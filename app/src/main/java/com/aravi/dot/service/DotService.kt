@@ -70,6 +70,7 @@ class DotService : AccessibilityService() {
     private var isCameraUnavailable = false
     private var isMicUnavailable = false
     private var isLocUnavailable = false
+    private var isVibrationEnabled = false
     private val isOnUseNotificationEnabled = true
 
     private var didCameraUseStart = false
@@ -138,6 +139,9 @@ class DotService : AccessibilityService() {
                 PREF_CONSTANTS.LOCATION_KEY -> syncLocationMonitoring()
                 PREF_CONSTANTS.CAMERA_KEY -> syncCameraIndicator()
                 PREF_CONSTANTS.MIC_KEY -> syncMicIndicator()
+                PREF_CONSTANTS.VIBRATION_KEY -> {
+                    isVibrationEnabled = sharedPreferenceManager.isVibrationEnabled
+                }
                 PREF_CONSTANTS.CAMERA_DOT_COLOR,
                 PREF_CONSTANTS.MIC_DOT_COLOR,
                 PREF_CONSTANTS.LOC_DOT_COLOR,
@@ -155,6 +159,7 @@ class DotService : AccessibilityService() {
     override fun onServiceConnected() {
         sendBroadcast(Intent(KEY_ACCESSIBILITY_START).setPackage(BuildConfig.APPLICATION_ID))
         sharedPreferenceManager = PreferenceManager(this)
+        isVibrationEnabled = sharedPreferenceManager.isVibrationEnabled
         notificationManager = NotificationManagerCompat.from(applicationContext)
         initDotViews()
         initHardwareCallbacks()
@@ -183,9 +188,11 @@ class DotService : AccessibilityService() {
         layoutParams.width = WindowManager.LayoutParams.WRAP_CONTENT
         layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT
         layoutParams.gravity = layoutGravity
+        layoutParams.y = layoutOffset
 
         inflater.inflate(R.layout.dot_layout, hoverLayout)
         windowManager.addView(hoverLayout, layoutParams)
+        hoverLayout.post { updateLayoutGravity() }
         dotCamera = hoverLayout.findViewById(R.id.dot_camera)
         dotMic = hoverLayout.findViewById(R.id.dot_mic)
         dotLoc = hoverLayout.findViewById(R.id.dot_location)
@@ -441,7 +448,7 @@ class DotService : AccessibilityService() {
     }
 
     private fun triggerVibration() {
-        if (!sharedPreferenceManager.isVibrationEnabled) return
+        if (!isVibrationEnabled) return
         val vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             getSystemService(VibratorManager::class.java).defaultVibrator
         } else {
@@ -485,6 +492,16 @@ class DotService : AccessibilityService() {
                 2 -> Gravity.TOP or Gravity.CENTER_HORIZONTAL
                 else -> Gravity.TOP or Gravity.END
             }
+        }
+
+    private val layoutOffset: Int
+        get() {
+            if (sharedPreferenceManager.dotPosition != 2 ||
+                Build.VERSION.SDK_INT < Build.VERSION_CODES.P
+            ) {
+                return 0
+            }
+            return hoverLayout.rootWindowInsets?.displayCutout?.safeInsetTop ?: 0
         }
 
     /// show dots functions ---------------------------
@@ -552,6 +569,7 @@ class DotService : AccessibilityService() {
 
     private fun updateLayoutGravity() {
         layoutParams.gravity = layoutGravity
+        layoutParams.y = layoutOffset
         windowManager.updateViewLayout(hoverLayout, layoutParams)
     }
 
